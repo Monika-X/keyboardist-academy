@@ -1,0 +1,11 @@
+# This directory will hold all frontend page HTML and CSS files.
+# Pages to be created:
+#   - home.html / home.css
+#   - courses.html / courses.css
+#   - course-detail.html / course-detail.css
+#   - about.html / about.css
+#   - contact.html / contact.css
+#   - login.html / login.css
+#   - register.html / register.css
+#   - dashboard.html / dashboard.css
+#   - profile.html / profile.css

@@ -1,0 +1,730 @@
+/* ═══════════════════════════════════════════════════════════════
+   KEYBOARDIST ACADEMY — Animations, Transitions & Motion
+   frontend/assets/css/animations.css
+═══════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. KEYFRAMES
+   ──────────────────────────────────────────────────────────── */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-down {
+  from { opacity: 0; transform: translateY(-28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-left {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fade-in-right {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.90); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scale-in-spring {
+  0%   { opacity: 0; transform: scale(0.85); }
+  65%  { transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
+@keyframes ping {
+  0%   { transform: scale(1); opacity: 0.8; }
+  75%  { transform: scale(2); opacity: 0; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-16px); }
+}
+
+@keyframes float-x {
+  0%, 100% { transform: translateX(0px); }
+  50%       { transform: translateX(10px); }
+}
+
+@keyframes float-diagonal {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33%       { transform: translate(6px, -10px) rotate(1deg); }
+  66%       { transform: translate(-4px, -16px) rotate(-1deg); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -800px 0; }
+  100% { background-position:  800px 0; }
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+@keyframes draw-line {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blur-in {
+  from { opacity: 0; filter: blur(12px); transform: scale(0.96); }
+  to   { opacity: 1; filter: blur(0px);  transform: scale(1); }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+@keyframes blink-caret {
+  0%, 100% { border-color: transparent; }
+  50%       { border-color: var(--color-violet); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. ANIMATION UTILITY CLASSES
+   ──────────────────────────────────────────────────────────── */
+
+/* Entry animations */
+.animate-fade-in        { animation: fade-in          0.5s var(--ease-out) both; }
+.animate-fade-in-up     { animation: fade-in-up        0.6s var(--ease-expo-out) both; }
+.animate-fade-in-down   { animation: fade-in-down      0.6s var(--ease-expo-out) both; }
+.animate-fade-in-left   { animation: fade-in-left      0.6s var(--ease-expo-out) both; }
+.animate-fade-in-right  { animation: fade-in-right     0.6s var(--ease-expo-out) both; }
+.animate-scale-in       { animation: scale-in          0.4s var(--ease-expo-out) both; }
+.animate-scale-spring   { animation: scale-in-spring   0.5s var(--ease-spring)   both; }
+.animate-blur-in        { animation: blur-in           0.7s var(--ease-expo-out) both; }
+
+/* Looping animations */
+.animate-spin           { animation: spin          0.8s linear infinite; }
+.animate-spin-slow      { animation: spin          2.5s linear infinite; }
+.animate-pulse          { animation: pulse         2s ease-in-out infinite; }
+.animate-ping           { animation: ping          1.5s cubic-bezier(0,0,0.2,1) infinite; }
+.animate-float          { animation: float-y       4s ease-in-out infinite; }
+.animate-float-slow     { animation: float-y       6s ease-in-out infinite; }
+.animate-float-diag     { animation: float-diagonal 7s ease-in-out infinite; }
+
+/* Gradient animation */
+.animate-gradient {
+  background-size : 300% 300%;
+  animation       : gradient-shift 8s ease infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3. ANIMATION DELAY UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.delay-75   { animation-delay:  75ms; }
+.delay-100  { animation-delay: 100ms; }
+.delay-150  { animation-delay: 150ms; }
+.delay-200  { animation-delay: 200ms; }
+.delay-300  { animation-delay: 300ms; }
+.delay-400  { animation-delay: 400ms; }
+.delay-500  { animation-delay: 500ms; }
+.delay-600  { animation-delay: 600ms; }
+.delay-700  { animation-delay: 700ms; }
+.delay-800  { animation-delay: 800ms; }
+.delay-1000 { animation-delay: 1000ms; }
+.delay-1200 { animation-delay: 1200ms; }
+
+/* ─────────────────────────────────────────────────────────────
+   4. SCROLL-TRIGGERED REVEAL
+   ──────────────────────────────────────────────────────────── */
+
+/* JS adds .is-revealed when element enters viewport */
+
+.reveal {
+  opacity   : 0;
+  transform : translateY(36px);
+  transition: opacity   0.8s var(--ease-expo-out),
+              transform 0.8s var(--ease-expo-out);
+}
+
+.reveal.is-revealed {
+  opacity  : 1;
+  transform: translateY(0);
+}
+
+/* Directional reveal variants */
+.reveal-left {
+  opacity  : 0;
+  transform: translateX(-40px);
+  transition: opacity   0.8s var(--ease-expo-out),
+              transform 0.8s var(--ease-expo-out);
+}
+
+.reveal-right {
+  opacity  : 0;
+  transform: translateX(40px);
+  transition: opacity   0.8s var(--ease-expo-out),
+              transform 0.8s var(--ease-expo-out);
+}
+
+.reveal-scale {
+  opacity  : 0;
+  transform: scale(0.92);
+  transition: opacity   0.8s var(--ease-expo-out),
+              transform 0.8s var(--ease-expo-out);
+}
+
+.reveal-left.is-revealed,
+.reveal-right.is-revealed,
+.reveal-scale.is-revealed {
+  opacity  : 1;
+  transform: none;
+}
+
+/* Stagger children */
+.stagger-children > * {
+  opacity  : 0;
+  transform: translateY(24px);
+  transition: opacity   0.6s var(--ease-expo-out),
+              transform 0.6s var(--ease-expo-out);
+}
+
+.stagger-children.is-revealed > * { opacity: 1; transform: none; }
+
+.stagger-children > *:nth-child(1)  { transition-delay:  60ms; }
+.stagger-children > *:nth-child(2)  { transition-delay: 120ms; }
+.stagger-children > *:nth-child(3)  { transition-delay: 180ms; }
+.stagger-children > *:nth-child(4)  { transition-delay: 240ms; }
+.stagger-children > *:nth-child(5)  { transition-delay: 300ms; }
+.stagger-children > *:nth-child(6)  { transition-delay: 360ms; }
+.stagger-children > *:nth-child(7)  { transition-delay: 420ms; }
+.stagger-children > *:nth-child(8)  { transition-delay: 480ms; }
+.stagger-children > *:nth-child(9)  { transition-delay: 540ms; }
+.stagger-children > *:nth-child(10) { transition-delay: 600ms; }
+
+/* ─────────────────────────────────────────────────────────────
+   5. HOVER MICRO-INTERACTIONS
+   ──────────────────────────────────────────────────────────── */
+
+/* Lift on hover */
+.hover-lift {
+  transition: transform   var(--duration-300) var(--ease-expo-out),
+              box-shadow  var(--duration-300) var(--ease-out);
+}
+
+.hover-lift:hover {
+  transform : translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Violet glow on hover */
+.hover-glow {
+  transition: box-shadow var(--duration-300) var(--ease-out);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-violet-md), var(--shadow-glow);
+}
+
+/* Scale on hover */
+.hover-scale {
+  transition: transform var(--duration-200) var(--ease-spring);
+}
+
+.hover-scale:hover   { transform: scale(1.04); }
+.hover-scale:active  { transform: scale(0.97); }
+
+/* Dim on hover */
+.hover-dim {
+  transition: opacity var(--duration-200);
+}
+
+.hover-dim:hover { opacity: 0.75; }
+
+/* Bright on hover */
+.hover-bright {
+  transition: opacity var(--duration-200), filter var(--duration-200);
+}
+
+.hover-bright:hover { filter: brightness(1.12); }
+
+/* Rotate on hover */
+.hover-rotate {
+  transition: transform var(--duration-300) var(--ease-spring);
+}
+
+.hover-rotate:hover { transform: rotate(6deg); }
+
+/* Underline slide-in on hover */
+.hover-underline {
+  position      : relative;
+  text-decoration: none;
+}
+
+.hover-underline::after {
+  content      : '';
+  position     : absolute;
+  bottom       : -2px;
+  left         : 0;
+  right        : 100%;
+  height       : 1.5px;
+  background   : currentColor;
+  border-radius: var(--radius-full);
+  transition   : right var(--duration-300) var(--ease-expo-out);
+}
+
+.hover-underline:hover::after { right: 0; }
+
+/* Violet underline variant */
+.hover-underline-violet::after { background: var(--color-violet); }
+
+/* ─────────────────────────────────────────────────────────────
+   6. SKELETON LOADER
+   ──────────────────────────────────────────────────────────── */
+
+.skeleton {
+  background      : linear-gradient(
+    90deg,
+    var(--bg-raised)  25%,
+    var(--bg-overlay) 50%,
+    var(--bg-raised)  75%
+  );
+  background-size : 800px 100%;
+  animation       : shimmer 1.6s ease-in-out infinite;
+  border-radius   : var(--radius-md);
+  color           : transparent !important;
+}
+
+.skeleton--text {
+  height       : 1em;
+  border-radius: var(--radius-sm);
+  width        : 100%;
+}
+
+.skeleton--text-sm {
+  height : 0.75em;
+  width  : 80%;
+}
+
+.skeleton--avatar {
+  border-radius: 50%;
+}
+
+.skeleton--card {
+  border-radius: var(--card-radius);
+  height       : 300px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7. TRANSITION UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.transition-none     { transition: none !important; }
+.transition-colors   { transition: var(--transition-colors); }
+.transition-transform{ transition: var(--transition-transform); }
+.transition-shadow   { transition: var(--transition-shadow); }
+.transition-opacity  { transition: var(--transition-opacity); }
+.transition-all      { transition: var(--transition-all); }
+.transition-smooth   { transition: var(--transition-smooth); }
+
+/* ─────────────────────────────────────────────────────────────
+   8. PAGE TRANSITIONS
+   ──────────────────────────────────────────────────────────── */
+
+/* The #app root fades in on route change */
+#app {
+  animation: fade-in 0.35s var(--ease-out);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   9. FULL-PAGE LOADER
+   ──────────────────────────────────────────────────────────── */
+
+#page-loader {
+  position         : fixed;
+  inset            : 0;
+  background       : var(--bg-base);
+  z-index          : var(--z-top);
+  display          : flex;
+  align-items      : center;
+  justify-content  : center;
+  flex-direction   : column;
+  gap              : var(--space-6);
+  transition       : opacity    var(--duration-500) var(--ease-out),
+                     visibility var(--duration-500);
+}
+
+#page-loader.is-hidden {
+  opacity   : 0;
+  visibility: hidden;
+}
+
+.loader-logo {
+  font-family  : var(--font-display);
+  font-size    : var(--text-3xl);
+  font-weight  : var(--fw-bold);
+  color        : var(--text-primary);
+  letter-spacing: -0.02em;
+  animation    : fade-in-up 0.6s var(--ease-expo-out) both;
+}
+
+.loader-logo span { color: var(--color-violet); }
+
+.loader-bar {
+  width        : 200px;
+  height       : 3px;
+  background   : var(--bg-overlay);
+  border-radius: var(--radius-full);
+  overflow     : hidden;
+  animation    : fade-in 0.6s 0.2s var(--ease-out) both;
+}
+
+.loader-bar::after {
+  content      : '';
+  display      : block;
+  height       : 100%;
+  width        : 40%;
+  background   : var(--color-violet);
+  border-radius: var(--radius-full);
+  animation    : shimmer 1.2s ease-in-out infinite;
+  background   : linear-gradient(90deg, transparent, var(--color-violet), transparent);
+  background-size: 200px 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   10. TOAST NOTIFICATIONS
+   ──────────────────────────────────────────────────────────── */
+
+.toast-container {
+  position     : fixed;
+  bottom       : var(--space-6);
+  right        : var(--space-6);
+  z-index      : var(--z-toast);
+  display      : flex;
+  flex-direction: column;
+  gap          : var(--space-3);
+  pointer-events: none;
+}
+
+.toast {
+  display        : flex;
+  align-items    : center;
+  gap            : var(--space-3);
+  padding        : var(--space-4) var(--space-5);
+  background     : var(--bg-modal);
+  border         : 1px solid var(--border-default);
+  border-radius  : var(--radius-xl);
+  min-width      : 280px;
+  max-width      : 400px;
+  box-shadow     : var(--shadow-xl);
+  pointer-events : auto;
+  animation      : fade-in-right 0.4s var(--ease-expo-out) both;
+
+  /* Exit */
+  transition     : opacity var(--duration-300) var(--ease-out),
+                   transform var(--duration-300) var(--ease-in),
+                   margin-bottom var(--duration-300) var(--ease-out);
+}
+
+.toast.is-dismissing {
+  opacity  : 0;
+  transform: translateX(24px);
+}
+
+.toast__icon {
+  width        : 32px;
+  height       : 32px;
+  border-radius: var(--radius-md);
+  display      : flex;
+  align-items  : center;
+  justify-content: center;
+  flex-shrink  : 0;
+  font-size    : 1rem;
+}
+
+.toast--success .toast__icon { background: rgba(80, 200, 120, 0.15); color: #64c87a; }
+.toast--error   .toast__icon { background: rgba(235, 87, 87, 0.15);  color: #eb5757; }
+.toast--info    .toast__icon { background: var(--violet-15);          color: var(--color-violet); }
+.toast--warning .toast__icon { background: rgba(255, 170, 40, 0.15); color: #ffaa28; }
+
+.toast--success { border-color: rgba(80, 200, 120, 0.25); }
+.toast--error   { border-color: rgba(235, 87, 87, 0.25); }
+.toast--info    { border-color: var(--border-violet); }
+
+.toast__body {
+  flex: 1;
+}
+
+.toast__title {
+  font-size  : var(--text-sm);
+  font-weight: var(--fw-semibold);
+  color      : var(--text-primary);
+  line-height: 1.2;
+}
+
+.toast__msg {
+  font-size  : var(--text-xs);
+  color      : var(--text-secondary);
+  margin-top : var(--space-1);
+  line-height: var(--lh-snug);
+}
+
+.toast__close {
+  width       : 24px;
+  height      : 24px;
+  border-radius: var(--radius-sm);
+  display     : flex;
+  align-items : center;
+  justify-content: center;
+  color       : var(--text-tertiary);
+  cursor      : pointer;
+  background  : none;
+  border      : none;
+  flex-shrink : 0;
+  transition  : background var(--duration-150), color var(--duration-150);
+}
+
+.toast__close:hover {
+  background: var(--white-08);
+  color     : var(--text-primary);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   11. SCROLL-TO-TOP BUTTON
+   ──────────────────────────────────────────────────────────── */
+
+#scroll-top {
+  position        : fixed;
+  bottom          : var(--space-8);
+  right           : var(--space-8);
+  width           : 48px;
+  height          : 48px;
+  border-radius   : var(--radius-full);
+  background      : var(--bg-modal);
+  border          : 1px solid var(--border-default);
+  color           : var(--text-secondary);
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
+  cursor          : pointer;
+  z-index         : var(--z-raised);
+  box-shadow      : var(--shadow-lg);
+
+  opacity         : 0;
+  transform       : translateY(16px) scale(0.9);
+  transition      : opacity   var(--duration-300) var(--ease-out),
+                    transform var(--duration-300) var(--ease-spring),
+                    background var(--duration-200),
+                    border-color var(--duration-200),
+                    box-shadow var(--duration-300);
+  pointer-events  : none;
+}
+
+#scroll-top.is-visible {
+  opacity       : 1;
+  transform     : translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+#scroll-top:hover {
+  background  : var(--color-violet);
+  border-color: var(--color-violet);
+  color       : var(--color-white);
+  box-shadow  : var(--shadow-violet-md);
+  transform   : translateY(-4px) scale(1.05);
+}
+
+#scroll-top svg {
+  width    : 20px;
+  height   : 20px;
+  flex-shrink: 0;
+  transition: transform var(--duration-200) var(--ease-spring);
+}
+
+#scroll-top:hover svg { transform: translateY(-2px); }
+
+/* ─────────────────────────────────────────────────────────────
+   12. PROGRESS BAR
+   ──────────────────────────────────────────────────────────── */
+
+.progress {
+  width        : 100%;
+  height       : 6px;
+  background   : var(--white-08);
+  border-radius: var(--radius-full);
+  overflow     : hidden;
+}
+
+.progress__fill {
+  height          : 100%;
+  background      : var(--color-violet);
+  border-radius   : var(--radius-full);
+  transition      : width 0.8s var(--ease-expo-out);
+  position        : relative;
+}
+
+/* Shimmer on progress fill */
+.progress__fill::after {
+  content    : '';
+  position   : absolute;
+  inset      : 0;
+  background : linear-gradient(90deg, transparent 0%, var(--white-20) 50%, transparent 100%);
+  animation  : shimmer 2s ease-in-out infinite;
+  background-size: 200% 100%;
+}
+
+.progress--sm { height: 4px; }
+.progress--lg { height: 10px; }
+
+/* Radial progress */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring__track {
+  fill           : none;
+  stroke         : var(--white-08);
+  stroke-width   : 4;
+}
+
+.progress-ring__fill {
+  fill            : none;
+  stroke          : var(--color-violet);
+  stroke-width    : 4;
+  stroke-linecap  : round;
+  stroke-dasharray: 283;
+  transition      : stroke-dashoffset 0.8s var(--ease-expo-out);
+  filter          : drop-shadow(0 0 6px var(--color-violet));
+}
+
+/* ─────────────────────────────────────────────────────────────
+   13. MODAL OVERLAY
+   ──────────────────────────────────────────────────────────── */
+
+.modal-overlay {
+  position         : fixed;
+  inset            : 0;
+  background       : rgba(18, 18, 18, 0.85);
+  backdrop-filter  : blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index          : var(--z-modal);
+  display          : flex;
+  align-items      : center;
+  justify-content  : center;
+  padding          : var(--space-6);
+
+  opacity          : 0;
+  visibility       : hidden;
+  transition       : opacity     var(--duration-300) var(--ease-out),
+                     visibility  var(--duration-300);
+}
+
+.modal-overlay.is-open {
+  opacity   : 1;
+  visibility: visible;
+}
+
+.modal {
+  background   : var(--bg-modal);
+  border       : 1px solid var(--border-default);
+  border-radius: var(--radius-3xl);
+  width        : 100%;
+  max-width    : 560px;
+  max-height   : 90dvh;
+  overflow-y   : auto;
+  box-shadow   : var(--shadow-2xl);
+  transform    : scale(0.92) translateY(20px);
+  transition   : transform var(--duration-400) var(--ease-expo-out),
+                 opacity   var(--duration-300) var(--ease-out);
+  opacity      : 0;
+}
+
+.modal-overlay.is-open .modal {
+  transform: scale(1) translateY(0);
+  opacity  : 1;
+}
+
+.modal__header {
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+  padding        : var(--space-6) var(--space-8);
+  border-bottom  : 1px solid var(--border-subtle);
+}
+
+.modal__title {
+  font-size  : var(--text-lg);
+  font-weight: var(--fw-semibold);
+  color      : var(--text-primary);
+}
+
+.modal__close {
+  width       : 36px;
+  height      : 36px;
+  border-radius: var(--radius-md);
+  background  : var(--white-06);
+  border      : 1px solid var(--border-subtle);
+  display     : flex;
+  align-items : center;
+  justify-content: center;
+  cursor      : pointer;
+  color       : var(--text-tertiary);
+  transition  : background var(--duration-150), color var(--duration-150);
+  flex-shrink : 0;
+}
+
+.modal__close:hover {
+  background: var(--white-10);
+  color     : var(--text-primary);
+}
+
+.modal__body    { padding: var(--space-8); }
+.modal__footer  {
+  padding    : var(--space-6) var(--space-8);
+  border-top : 1px solid var(--border-subtle);
+  display    : flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap        : var(--space-3);
+}

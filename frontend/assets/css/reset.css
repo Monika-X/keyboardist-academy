@@ -1,0 +1,208 @@
+/* ═══════════════════════════════════════════════════════════════
+   KEYBOARDIST ACADEMY — CSS Reset & Base Styles
+   frontend/assets/css/reset.css
+═══════════════════════════════════════════════════════════════ */
+
+/* ── Box model & base reset ──────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing : border-box;
+  margin     : 0;
+  padding    : 0;
+  border     : 0;
+  outline    : none;
+}
+
+/* ── Root & HTML ─────────────────────────────────────────────── */
+html {
+  font-size            : 16px;
+  scroll-behavior      : smooth;
+  scroll-padding-top   : var(--nav-height);
+  -webkit-text-size-adjust  : 100%;
+  text-size-adjust          : 100%;
+  -moz-tab-size        : 4;
+  tab-size             : 4;
+}
+
+/* ── Body ────────────────────────────────────────────────────── */
+body {
+  font-family             : var(--font-body);
+  font-size               : var(--text-base);
+  font-weight             : var(--fw-regular);
+  line-height             : var(--lh-normal);
+  color                   : var(--text-primary);
+  background-color        : var(--bg-base);
+  -webkit-font-smoothing  : antialiased;
+  -moz-osx-font-smoothing : grayscale;
+  text-rendering          : optimizeLegibility;
+  overflow-x              : hidden;
+  min-height              : 100dvh;
+}
+
+/* ── Media elements ──────────────────────────────────────────── */
+img,
+picture,
+video,
+canvas,
+svg {
+  display   : block;
+  max-width : 100%;
+  height    : auto;
+}
+
+/* ── Typography elements ─────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight    : var(--fw-bold);
+  line-height    : var(--lh-tight);
+  letter-spacing : var(--ls-tight);
+  text-wrap      : balance;
+}
+
+p {
+  line-height : var(--lh-relaxed);
+  text-wrap   : pretty;
+  max-width   : 70ch;
+}
+
+a {
+  color          : inherit;
+  text-decoration: none;
+}
+
+/* ── Interactive elements ────────────────────────────────────── */
+button,
+[role="button"] {
+  font-family : inherit;
+  cursor      : pointer;
+  appearance  : none;
+  background  : none;
+  border      : none;
+  outline     : none;
+}
+
+input,
+textarea,
+select {
+  font-family : inherit;
+  font-size   : inherit;
+  color       : inherit;
+  appearance  : none;
+  background  : none;
+  border      : none;
+  outline     : none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* ── Lists ───────────────────────────────────────────────────── */
+ul,
+ol {
+  list-style: none;
+}
+
+/* ── Table ───────────────────────────────────────────────────── */
+table {
+  border-collapse: collapse;
+  border-spacing : 0;
+}
+
+/* ── Misc ────────────────────────────────────────────────────── */
+hr {
+  border    : none;
+  height    : 1px;
+  background: var(--border-default);
+}
+
+abbr[title] {
+  text-decoration    : underline dotted;
+  cursor             : help;
+}
+
+strong, b {
+  font-weight: var(--fw-semibold);
+}
+
+em, i {
+  font-style: italic;
+}
+
+small {
+  font-size: var(--text-sm);
+}
+
+sub,
+sup {
+  font-size     : 0.75em;
+  line-height   : 0;
+  position      : relative;
+  vertical-align: baseline;
+}
+
+sub { bottom: -0.25em; }
+sup { top:    -0.5em; }
+
+/* ── Focus styles ────────────────────────────────────────────── */
+:focus-visible {
+  outline         : 2px solid var(--color-violet);
+  outline-offset  : 3px;
+  border-radius   : var(--radius-sm);
+}
+
+/* ── Selection ───────────────────────────────────────────────── */
+::selection {
+  background : var(--violet-20);
+  color      : var(--text-primary);
+}
+
+/* ── Custom scrollbar ────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width : 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background   : var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background      : var(--violet-40);
+  border-radius   : var(--radius-full);
+  transition      : background var(--duration-200);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-violet);
+}
+
+/* ── Placeholder ─────────────────────────────────────────────── */
+::placeholder {
+  color  : var(--text-tertiary);
+  opacity: 1;
+}
+
+/* ── Disabled state ──────────────────────────────────────────── */
+[disabled],
+[aria-disabled="true"] {
+  cursor        : not-allowed;
+  user-select   : none;
+  pointer-events: none;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration       : 0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration      : 0.01ms !important;
+    scroll-behavior          : auto   !important;
+  }
+}

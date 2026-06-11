@@ -1,0 +1,292 @@
+/* ═══════════════════════════════════════════════════════════════
+   KEYBOARDIST ACADEMY — Button Styles
+   frontend/assets/css/buttons.css
+═══════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. BASE BUTTON
+   ──────────────────────────────────────────────────────────── */
+
+.btn {
+  /* Layout */
+  display         : inline-flex;
+  align-items     : center;
+  justify-content : center;
+  gap             : var(--space-2);
+  white-space     : nowrap;
+  text-decoration : none;
+  flex-shrink     : 0;
+
+  /* Sizing — default: md */
+  height          : var(--btn-height-md);
+  padding         : 0 var(--btn-px-md);
+  border-radius   : var(--btn-radius);
+
+  /* Typography */
+  font-family     : var(--font-body);
+  font-size       : var(--btn-font-md);
+  font-weight     : var(--btn-fw);
+  letter-spacing  : var(--btn-ls);
+  line-height     : 1;
+
+  /* Interaction */
+  cursor          : pointer;
+  border          : 2px solid transparent;
+  position        : relative;
+  overflow        : hidden;
+  isolation       : isolate;
+  user-select     : none;
+  -webkit-user-select: none;
+  appearance      : none;
+
+  /* Transitions */
+  transition      : color            var(--duration-200) var(--ease-out),
+                    background-color var(--duration-200) var(--ease-out),
+                    border-color     var(--duration-200) var(--ease-out),
+                    box-shadow       var(--duration-300) var(--ease-out),
+                    transform        var(--duration-200) var(--ease-spring),
+                    opacity          var(--duration-200) var(--ease-out);
+}
+
+/* Ripple pseudo-element */
+.btn::after {
+  content       : '';
+  position      : absolute;
+  inset         : 0;
+  background    : rgba(245, 245, 242, 0.08);
+  opacity       : 0;
+  transition    : opacity var(--duration-150) var(--ease-out);
+  border-radius : inherit;
+}
+
+.btn:hover::after  { opacity: 1; }
+.btn:active::after { opacity: 0.18; }
+
+/* Active press */
+.btn:active { transform: scale(0.97); }
+
+/* Focus ring */
+.btn:focus-visible {
+  outline       : 2px solid var(--color-violet);
+  outline-offset: 3px;
+}
+
+/* Disabled state */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity       : 0.4;
+  cursor        : not-allowed;
+  pointer-events: none;
+  transform     : none !important;
+}
+
+/* Loading state */
+.btn.is-loading {
+  color         : transparent !important;
+  pointer-events: none;
+  cursor        : wait;
+}
+
+.btn.is-loading::before {
+  content      : '';
+  position     : absolute;
+  top          : 50%;
+  left         : 50%;
+  translate    : -50% -50%;
+  width        : 18px;
+  height       : 18px;
+  border       : 2px solid rgba(245, 245, 242, 0.25);
+  border-top   : 2px solid currentColor;
+  border-radius: 50%;
+  animation    : btn-spin 0.7s linear infinite;
+}
+
+/* btn-spin only when needed */
+@keyframes btn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. BUTTON VARIANTS
+   ──────────────────────────────────────────────────────────── */
+
+/* Primary — solid violet */
+.btn--primary {
+  background  : var(--color-violet);
+  color       : var(--color-white);
+  border-color: var(--color-violet);
+  box-shadow  : var(--shadow-violet-sm);
+}
+
+.btn--primary:hover {
+  background  : transparent;
+  color       : var(--color-violet);
+  box-shadow  : var(--shadow-violet-md), var(--shadow-glow);
+  transform   : translateY(-2px);
+}
+
+/* Outline — transparent with violet border */
+.btn--outline {
+  background  : transparent;
+  color       : var(--color-white);
+  border-color: var(--border-strong);
+}
+
+.btn--outline:hover {
+  border-color: var(--color-violet);
+  color       : var(--color-violet);
+  background  : var(--violet-10);
+  box-shadow  : 0 0 0 1px var(--border-violet);
+  transform   : translateY(-2px);
+}
+
+/* Ghost — subtle tinted */
+.btn--ghost {
+  background  : var(--white-08);
+  color       : var(--text-primary);
+  border-color: var(--border-default);
+}
+
+.btn--ghost:hover {
+  background  : var(--white-10);
+  border-color: var(--border-strong);
+  transform   : translateY(-2px);
+}
+
+/* Tinted — violet tint background */
+.btn--tinted {
+  background  : var(--violet-10);
+  color       : var(--color-violet);
+  border-color: var(--border-violet);
+}
+
+.btn--tinted:hover {
+  background  : var(--violet-15);
+  border-color: var(--color-violet);
+  box-shadow  : var(--shadow-violet-sm);
+  transform   : translateY(-2px);
+}
+
+/* White (on dark sections) */
+.btn--white {
+  background  : var(--color-white);
+  color       : var(--color-black);
+  border-color: var(--color-white);
+  font-weight : var(--fw-bold);
+}
+
+.btn--white:hover {
+  background  : transparent;
+  color       : var(--color-white);
+  box-shadow  : 0 0 0 1px var(--color-white);
+  transform   : translateY(-2px);
+}
+
+/* Dark — black on white section */
+.btn--dark {
+  background  : var(--color-black);
+  color       : var(--color-white);
+  border-color: var(--color-black);
+}
+
+.btn--dark:hover {
+  background  : transparent;
+  color       : var(--color-black);
+  transform   : translateY(-2px);
+}
+
+/* Danger — red tint (uses existing palette darkness only) */
+.btn--danger {
+  background  : rgba(220, 53, 69, 0.15);
+  color       : #ff6b7a;
+  border-color: rgba(220, 53, 69, 0.30);
+}
+
+.btn--danger:hover {
+  background  : rgba(220, 53, 69, 0.25);
+  border-color: rgba(220, 53, 69, 0.60);
+  transform   : translateY(-2px);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3. BUTTON SIZES
+   ──────────────────────────────────────────────────────────── */
+
+.btn--xs {
+  height       : 28px;
+  padding      : 0 0.875rem;
+  font-size    : var(--text-2xs);
+  border-radius: var(--radius-full);
+  gap          : var(--space-1);
+}
+
+.btn--sm {
+  height   : var(--btn-height-sm);
+  padding  : 0 var(--btn-px-sm);
+  font-size: var(--btn-font-sm);
+}
+
+/* md is default */
+
+.btn--lg {
+  height   : var(--btn-height-lg);
+  padding  : 0 var(--btn-px-lg);
+  font-size: var(--btn-font-lg);
+}
+
+.btn--xl {
+  height   : var(--btn-height-xl);
+  padding  : 0 var(--btn-px-xl);
+  font-size: var(--btn-font-xl);
+}
+
+/* Full-width block button */
+.btn--block {
+  display: flex;
+  width  : 100%;
+}
+
+/* Icon-only square button */
+.btn--icon {
+  padding: 0;
+  width  : var(--btn-height-md);
+}
+
+.btn--icon.btn--sm { width: var(--btn-height-sm); }
+.btn--icon.btn--lg { width: var(--btn-height-lg); }
+.btn--icon.btn--xl { width: var(--btn-height-xl); }
+
+/* ─────────────────────────────────────────────────────────────
+   4. BUTTON WITH ICON
+   ──────────────────────────────────────────────────────────── */
+
+.btn__icon {
+  width     : 20px;
+  height    : 20px;
+  flex-shrink: 0;
+  transition : transform var(--duration-200) var(--ease-spring);
+}
+
+.btn:hover .btn__icon--arrow {
+  transform: translateX(3px);
+}
+
+.btn:hover .btn__icon--up {
+  transform: translateY(-3px);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5. BUTTON GROUP
+   ──────────────────────────────────────────────────────────── */
+
+.btn-group {
+  display  : inline-flex;
+  align-items: center;
+  gap      : var(--space-3);
+  flex-wrap: wrap;
+}
+
+.btn-group--vertical {
+  flex-direction: column;
+  align-items   : stretch;
+}

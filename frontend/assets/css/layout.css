@@ -1,0 +1,512 @@
+/* ═══════════════════════════════════════════════════════════════
+   KEYBOARDIST ACADEMY — Layout, Grid & Section Spacing System
+   frontend/assets/css/layout.css
+═══════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. PAGE STRUCTURE
+   ──────────────────────────────────────────────────────────── */
+
+.page-wrapper {
+  min-height     : 100dvh;
+  display        : flex;
+  flex-direction : column;
+  padding-top    : var(--nav-height);
+}
+
+.page-main { flex: 1; }
+
+/* ─────────────────────────────────────────────────────────────
+   2. CONTAINER SYSTEM
+   ──────────────────────────────────────────────────────────── */
+
+.container {
+  width    : 100%;
+  max-width: var(--container-xl);
+  margin   : 0 auto;
+  padding  : 0 var(--container-pad);
+}
+
+.container--xs  { max-width: var(--container-xs);  margin: 0 auto; padding: 0 var(--container-pad); }
+.container--sm  { max-width: var(--container-sm);  margin: 0 auto; padding: 0 var(--container-pad); }
+.container--md  { max-width: var(--container-md);  margin: 0 auto; padding: 0 var(--container-pad); }
+.container--lg  { max-width: var(--container-lg);  margin: 0 auto; padding: 0 var(--container-pad); }
+.container--2xl { max-width: var(--container-2xl); margin: 0 auto; padding: 0 var(--container-pad); }
+.container--full{ max-width: 100%; padding: 0 var(--container-pad); }
+
+/* ─────────────────────────────────────────────────────────────
+   3. SECTION SPACING SYSTEM
+   ──────────────────────────────────────────────────────────── */
+
+/* Base section */
+.section {
+  position   : relative;
+  padding-block: var(--section-md);
+}
+
+/* Spacing scale */
+.section--xs  { padding-block: var(--space-8); }
+.section--sm  { padding-block: var(--section-sm); }
+.section--md  { padding-block: var(--section-md); }   /* default */
+.section--lg  { padding-block: var(--section-lg); }
+.section--xl  { padding-block: var(--section-xl); }
+
+/* Top-only / bottom-only padding */
+.section--pt   { padding-top: var(--section-md); padding-bottom: 0; }
+.section--pb   { padding-top: 0; padding-bottom: var(--section-md); }
+.section--pt-lg { padding-top: var(--section-lg); padding-bottom: 0; }
+.section--pb-lg { padding-top: 0; padding-bottom: var(--section-lg); }
+
+/* No padding */
+.section--flush { padding-block: 0; }
+
+/* ── Section header ──────────────────────────────────────────── */
+
+.section-header {
+  max-width: 680px;
+  margin-bottom: var(--space-16);
+}
+
+.section-header--center {
+  text-align: center;
+  margin-left : auto;
+  margin-right: auto;
+}
+
+.section-header--wide { max-width: 840px; }
+.section-header--full { max-width: none; }
+
+.section-header__eyebrow {
+  display       : inline-flex;
+  align-items   : center;
+  gap           : var(--space-2);
+  font-size     : var(--text-xs);
+  font-weight   : var(--fw-semibold);
+  letter-spacing: var(--ls-widest);
+  text-transform: uppercase;
+  color         : var(--text-accent);
+  margin-bottom : var(--space-4);
+}
+
+.section-header__eyebrow::before {
+  content      : '';
+  display      : block;
+  width        : 24px;
+  height       : 2px;
+  background   : var(--color-violet);
+  border-radius: var(--radius-full);
+  flex-shrink  : 0;
+}
+
+.section-header--center .section-header__eyebrow::before { display: none; }
+
+.section-header__title {
+  font-family  : var(--font-display);
+  font-size    : clamp(var(--text-3xl), 4.5vw, var(--text-5xl));
+  font-weight  : var(--fw-bold);
+  line-height  : var(--lh-tight);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.section-header__desc {
+  font-size  : clamp(var(--text-base), 1.8vw, var(--text-lg));
+  color      : var(--text-secondary);
+  line-height: var(--lh-relaxed);
+  max-width  : 56ch;
+}
+
+.section-header--center .section-header__desc {
+  margin-left : auto;
+  margin-right: auto;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   4. GRID SYSTEM
+   ──────────────────────────────────────────────────────────── */
+
+/* Auto-fill responsive grid */
+.grid {
+  display              : grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap                  : var(--space-6);
+}
+
+/* Gap variants */
+.grid--gap-2  { gap: var(--space-2); }
+.grid--gap-4  { gap: var(--space-4); }
+.grid--gap-6  { gap: var(--space-6); }   /* default */
+.grid--gap-8  { gap: var(--space-8); }
+.grid--gap-10 { gap: var(--space-10); }
+.grid--gap-12 { gap: var(--space-12); }
+
+/* Column span utilities */
+.col-1  { grid-column: span 1; }
+.col-2  { grid-column: span 2; }
+.col-3  { grid-column: span 3; }
+.col-4  { grid-column: span 4; }
+.col-5  { grid-column: span 5; }
+.col-6  { grid-column: span 6; }
+.col-7  { grid-column: span 7; }
+.col-8  { grid-column: span 8; }
+.col-9  { grid-column: span 9; }
+.col-10 { grid-column: span 10; }
+.col-11 { grid-column: span 11; }
+.col-12 { grid-column: span 12; }
+.col-full { grid-column: 1 / -1; }
+
+/* Column start */
+.col-start-1  { grid-column-start: 1; }
+.col-start-2  { grid-column-start: 2; }
+.col-start-3  { grid-column-start: 3; }
+.col-start-4  { grid-column-start: 4; }
+.col-start-5  { grid-column-start: 5; }
+.col-start-7  { grid-column-start: 7; }
+
+/* Row span */
+.row-2 { grid-row: span 2; }
+.row-3 { grid-row: span 3; }
+
+/* ── Semantic grid presets ──────────────────────────────────── */
+
+/* Auto cards grid */
+.grid-cards {
+  display              : grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap                  : var(--space-6);
+}
+
+.grid-cards--sm {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.grid-cards--lg {
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+}
+
+/* Fixed column grids */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-5); }
+.grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-5); }
+
+/* Hero split layout */
+.grid-hero {
+  display             : grid;
+  grid-template-columns: 1fr 1fr;
+  gap                 : var(--space-16);
+  align-items         : center;
+}
+
+/* Content + sidebar */
+.grid-sidebar {
+  display             : grid;
+  grid-template-columns: 1fr 380px;
+  gap                 : var(--space-12);
+  align-items         : start;
+}
+
+.grid-sidebar--reverse {
+  grid-template-columns: 380px 1fr;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5. FLEXBOX UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.flex         { display: flex; }
+.flex-col     { display: flex; flex-direction: column; }
+.flex-wrap    { flex-wrap: wrap; }
+.flex-nowrap  { flex-wrap: nowrap; }
+.flex-1       { flex: 1; }
+.flex-auto    { flex: auto; }
+.flex-none    { flex: none; }
+.flex-shrink-0{ flex-shrink: 0; }
+.flex-grow    { flex-grow: 1; }
+
+.items-start   { align-items: flex-start; }
+.items-center  { align-items: center; }
+.items-end     { align-items: flex-end; }
+.items-stretch { align-items: stretch; }
+.items-baseline{ align-items: baseline; }
+
+.justify-start   { justify-content: flex-start; }
+.justify-center  { justify-content: center; }
+.justify-end     { justify-content: flex-end; }
+.justify-between { justify-content: space-between; }
+.justify-around  { justify-content: space-around; }
+.justify-evenly  { justify-content: space-evenly; }
+
+.self-start    { align-self: flex-start; }
+.self-center   { align-self: center; }
+.self-end      { align-self: flex-end; }
+.self-stretch  { align-self: stretch; }
+
+/* ── Gap ─────────────────────────────────────────────────────── */
+.gap-0  { gap: 0; }
+.gap-1  { gap: var(--space-1); }
+.gap-2  { gap: var(--space-2); }
+.gap-3  { gap: var(--space-3); }
+.gap-4  { gap: var(--space-4); }
+.gap-5  { gap: var(--space-5); }
+.gap-6  { gap: var(--space-6); }
+.gap-8  { gap: var(--space-8); }
+.gap-10 { gap: var(--space-10); }
+.gap-12 { gap: var(--space-12); }
+.gap-16 { gap: var(--space-16); }
+
+/* ─────────────────────────────────────────────────────────────
+   6. SPACING UTILITIES  (margin / padding)
+   ──────────────────────────────────────────────────────────── */
+
+/* Margin */
+.m-0  { margin: 0; }
+.mx-auto { margin-inline: auto; }
+.mt-0  { margin-top: 0; }
+.mt-2  { margin-top: var(--space-2); }
+.mt-4  { margin-top: var(--space-4); }
+.mt-6  { margin-top: var(--space-6); }
+.mt-8  { margin-top: var(--space-8); }
+.mt-10 { margin-top: var(--space-10); }
+.mt-12 { margin-top: var(--space-12); }
+.mt-16 { margin-top: var(--space-16); }
+.mb-0  { margin-bottom: 0; }
+.mb-2  { margin-bottom: var(--space-2); }
+.mb-4  { margin-bottom: var(--space-4); }
+.mb-6  { margin-bottom: var(--space-6); }
+.mb-8  { margin-bottom: var(--space-8); }
+.mb-10 { margin-bottom: var(--space-10); }
+.mb-12 { margin-bottom: var(--space-12); }
+.mb-16 { margin-bottom: var(--space-16); }
+.ml-auto{ margin-left: auto; }
+.mr-auto{ margin-right: auto; }
+
+/* Padding */
+.p-0  { padding: 0; }
+.p-2  { padding: var(--space-2); }
+.p-4  { padding: var(--space-4); }
+.p-6  { padding: var(--space-6); }
+.p-8  { padding: var(--space-8); }
+.px-4 { padding-inline: var(--space-4); }
+.px-6 { padding-inline: var(--space-6); }
+.px-8 { padding-inline: var(--space-8); }
+.py-4 { padding-block: var(--space-4); }
+.py-6 { padding-block: var(--space-6); }
+.py-8 { padding-block: var(--space-8); }
+
+/* ─────────────────────────────────────────────────────────────
+   7. DISPLAY UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.block          { display: block; }
+.inline-block   { display: inline-block; }
+.inline         { display: inline; }
+.inline-flex    { display: inline-flex; }
+.grid-display   { display: grid; }
+.hidden         { display: none !important; }
+.invisible      { visibility: hidden; }
+
+/* ─────────────────────────────────────────────────────────────
+   8. POSITION UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.relative    { position: relative; }
+.absolute    { position: absolute; }
+.fixed       { position: fixed; }
+.sticky      { position: sticky; top: var(--nav-height); }
+.inset-0     { inset: 0; }
+.top-0       { top: 0; }
+.bottom-0    { bottom: 0; }
+.left-0      { left: 0; }
+.right-0     { right: 0; }
+.z-0         { z-index: var(--z-base); }
+.z-10        { z-index: var(--z-raised); }
+.z-top       { z-index: var(--z-top); }
+
+/* ─────────────────────────────────────────────────────────────
+   9. SIZE UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.w-full       { width: 100%; }
+.w-fit        { width: fit-content; }
+.h-full       { height: 100%; }
+.h-screen     { height: 100dvh; }
+.min-h-screen { min-height: 100dvh; }
+
+/* Aspect ratios */
+.ratio-16-9 { aspect-ratio: 16 / 9; }
+.ratio-4-3  { aspect-ratio: 4  / 3; }
+.ratio-1-1  { aspect-ratio: 1  / 1; }
+.ratio-3-4  { aspect-ratio: 3  / 4; }
+
+/* ─────────────────────────────────────────────────────────────
+   10. BACKGROUND UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.bg-base     { background-color: var(--bg-base); }
+.bg-raised   { background-color: var(--bg-raised); }
+.bg-overlay  { background-color: var(--bg-overlay); }
+.bg-modal    { background-color: var(--bg-modal); }
+.bg-violet   { background-color: var(--color-violet); }
+.bg-white    { background-color: var(--color-white); }
+.bg-black    { background-color: var(--color-black); }
+.bg-tinted   { background-color: var(--violet-10); }
+.bg-glass    {
+  background        : rgba(26, 26, 26, 0.60);
+  backdrop-filter   : blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   11. BORDER UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.border         { border: 1px solid var(--border-default); }
+.border-subtle  { border: 1px solid var(--border-subtle); }
+.border-violet  { border: 1px solid var(--border-violet); }
+.border-none    { border: none; }
+.border-t       { border-top: 1px solid var(--border-subtle); }
+.border-b       { border-bottom: 1px solid var(--border-subtle); }
+
+.rounded-sm   { border-radius: var(--radius-sm); }
+.rounded-md   { border-radius: var(--radius-md); }
+.rounded-lg   { border-radius: var(--radius-lg); }
+.rounded-xl   { border-radius: var(--radius-xl); }
+.rounded-2xl  { border-radius: var(--radius-2xl); }
+.rounded-3xl  { border-radius: var(--radius-3xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+/* ─────────────────────────────────────────────────────────────
+   12. SHADOW UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.shadow-sm     { box-shadow: var(--shadow-sm); }
+.shadow-md     { box-shadow: var(--shadow-md); }
+.shadow-lg     { box-shadow: var(--shadow-lg); }
+.shadow-xl     { box-shadow: var(--shadow-xl); }
+.shadow-violet { box-shadow: var(--shadow-violet-md); }
+.shadow-glow   { box-shadow: var(--shadow-glow); }
+.shadow-none   { box-shadow: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   13. OVERFLOW UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+.overflow-hidden  { overflow: hidden; }
+.overflow-auto    { overflow: auto; }
+.overflow-x-auto  { overflow-x: auto; }
+.overflow-y-auto  { overflow-y: auto; }
+.overflow-x-hidden{ overflow-x: hidden; }
+
+/* ─────────────────────────────────────────────────────────────
+   14. ISOLATE / POINTER EVENTS
+   ──────────────────────────────────────────────────────────── */
+
+.isolate          { isolation: isolate; }
+.pointer-none     { pointer-events: none; }
+.pointer-auto     { pointer-events: auto; }
+.select-none      { user-select: none; }
+.cursor-pointer   { cursor: pointer; }
+.cursor-default   { cursor: default; }
+
+/* ─────────────────────────────────────────────────────────────
+   15. DIVIDER
+   ──────────────────────────────────────────────────────────── */
+
+.divider {
+  width     : 100%;
+  height    : 1px;
+  background: var(--border-subtle);
+}
+
+.divider--violet {
+  background: linear-gradient(90deg, transparent, var(--color-violet), transparent);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   16. DECORATIVE UTILITIES
+   ──────────────────────────────────────────────────────────── */
+
+/* Glow orbs — positioned via inline style or modifier classes */
+.glow-orb {
+  position      : absolute;
+  border-radius : 50%;
+  filter        : blur(90px);
+  pointer-events: none;
+  z-index       : 0;
+}
+
+.glow-orb--violet {
+  background: var(--violet-10);
+  width     : 700px;
+  height    : 700px;
+}
+
+.glow-orb--white {
+  background: var(--white-04);
+  width     : 500px;
+  height    : 500px;
+}
+
+/* Noise texture overlay */
+.noise-overlay {
+  position      : fixed;
+  inset         : 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index       : 0;
+  opacity       : 0.5;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   17. RESPONSIVE GRID BREAKPOINTS
+   ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 1279px) {
+  .grid-sidebar { grid-template-columns: 1fr 320px; }
+  .grid-4       { grid-template-columns: repeat(3, 1fr); }
+  .grid-5       { grid-template-columns: repeat(4, 1fr); }
+  .grid-6       { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 1023px) {
+  .grid-hero    { grid-template-columns: 1fr; gap: var(--space-12); }
+  .grid-sidebar { grid-template-columns: 1fr; }
+  .grid-sidebar--reverse { grid-template-columns: 1fr; }
+  .grid-3       { grid-template-columns: repeat(2, 1fr); }
+  .grid-4       { grid-template-columns: repeat(2, 1fr); }
+  .grid-5       { grid-template-columns: repeat(3, 1fr); }
+  .grid-6       { grid-template-columns: repeat(3, 1fr); }
+
+  /* Col spans on tablet */
+  .col-1, .col-2, .col-3 { grid-column: span 4; }
+  .col-4, .col-5, .col-6 { grid-column: span 6; }
+  .col-7, .col-8, .col-9 { grid-column: span 8; }
+}
+
+@media (max-width: 767px) {
+  .grid-2, .grid-3, .grid-4, .grid-5, .grid-6 {
+    grid-template-columns: 1fr;
+  }
+
+  .col-1, .col-2, .col-3,
+  .col-4, .col-5, .col-6,
+  .col-7, .col-8, .col-9,
+  .col-10, .col-11 {
+    grid-column: span 12;
+  }
+
+  /* Hide on mobile */
+  .hide-mobile  { display: none !important; }
+  /* Show only on mobile */
+  .show-mobile  { display: revert !important; }
+}
+
+@media (min-width: 768px) {
+  .hide-tablet  { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .hide-desktop { display: none !important; }
+}

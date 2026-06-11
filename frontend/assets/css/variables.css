@@ -1,0 +1,322 @@
+/* ═══════════════════════════════════════════════════════════════
+   KEYBOARDIST ACADEMY — Design Token System
+   frontend/assets/css/variables.css
+
+   Brand Palette (ONLY these three colors are used)
+   ──────────────────────────────────────────────────
+   Matte Black  : #121212
+   Soft White   : #F5F5F2
+   Royal Violet : #6C63FF
+═══════════════════════════════════════════════════════════════ */
+
+:root {
+
+  /* ─────────────────────────────────────────────────────────
+     1. PRIMITIVE COLOR TOKENS
+     ──────────────────────────────────────────────────────── */
+
+  /* Brand primaries */
+  --black-raw    : 18, 18, 18;      /* #121212 as R,G,B */
+  --white-raw    : 245, 245, 242;   /* #F5F5F2 as R,G,B */
+  --violet-raw   : 108, 99, 255;    /* #6C63FF as R,G,B */
+
+  --color-black  : #121212;
+  --color-white  : #F5F5F2;
+  --color-violet : #6C63FF;
+
+  /* ─────────────────────────────────────────────────────────
+     2. SEMANTIC SURFACE TOKENS
+     (same palette — lightness only, never new hues)
+     ──────────────────────────────────────────────────────── */
+
+  /* Page backgrounds — depth via lightness */
+  --bg-base      : #121212;   /* deepest background          */
+  --bg-raised    : #191919;   /* cards, panels on bg-base    */
+  --bg-overlay   : #1f1f1f;   /* elevated cards              */
+  --bg-modal     : #252525;   /* modals, dropdowns           */
+  --bg-input     : #1c1c1c;   /* form inputs                 */
+  --bg-hover     : #2a2a2a;   /* hover state on surfaces     */
+
+  /* Borders */
+  --border-subtle  : rgba(245, 245, 242, 0.06);
+  --border-default : rgba(245, 245, 242, 0.10);
+  --border-strong  : rgba(245, 245, 242, 0.18);
+  --border-violet  : rgba(108, 99, 255, 0.30);
+  --border-focus   : rgba(108, 99, 255, 0.80);
+
+  /* Text */
+  --text-primary     : #F5F5F2;
+  --text-secondary   : rgba(245, 245, 242, 0.65);
+  --text-tertiary    : rgba(245, 245, 242, 0.40);
+  --text-disabled    : rgba(245, 245, 242, 0.25);
+  --text-inverse     : #121212;
+  --text-accent      : #6C63FF;
+  --text-on-violet   : #F5F5F2;
+
+  /* Brand opacity scale */
+  --violet-10    : rgba(108, 99, 255, 0.10);
+  --violet-15    : rgba(108, 99, 255, 0.15);
+  --violet-20    : rgba(108, 99, 255, 0.20);
+  --violet-30    : rgba(108, 99, 255, 0.30);
+  --violet-40    : rgba(108, 99, 255, 0.40);
+  --violet-60    : rgba(108, 99, 255, 0.60);
+  --violet-80    : rgba(108, 99, 255, 0.80);
+
+  --white-04     : rgba(245, 245, 242, 0.04);
+  --white-06     : rgba(245, 245, 242, 0.06);
+  --white-08     : rgba(245, 245, 242, 0.08);
+  --white-10     : rgba(245, 245, 242, 0.10);
+  --white-15     : rgba(245, 245, 242, 0.15);
+  --white-20     : rgba(245, 245, 242, 0.20);
+  --white-30     : rgba(245, 245, 242, 0.30);
+  --white-40     : rgba(245, 245, 242, 0.40);
+  --white-60     : rgba(245, 245, 242, 0.60);
+  --white-80     : rgba(245, 245, 242, 0.80);
+
+  --black-80     : rgba(18, 18, 18, 0.80);
+  --black-90     : rgba(18, 18, 18, 0.90);
+  --black-95     : rgba(18, 18, 18, 0.95);
+
+  /* ─────────────────────────────────────────────────────────
+     3. TYPOGRAPHY
+     ──────────────────────────────────────────────────────── */
+
+  /* Font stacks */
+  --font-display : 'Playfair Display', 'Georgia', serif;
+  --font-body    : 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono    : 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Fluid type scale — clamp(min, preferred, max) */
+  --text-2xs   : clamp(0.625rem,  1.2vw, 0.6875rem);  /* 10–11px */
+  --text-xs    : clamp(0.75rem,   1.4vw, 0.8125rem);   /* 12–13px */
+  --text-sm    : clamp(0.8125rem, 1.6vw, 0.9375rem);   /* 13–15px */
+  --text-base  : clamp(0.9375rem, 1.8vw, 1rem);        /* 15–16px */
+  --text-md    : clamp(1rem,      2vw,   1.125rem);     /* 16–18px */
+  --text-lg    : clamp(1.125rem,  2.2vw, 1.25rem);      /* 18–20px */
+  --text-xl    : clamp(1.25rem,   2.5vw, 1.5rem);       /* 20–24px */
+  --text-2xl   : clamp(1.5rem,    3vw,   2rem);         /* 24–32px */
+  --text-3xl   : clamp(1.875rem,  4vw,   2.5rem);       /* 30–40px */
+  --text-4xl   : clamp(2.25rem,   5vw,   3rem);         /* 36–48px */
+  --text-5xl   : clamp(2.75rem,   6vw,   4rem);         /* 44–64px */
+  --text-6xl   : clamp(3.25rem,   7.5vw, 5rem);         /* 52–80px */
+  --text-7xl   : clamp(3.75rem,   9vw,   6rem);         /* 60–96px */
+  --text-8xl   : clamp(4.5rem,    11vw,  8rem);         /* 72–128px */
+
+  /* Font weights */
+  --fw-thin       : 100;
+  --fw-light      : 300;
+  --fw-regular    : 400;
+  --fw-medium     : 500;
+  --fw-semibold   : 600;
+  --fw-bold       : 700;
+  --fw-extrabold  : 800;
+  --fw-black      : 900;
+
+  /* Line heights */
+  --lh-none     : 1;
+  --lh-tighter  : 1.05;
+  --lh-tight    : 1.15;
+  --lh-snug     : 1.3;
+  --lh-normal   : 1.5;
+  --lh-relaxed  : 1.65;
+  --lh-loose    : 1.85;
+  --lh-spacious : 2;
+
+  /* Letter spacing */
+  --ls-tighter   : -0.04em;
+  --ls-tight     : -0.02em;
+  --ls-normal    : 0em;
+  --ls-wide      : 0.04em;
+  --ls-wider     : 0.08em;
+  --ls-widest    : 0.16em;
+
+  /* ─────────────────────────────────────────────────────────
+     4. SPACING SCALE  (4px base unit)
+     ──────────────────────────────────────────────────────── */
+
+  --space-px  : 1px;
+  --space-0   : 0;
+  --space-1   : 0.25rem;    /*  4px */
+  --space-2   : 0.5rem;     /*  8px */
+  --space-3   : 0.75rem;    /* 12px */
+  --space-4   : 1rem;       /* 16px */
+  --space-5   : 1.25rem;    /* 20px */
+  --space-6   : 1.5rem;     /* 24px */
+  --space-7   : 1.75rem;    /* 28px */
+  --space-8   : 2rem;       /* 32px */
+  --space-9   : 2.25rem;    /* 36px */
+  --space-10  : 2.5rem;     /* 40px */
+  --space-11  : 2.75rem;    /* 44px */
+  --space-12  : 3rem;       /* 48px */
+  --space-14  : 3.5rem;     /* 56px */
+  --space-16  : 4rem;       /* 64px */
+  --space-18  : 4.5rem;     /* 72px */
+  --space-20  : 5rem;       /* 80px */
+  --space-24  : 6rem;       /* 96px */
+  --space-28  : 7rem;       /* 112px */
+  --space-32  : 8rem;       /* 128px */
+  --space-36  : 9rem;       /* 144px */
+  --space-40  : 10rem;      /* 160px */
+  --space-48  : 12rem;      /* 192px */
+  --space-56  : 14rem;      /* 224px */
+  --space-64  : 16rem;      /* 256px */
+
+  /* Fluid section padding */
+  --section-sm   : clamp(4rem,  7vw,  6rem);
+  --section-md   : clamp(5rem,  8vw,  8rem);
+  --section-lg   : clamp(6rem, 10vw, 10rem);
+  --section-xl   : clamp(7rem, 12vw, 14rem);
+
+  /* ─────────────────────────────────────────────────────────
+     5. BORDER RADIUS
+     ──────────────────────────────────────────────────────── */
+
+  --radius-none  : 0;
+  --radius-xs    : 3px;
+  --radius-sm    : 6px;
+  --radius-md    : 10px;
+  --radius-lg    : 14px;
+  --radius-xl    : 18px;
+  --radius-2xl   : 24px;
+  --radius-3xl   : 32px;
+  --radius-4xl   : 40px;
+  --radius-full  : 9999px;
+
+  /* ─────────────────────────────────────────────────────────
+     6. SHADOWS
+     ──────────────────────────────────────────────────────── */
+
+  --shadow-xs    : 0 1px 2px   rgba(0, 0, 0, 0.35);
+  --shadow-sm    : 0 2px 6px   rgba(0, 0, 0, 0.40);
+  --shadow-md    : 0 4px 16px  rgba(0, 0, 0, 0.45);
+  --shadow-lg    : 0 8px 32px  rgba(0, 0, 0, 0.55);
+  --shadow-xl    : 0 16px 64px rgba(0, 0, 0, 0.65);
+  --shadow-2xl   : 0 24px 80px rgba(0, 0, 0, 0.70);
+
+  --shadow-violet-sm : 0 4px 16px  rgba(108, 99, 255, 0.25);
+  --shadow-violet-md : 0 8px 32px  rgba(108, 99, 255, 0.30);
+  --shadow-violet-lg : 0 16px 48px rgba(108, 99, 255, 0.35);
+  --shadow-glow      : 0 0 40px    rgba(108, 99, 255, 0.20),
+                       0 0 80px    rgba(108, 99, 255, 0.10);
+  --shadow-glow-lg   : 0 0 60px    rgba(108, 99, 255, 0.30),
+                       0 0 120px   rgba(108, 99, 255, 0.15);
+
+  --shadow-inset     : inset 0 1px 0 rgba(245, 245, 242, 0.05);
+  --shadow-card      : 0 1px 0 rgba(245, 245, 242, 0.04) inset,
+                       0 8px 32px rgba(0, 0, 0, 0.50);
+
+  /* ─────────────────────────────────────────────────────────
+     7. TRANSITIONS & EASINGS
+     ──────────────────────────────────────────────────────── */
+
+  --ease-default  : cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-in       : cubic-bezier(0.4, 0, 1, 1);
+  --ease-out      : cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out   : cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring   : cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce   : cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-expo-out : cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-expo-in  : cubic-bezier(0.7, 0, 0.84, 0);
+
+  --duration-75   : 75ms;
+  --duration-100  : 100ms;
+  --duration-150  : 150ms;
+  --duration-200  : 200ms;
+  --duration-300  : 300ms;
+  --duration-400  : 400ms;
+  --duration-500  : 500ms;
+  --duration-700  : 700ms;
+  --duration-1000 : 1000ms;
+
+  --transition-colors    : color var(--duration-200) var(--ease-out),
+                           background-color var(--duration-200) var(--ease-out),
+                           border-color var(--duration-200) var(--ease-out);
+  --transition-transform : transform var(--duration-300) var(--ease-expo-out);
+  --transition-shadow    : box-shadow var(--duration-300) var(--ease-out);
+  --transition-opacity   : opacity var(--duration-200) var(--ease-out);
+  --transition-all       : all var(--duration-300) var(--ease-expo-out);
+  --transition-smooth    : all var(--duration-400) var(--ease-expo-out);
+
+  /* ─────────────────────────────────────────────────────────
+     8. LAYOUT
+     ──────────────────────────────────────────────────────── */
+
+  --container-xs  : 480px;
+  --container-sm  : 640px;
+  --container-md  : 768px;
+  --container-lg  : 1024px;
+  --container-xl  : 1280px;
+  --container-2xl : 1400px;
+  --container-pad : clamp(1rem, 4vw, 2rem);
+
+  --nav-height    : 72px;
+  --nav-height-sm : 60px;
+
+  /* Breakpoints (for reference — use in media queries) */
+  --bp-xs  : 375px;
+  --bp-sm  : 640px;
+  --bp-md  : 768px;
+  --bp-lg  : 1024px;
+  --bp-xl  : 1280px;
+  --bp-2xl : 1536px;
+
+  /* ─────────────────────────────────────────────────────────
+     9. Z-INDEX STACK
+     ──────────────────────────────────────────────────────── */
+
+  --z-behind   : -1;
+  --z-base     :  0;
+  --z-raised   :  10;
+  --z-dropdown :  100;
+  --z-sticky   :  200;
+  --z-overlay  :  300;
+  --z-modal    :  400;
+  --z-toast    :  500;
+  --z-tooltip  :  600;
+  --z-top      :  9999;
+
+  /* ─────────────────────────────────────────────────────────
+     10. COMPONENT TOKENS
+     ──────────────────────────────────────────────────────── */
+
+  /* Buttons */
+  --btn-height-sm  : 36px;
+  --btn-height-md  : 48px;
+  --btn-height-lg  : 56px;
+  --btn-height-xl  : 64px;
+  --btn-px-sm      : 1.25rem;
+  --btn-px-md      : 1.75rem;
+  --btn-px-lg      : 2.25rem;
+  --btn-px-xl      : 2.75rem;
+  --btn-font-sm    : var(--text-xs);
+  --btn-font-md    : var(--text-sm);
+  --btn-font-lg    : var(--text-base);
+  --btn-font-xl    : var(--text-md);
+  --btn-radius     : var(--radius-full);
+  --btn-fw         : var(--fw-semibold);
+  --btn-ls         : 0.02em;
+
+  /* Cards */
+  --card-radius    : var(--radius-2xl);
+  --card-padding   : var(--space-6);
+  --card-border    : 1px solid var(--border-subtle);
+  --card-bg        : var(--bg-raised);
+  --card-shadow    : var(--shadow-card);
+
+  /* Inputs */
+  --input-height   : 52px;
+  --input-px       : 1.25rem;
+  --input-radius   : var(--radius-lg);
+  --input-bg       : var(--bg-input);
+  --input-border   : 1px solid var(--border-default);
+  --input-font     : var(--text-base);
+
+  /* Nav */
+  --nav-bg         : transparent;
+  --nav-bg-scrolled: rgba(18, 18, 18, 0.92);
+
+  /* Badge */
+  --badge-radius   : var(--radius-full);
+  --badge-px       : 0.875rem;
+  --badge-py       : 0.3125rem;
+}
