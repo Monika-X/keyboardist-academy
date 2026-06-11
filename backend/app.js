@@ -60,7 +60,7 @@ app.use(
         imgSrc: ["'self'", 'data:', 'blob:', '*'],
         scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
         scriptSrcAttr: ["'unsafe-inline'"],
-        connectSrc: ["'self'", "http://localhost:5000", "http://127.0.0.1:5000"],
+        connectSrc: ["'self'", "http://localhost:5000", "http://127.0.0.1:5000", "https://*.onrender.com"],
       },
     },
     crossOriginEmbedderPolicy: false,
@@ -69,14 +69,30 @@ app.use(
 
 // ── CORS ─────────────────────────────────────────────────────
 const corsOptions = {
-  origin: [
-    'http://127.0.0.1:5500',
-    'http://localhost:5500',
-    'http://127.0.0.1:5000',
-    'http://localhost:5000',
-    'http://127.0.0.1:3000',
-    'http://localhost:3000',
-  ],
+  origin: (origin, callback) => {
+    // Allow same-origin requests (e.g. static files served from this server)
+    if (!origin) return callback(null, true);
+
+    const allowedOrigins = [
+      'http://127.0.0.1:5500',
+      'http://localhost:5500',
+      'http://127.0.0.1:5000',
+      'http://localhost:5000',
+      'http://127.0.0.1:3000',
+      'http://localhost:3000',
+    ];
+
+    const isAllowed =
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.onrender.com') ||
+      (process.env.ALLOWED_ORIGINS && process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim()).includes(origin));
+
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
