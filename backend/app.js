@@ -46,6 +46,7 @@ const galleryRoutes = require('./routes/galleryRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const testimonialRoutes = require('./routes/testimonialRoutes');
 const settingRoutes = require('./routes/settingRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 
@@ -179,8 +180,22 @@ const mongoose = require('mongoose');
 app.use('/api/v1', (req, res, next) => {
   // Allow health check through always
   if (req.path === '/health') return next();
+
   // ReadyState: 0=disconnected, 1=connected, 2=connecting, 3=disconnecting
-  if (mongoose.connection.readyState !== 1) {
+  if (mongoose.connection.readyState === 0) {
+    console.log('🔄 Mongoose disconnected. Triggering background reconnection...');
+    mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS   : 10000,
+      socketTimeoutMS            : 45000,
+      tls                        : true,
+      tlsAllowInvalidCertificates: true,
+      tlsAllowInvalidHostnames   : true,
+      retryWrites                : true,
+    }).catch(err => console.error('Mongoose reconnect trigger failed:', err.message));
+  }
+
+  // Allow state 1 (connected) and state 2 (connecting) because mongoose buffers commands and will execute them once connected.
+  if (mongoose.connection.readyState !== 1 && mongoose.connection.readyState !== 2) {
     return res.status(503).json({
       status: 'error',
       message: 'Database not connected. Please check MongoDB Atlas IP whitelist and try again shortly.'
@@ -204,6 +219,7 @@ app.use('/api/v1/gallery', galleryRoutes);
 app.use('/api/v1/events', eventRoutes);
 app.use('/api/v1/testimonials', testimonialRoutes);
 app.use('/api/v1/settings', settingRoutes);
+app.use('/api/v1/upload', uploadRoutes);
 
 // ── SPA fallback — serve index.html for non-API routes ───────
 app.get('*', (_req, res) => {

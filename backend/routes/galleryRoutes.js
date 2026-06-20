@@ -11,6 +11,7 @@ const express = require('express');
 const router = express.Router();
 const galleryCtrl = require('../controllers/galleryController');
 const { protect, authorize } = require('../middleware/auth');
+const upload = require('../middleware/upload');
 
 // Public routes
 router.get('/', galleryCtrl.getAllGalleryItems);
@@ -20,9 +21,9 @@ router.get('/:id', galleryCtrl.getGalleryItem);
 router.use(protect);
 router.use(authorize('admin'));
 
-router.post('/', galleryCtrl.createGalleryItem);
+router.post('/', upload.single('image'), galleryCtrl.createGalleryItem);
 router.route('/:id')
-  .patch(galleryCtrl.updateGalleryItem)
+  .patch(upload.single('image'), galleryCtrl.updateGalleryItem)
   .delete(galleryCtrl.deleteGalleryItem);
 
 module.exports = router;

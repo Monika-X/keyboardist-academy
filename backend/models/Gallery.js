@@ -20,6 +20,9 @@ const gallerySchema = new mongoose.Schema(
       type: String,
       required: [true, 'Image URL is required.']
     },
+    publicId: {
+      type: String
+    },
     category: {
       type: String,
       required: [true, 'Category is required.'],
@@ -28,6 +31,10 @@ const gallerySchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true
+    },
+    isPublished: {
+      type: Boolean,
+      default: true
     }
   },
   { timestamps: true }

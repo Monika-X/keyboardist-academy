@@ -36,10 +36,18 @@ const handleJWTError = () =>
 const handleJWTExpiredError = () =>
   new AppError('Your session has expired. Please log in again.', 401);
 
+// ── Handle Multer errors ──────────────────────────────────────
+const handleMulterError = (err) => {
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    return new AppError('File too large. Maximum size allowed is 5MB.', 400);
+  }
+  return new AppError(err.message || 'Image upload failed.', 400);
+};
+
 // ── Send detailed error in development ───────────────────────
 const sendErrorDev = (err, res) =>
   res.status(err.statusCode).json({
-    status     : err.status,
+    success    : false,
     error      : err,
     message    : err.message,
     stack      : err.stack,
@@ -50,14 +58,14 @@ const sendErrorProd = (err, res) => {
   if (err.isOperational) {
     // Trusted, operational error — safe to expose details
     return res.status(err.statusCode).json({
-      status : err.status,
+      success: false,
       message: err.message,
     });
   }
   // Unknown / programming error — don't leak details
   console.error('💥 UNHANDLED ERROR:', err);
   return res.status(500).json({
-    status : 'error',
+    success: false,
     message: 'Something went wrong. Please try again later.',
   });
 };
@@ -78,6 +86,7 @@ const errorHandler = (err, req, res, _next) => {
     if (error.name  === 'ValidationError')        error = handleValidationErrorDB(error);
     if (error.name  === 'JsonWebTokenError')      error = handleJWTError();
     if (error.name  === 'TokenExpiredError')      error = handleJWTExpiredError();
+    if (error.name  === 'MulterError' || error.message?.includes('format')) error = handleMulterError(error);
 
     sendErrorProd(error, res);
   }

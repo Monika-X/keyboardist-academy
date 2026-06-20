@@ -11,6 +11,7 @@ const Course     = require('../models/Course');
 const AppError   = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const ApiFeatures = require('../utils/ApiFeatures');
+const cloudinaryService = require('../services/cloudinaryService');
 
 // ── GET /api/v1/courses ──────────────────────────────────────
 exports.getAllCourses = catchAsync(async (req, res) => {
@@ -65,7 +66,23 @@ exports.getCourse = catchAsync(async (req, res, next) => {
 // ── POST /api/v1/courses  (Instructor / Admin) ───────────────
 exports.createCourse = catchAsync(async (req, res) => {
   req.body.instructor = req.user.id;
-  const course = await Course.create(req.body);
+  
+  if (req.file) {
+    const uploadResult = await cloudinaryService.uploadImage(req.file.buffer);
+    req.body.imageUrl = uploadResult.imageUrl;
+    req.body.publicId = uploadResult.publicId;
+  }
+
+  let course;
+  try {
+    course = await Course.create(req.body);
+  } catch (err) {
+    if (req.file && req.body.publicId) {
+      await cloudinaryService.deleteImage(req.body.publicId);
+    }
+    return next(err);
+  }
+
   res.status(201).json({ status: 'success', data: { course } });
 });
 
@@ -75,19 +92,47 @@ exports.updateCourse = catchAsync(async (req, res, next) => {
     ? { _id: req.params.id }
     : { _id: req.params.id, instructor: req.user.id };
 
-  const course = await Course.findOneAndUpdate(
-    query,
-    req.body,
-    { new: true, runValidators: true }
-  );
+  let course = await Course.findOne(query);
   if (!course) return next(new AppError('Course not found or you are not authorized.', 404));
+
+  const oldPublicId = course.publicId;
+
+  if (req.file) {
+    const uploadResult = await cloudinaryService.uploadImage(req.file.buffer);
+    req.body.imageUrl = uploadResult.imageUrl;
+    req.body.publicId = uploadResult.publicId;
+  }
+
+  try {
+    course = await Course.findByIdAndUpdate(
+      course._id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (req.file && oldPublicId) {
+      await cloudinaryService.deleteImage(oldPublicId);
+    }
+  } catch (err) {
+    if (req.file && req.body.publicId) {
+      await cloudinaryService.deleteImage(req.body.publicId);
+    }
+    return next(err);
+  }
+
   res.status(200).json({ status: 'success', data: { course } });
 });
 
 // ── DELETE /api/v1/courses/:id  (Admin) ─────────────────────
 exports.deleteCourse = catchAsync(async (req, res, next) => {
-  const course = await Course.findByIdAndDelete(req.params.id);
+  const course = await Course.findById(req.params.id);
   if (!course) return next(new AppError('Course not found.', 404));
+
+  const publicIdToDelete = course.publicId;
+  await course.deleteOne();
+  if (publicIdToDelete) {
+    await cloudinaryService.deleteImage(publicIdToDelete);
+  }
   res.status(204).json({ status: 'success', data: null });
 });
 

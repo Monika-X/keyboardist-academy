@@ -12,6 +12,7 @@ const router  = express.Router({ mergeParams: true });
 
 const courseCtrl = require('../controllers/courseController');
 const { protect, authorize } = require('../middleware/auth');
+const upload = require('../middleware/upload');
 
 // ── Public ────────────────────────────────────────────────────
 router.get('/featured', courseCtrl.getFeaturedCourses);
@@ -21,10 +22,10 @@ router.get('/:slug',    courseCtrl.getCourse);
 
 // ── Protected: Instructor / Admin ────────────────────────────
 router.use(protect);
-router.post('/', authorize('instructor', 'admin'), courseCtrl.createCourse);
+router.post('/', authorize('instructor', 'admin'), upload.single('image'), courseCtrl.createCourse);
 router
   .route('/:id')
-  .patch (authorize('instructor', 'admin'), courseCtrl.updateCourse)
+  .patch (authorize('instructor', 'admin'), upload.single('image'), courseCtrl.updateCourse)
   .delete(authorize('admin'),               courseCtrl.deleteCourse);
 
 module.exports = router;

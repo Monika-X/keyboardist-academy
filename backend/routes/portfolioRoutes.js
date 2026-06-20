@@ -11,6 +11,7 @@ const express = require('express');
 const router = express.Router();
 const portfolioCtrl = require('../controllers/portfolioController');
 const { protect, authorize } = require('../middleware/auth');
+const upload = require('../middleware/upload');
 
 // Public routes
 router.get('/', portfolioCtrl.getAllPortfolios);
@@ -20,9 +21,9 @@ router.get('/:id', portfolioCtrl.getPortfolio);
 router.use(protect);
 router.use(authorize('admin'));
 
-router.post('/', portfolioCtrl.createPortfolio);
+router.post('/', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'mediaFile', maxCount: 1 }]), portfolioCtrl.createPortfolio);
 router.route('/:id')
-  .patch(portfolioCtrl.updatePortfolio)
+  .patch(upload.fields([{ name: 'image', maxCount: 1 }, { name: 'mediaFile', maxCount: 1 }]), portfolioCtrl.updatePortfolio)
   .delete(portfolioCtrl.deletePortfolio);
 
 module.exports = router;

@@ -25,15 +25,22 @@ const testimonialSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Testimonial feedback text is required.']
     },
-    avatar: {
+    imageUrl: {
       type: String,
       default: 'default-avatar.webp'
+    },
+    publicId: {
+      type: String
     },
     rating: {
       type: Number,
       min: [1, 'Rating must be at least 1.'],
       max: [5, 'Rating cannot exceed 5.'],
       default: 5
+    },
+    isPublished: {
+      type: Boolean,
+      default: true
     }
   },
   { timestamps: true }

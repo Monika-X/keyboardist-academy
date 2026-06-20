@@ -20,6 +20,9 @@ const settingSchema = new mongoose.Schema(
     value: {
       type: mongoose.Schema.Types.Mixed
     },
+    publicId: {
+      type: String
+    },
     description: {
       type: String,
       trim: true

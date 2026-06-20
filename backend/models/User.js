@@ -61,9 +61,12 @@ const userSchema = new mongoose.Schema(
     passwordChangedAt  : Date,
 
     // ── Profile ────────────────────────────────────────────
-    avatar: {
+    imageUrl: {
       type   : String,
       default: 'default-avatar.webp',
+    },
+    publicId: {
+      type: String,
     },
     bio: {
       type     : String,
@@ -95,7 +98,6 @@ const userSchema = new mongoose.Schema(
 );
 
 // ── Indexes ──────────────────────────────────────────────────
-userSchema.index({ email: 1 });
 userSchema.index({ role: 1 });
 userSchema.index({ createdAt: -1 });
 

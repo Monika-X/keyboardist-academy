@@ -62,6 +62,9 @@ Router.register('/faq', async () => {
       .faq-trigger-icon {
         width: 24px;
         height: 24px;
+        min-width: 24px;
+        min-height: 24px;
+        flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -101,10 +104,10 @@ Router.register('/faq', async () => {
     </style>
 
     <!-- Hero -->
-    <section class="section section--glow relative" style="padding-top: calc(var(--section-md) + 2rem);">
+    <section class="section  relative" style="padding-top: calc(var(--section-md) + 2rem);">
       <div class="container text-center reveal">
         <span class="eyebrow">Assistance</span>
-        <h1 class="display-lg text-gradient mb-6" style="font-size: clamp(var(--text-2xl), 6vw, var(--text-6xl)); line-height: 1.15;">
+        <h1 class="display-lg text-primary mb-6" style="font-size: clamp(var(--text-2xl), 6vw, var(--text-6xl)); line-height: 1.15;">
           Frequently Asked Questions
         </h1>
         <p class="body-lg text-secondary mx-auto mb-12" style="max-width: 700px; font-size: clamp(var(--text-sm), 2vw, var(--text-base));">
@@ -156,7 +159,7 @@ Router.register('/faq', async () => {
             <div class="faq-collapse">
               <div class="faq-content-inner">
                 <div class="faq-body">
-                  To ensure that every student receives dedicated, tactile instruction from our faculty, we limit all physical studio classes in Vienna to a maximum of 6 students per session.
+                  To ensure that every student receives dedicated, tactile instruction from our faculty, we limit all physical studio classes in Avadi, Chennai to a maximum of 6 students per session.
                 </div>
               </div>
             </div>
@@ -186,10 +189,30 @@ Router.register('/faq', async () => {
             <div class="faq-collapse">
               <div class="faq-content-inner">
                 <div class="faq-body">
-                  We prepare students for official certifications including the Associated Board of the Royal Schools of Music (ABRSM) and Trinity College London examinations, alongside our proprietary Academy Performance Diplomas.
+                  We prepare students for standard keyboard examinations and performance grade assessments, alongside our proprietary Academy Performance Diplomas.
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ADMISSIONS & ACADEMY POLICIES -->
+    <section class="section border-bottom">
+      <div class="container">
+        <div class="section-header section-header--center">
+          <span class="eyebrow">Policies</span>
+          <h2 class="section-header__title">Admissions & Registration Guidelines</h2>
+        </div>
+        <div class="grid grid-2" style="gap: clamp(var(--sp-6), 6vw, var(--sp-12));">
+          <div class="card p-6 border bg-overlay">
+            <h3 class="h6 text-primary mb-2">Flexible Batch Transfers</h3>
+            <p class="body-xs text-secondary">Offline students can request batch transfers based on slot availability by contacting our coordinator. Online students can transition to offline batches if seats open up.</p>
+          </div>
+          <div class="card p-6 border bg-overlay">
+            <h3 class="h6 text-primary mb-2">Portal Access</h3>
+            <p class="body-xs text-secondary">All registered students receive lifetime access to their student portal dashboard, lesson materials, progress logs, and syllabus updates.</p>
           </div>
         </div>
       </div>
@@ -199,7 +222,7 @@ Router.register('/faq', async () => {
     <section class="section">
       <div class="container text-center py-8 reveal">
         <span class="eyebrow">Support</span>
-        <h2 class="display-md text-white mb-6" style="font-size: clamp(var(--text-xl), 5vw, var(--text-4xl));">Still Have Questions?</h2>
+        <h2 class="display-md text-primary mb-6" style="font-size: clamp(var(--text-xl), 5vw, var(--text-4xl));">Still Have Questions?</h2>
         <p class="body-md text-secondary mb-12 mx-auto" style="max-width: 600px;">
           Send us a message directly and our customer support team will reply within 24 hours.
         </p>

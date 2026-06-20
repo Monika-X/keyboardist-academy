@@ -13,6 +13,7 @@ const User       = require('../models/User');
 const AppError   = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const ApiFeatures = require('../utils/ApiFeatures');
+const cloudinaryService = require('../services/cloudinaryService');
 
 // ── Helpers ───────────────────────────────────────────────────
 const filterObj = (obj, ...allowed) => {
@@ -59,33 +60,82 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 
   const filtered = filterObj(req.body, 'firstName', 'lastName', 'phone', 'bio', 'socialLinks');
 
-  const user = await User.findByIdAndUpdate(req.user.id, filtered, {
-    new           : true,
-    runValidators : true,
-  });
+  let oldPublicId;
+  if (req.file) {
+    const currentUser = await User.findById(req.user.id);
+    oldPublicId = currentUser.publicId;
+    const uploadResult = await cloudinaryService.uploadImage(req.file.buffer);
+    filtered.imageUrl = uploadResult.imageUrl;
+    filtered.publicId = uploadResult.publicId;
+  }
 
-  res.status(200).json({ status: 'success', data: { user } });
+  try {
+    const user = await User.findByIdAndUpdate(req.user.id, filtered, {
+      new           : true,
+      runValidators : true,
+    });
+    if (req.file && oldPublicId) {
+      await cloudinaryService.deleteImage(oldPublicId);
+    }
+    res.status(200).json({ status: 'success', data: { user } });
+  } catch (err) {
+    if (req.file && filtered.publicId) {
+      await cloudinaryService.deleteImage(filtered.publicId);
+    }
+    return next(err);
+  }
 });
 
 // ── DELETE /api/v1/users/delete-me  (Logged-in user) ────────
 exports.deleteMe = catchAsync(async (req, res) => {
-  await User.findByIdAndUpdate(req.user.id, { isActive: false });
+  const user = await User.findById(req.user.id);
+  const publicIdToDelete = user ? user.publicId : null;
+  await User.findByIdAndUpdate(req.user.id, { isActive: false, publicId: null, imageUrl: 'default-avatar.webp' });
+  if (publicIdToDelete) {
+    await cloudinaryService.deleteImage(publicIdToDelete);
+  }
   res.status(204).json({ status: 'success', data: null });
 });
 
 // ── PATCH /api/v1/users/:id  (Admin) ────────────────────────
 exports.updateUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new          : true,
-    runValidators: true,
-  });
+  let user = await User.findById(req.params.id);
   if (!user) return next(new AppError('No user found with that ID.', 404));
-  res.status(200).json({ status: 'success', data: { user } });
+
+  const oldPublicId = user.publicId;
+
+  if (req.file) {
+    const uploadResult = await cloudinaryService.uploadImage(req.file.buffer);
+    req.body.imageUrl = uploadResult.imageUrl;
+    req.body.publicId = uploadResult.publicId;
+  }
+
+  try {
+    user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new          : true,
+      runValidators: true,
+    });
+    if (req.file && oldPublicId) {
+      await cloudinaryService.deleteImage(oldPublicId);
+    }
+    res.status(200).json({ status: 'success', data: { user } });
+  } catch (err) {
+    if (req.file && req.body.publicId) {
+      await cloudinaryService.deleteImage(req.body.publicId);
+    }
+    return next(err);
+  }
 });
 
 // ── DELETE /api/v1/users/:id  (Admin) ───────────────────────
 exports.deleteUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndDelete(req.params.id);
+  const user = await User.findById(req.params.id);
   if (!user) return next(new AppError('No user found with that ID.', 404));
+
+  const publicIdToDelete = user.publicId;
+  await user.deleteOne();
+  if (publicIdToDelete) {
+    await cloudinaryService.deleteImage(publicIdToDelete);
+  }
   res.status(204).json({ status: 'success', data: null });
 });

@@ -37,3 +37,9 @@ services:
         value: "5000000"
       - key: FILE_UPLOAD_PATH
         value: ./frontend/assets/images/uploads
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

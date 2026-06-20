@@ -32,11 +32,26 @@ const portfolioSchema = new mongoose.Schema(
     },
     mediaUrl: {
       type: String,
-      required: [true, 'Media URL is required.']
+      default: ''
     },
-    thumbnail: {
+    imageUrl: {
       type: String,
       default: 'default-portfolio.webp'
+    },
+    publicId: {
+      type: String
+    },
+    mediaPublicId: {
+      type: String
+    },
+    type: {
+      type: String,
+      enum: ['image', 'video', 'audio'],
+      default: 'image'
+    },
+    isPublished: {
+      type: Boolean,
+      default: true
     }
   },
   { timestamps: true }

@@ -12,12 +12,13 @@ const router  = express.Router();
 
 const userCtrl = require('../controllers/userController');
 const { protect, authorize } = require('../middleware/auth');
+const upload = require('../middleware/upload');
 
 // All routes require authentication
 router.use(protect);
 
 // ── Current user ──────────────────────────────────────────────
-router.patch('/update-me',  userCtrl.updateMe);
+router.patch('/update-me', upload.single('image'), userCtrl.updateMe);
 router.delete('/delete-me', userCtrl.deleteMe);
 
 // ── Admin-only ────────────────────────────────────────────────
@@ -27,7 +28,7 @@ router.route('/')
 
 router.route('/:id')
   .get(userCtrl.getUser)
-  .patch(userCtrl.updateUser)
+  .patch(upload.single('image'), userCtrl.updateUser)
   .delete(userCtrl.deleteUser);
 
 module.exports = router;

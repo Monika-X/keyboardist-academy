@@ -22,11 +22,10 @@ const Router = (() => {
   /** Navigate programmatically. */
   const navigate = (path, replace = false) => {
     if (replace) {
-      history.replaceState(null, '', path);
+      window.location.replace('#' + path);
     } else {
-      history.pushState(null, '', path);
+      window.location.hash = path;
     }
-    _resolve(path);
   };
 
   /** Match path including dynamic segments (:param). */
@@ -47,7 +46,13 @@ const Router = (() => {
 
   /** Resolve and render a path. */
   const _resolve = async (path) => {
-    const cleanPath = path.split('?')[0];
+    let cleanPath = path.split('?')[0];
+
+    // Map common dev server paths to root
+    if (cleanPath === '/frontend/' || cleanPath === '/frontend' || cleanPath === '/frontend/index.html' || cleanPath === '/index.html') {
+      cleanPath = '/';
+    }
+
     const matched   = _matchRoute(cleanPath);
 
     const app = document.getElementById('app');
@@ -55,11 +60,12 @@ const Router = (() => {
 
     if (!matched) {
       app.innerHTML = `
-        <div class="page-wrapper" style="display:flex;align-items:center;justify-content:center;min-height:100vh;">
-          <div style="text-align:center;">
-            <h1 class="display-md text-gradient">404</h1>
-            <p class="body-lg text-white-60 mt-4">Page not found.</p>
-            <a href="/" class="btn btn--primary mt-8" onclick="Router.navigate('/');return false;">Go Home</a>
+        <div style="display:flex;align-items:center;justify-content:center;min-height:100vh; background-color: var(--bg-base);">
+          <div style="text-align:center; padding: 2rem;">
+            <h1 style="font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; color: var(--violet); margin-bottom: 1rem; line-height: 1;">404</h1>
+            <h2 class="h3" style="color: var(--text-primary); margin-bottom: 1rem;">Page Not Found</h2>
+            <p class="body-md" style="color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 400px; margin-left: auto; margin-right: auto;">The page or curriculum you are looking for doesn't exist or has been moved.</p>
+            <a href="/" class="btn btn--primary" onclick="Router.navigate('/');return false;">Return Home</a>
           </div>
         </div>`;
       return;
@@ -88,7 +94,7 @@ const Router = (() => {
 
   /** Start the router — listen to navigation events. */
   const init = () => {
-    window.addEventListener('popstate', () => _resolve(window.location.pathname));
+    window.addEventListener('hashchange', () => _resolve(window.location.hash.substring(1) || '/'));
 
     // Intercept <a> clicks for internal navigation
     document.addEventListener('click', (e) => {
@@ -101,7 +107,7 @@ const Router = (() => {
       }
     });
 
-    _resolve(window.location.pathname);
+    _resolve(window.location.hash.substring(1) || '/');
   };
 
   const getCurrent = () => _current;

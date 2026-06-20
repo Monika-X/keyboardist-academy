@@ -55,6 +55,18 @@ Router.register('/admin', async () => {
   let filterStatus = 'all';
   let sortBy = 'newest';
 
+  const attachPreviewListener = (fileId, previewContainerId, previewImgId) => {
+    const fileInput = document.getElementById(fileId);
+    if (!fileInput) return;
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById(previewImgId).src = URL.createObjectURL(file);
+        document.getElementById(previewContainerId).style.display = 'block';
+      }
+    });
+  };
+
   // Navigation sidebar options
   const sidebarItems = [
     { id: 'overview', name: 'Dashboard Overview', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
@@ -74,18 +86,28 @@ Router.register('/admin', async () => {
   // Render Base Layout
   const renderLayout = () => {
     return `
-      <section class="section section--glow" style="padding-top: calc(var(--nav-h) + 1rem); min-height: 100vh; background: var(--surface-0);">
+      <style>
+        .admin-dashboard-scope,
+        .admin-dashboard-scope h1, .admin-dashboard-scope h2, .admin-dashboard-scope h3, 
+        .admin-dashboard-scope h4, .admin-dashboard-scope h5, .admin-dashboard-scope h6,
+        .admin-dashboard-scope .h1, .admin-dashboard-scope .h2, .admin-dashboard-scope .h3, 
+        .admin-dashboard-scope .h4, .admin-dashboard-scope .h5, .admin-dashboard-scope .h6 {
+          font-family: var(--font-admin) !important;
+        }
+      </style>
+      <div class="admin-dashboard-scope">
+      <section class="section " style="padding-top: calc(var(--nav-h) + 1rem); min-height: 100vh; background: var(--bg-base);">
         <div class="container flex col md:flex-row gap-8 items-start">
           
           <!-- Desktop Sidebar / Mobile Nav Wrapper -->
-          <div class="card p-6 border bg-glass w-full md:w-72 flex-shrink-0" style="border-radius: var(--radius-md); box-shadow: var(--shadow-card);">
+          <div class="card p-6 border bg-overlay w-full md:w-72 flex-shrink-0" style="border-radius: var(--radius-md); box-shadow: var(--shadow-card);">
             <!-- Admin Brand / Header -->
             <div class="flex items-center gap-3 mb-6 pb-4 border-bottom">
-              <div class="flex items-center justify-center bg-tinted text-accent rounded-full" style="width: 44px; height: 44px;">
+              <div class="flex items-center justify-center bg-overlay text-accent rounded-full" style="width: 44px; height: 44px;">
                 <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19V6l12-3v13M6 18c0-.75-.5-1.5-1.5-1.5S3 17.25 3 18s.5 1.5 1.5 1.5S6 18.75 6 18zm12-2c0-.75-.5-1.5-1.5-1.5S15 15.25 15 16s.5 1.5 1.5 1.5S18 16.75 18 16z"/></svg>
               </div>
               <div>
-                <h4 class="body-sm text-white font-bold leading-none">Admin Panel</h4>
+                <h4 class="body-sm text-primary font-bold leading-none">Admin Panel</h4>
                 <span class="text-xs text-tertiary">Keyboardist Academy</span>
               </div>
             </div>
@@ -96,7 +118,8 @@ Router.register('/admin', async () => {
                 <li>
                   <button 
                     id="tab-btn-${mod.id}" 
-                    class="btn w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${currentModule === mod.id ? 'btn--primary' : 'hover:bg-glass text-secondary'}" 
+                    title="${mod.name}"
+                    class="btn w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${currentModule === mod.id ? 'btn--primary' : 'hover:bg-overlay text-secondary'}" 
                     style="border: none; justify-content: flex-start; text-transform: none; font-size: var(--text-sm);"
                   >
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -109,7 +132,8 @@ Router.register('/admin', async () => {
               <li class="mt-4 pt-4 border-top">
                 <button 
                   id="tab-btn-logout" 
-                  class="btn w-full text-left py-3 px-4 rounded-md flex items-center gap-3 hover:bg-glass text-accent transition-all" 
+                  title="Logout"
+                  class="btn w-full text-left py-3 px-4 rounded-md flex items-center gap-3 hover:bg-overlay text-accent transition-all" 
                   style="border: none; justify-content: flex-start; text-transform: none; font-size: var(--text-sm);"
                 >
                   <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
@@ -128,20 +152,47 @@ Router.register('/admin', async () => {
       </section>
 
       <!-- Modal Management Container -->
-      <div id="admin-modal" class="fixed inset-0 bg-black-90 items-center justify-center hidden z-modal" style="display: none;">
-        <div class="card p-8 border bg-glass w-full max-width-md mx-4 overflow-auto max-h-screen" style="border-radius: var(--radius-lg); box-shadow: var(--shadow-xl);">
-          <div class="flex justify-between items-center mb-6 border-bottom pb-4">
-            <h3 class="h4 text-white" id="modal-title">Form Title</h3>
-            <button class="text-tertiary hover:text-white" id="close-modal-btn" style="font-size: 24px; border: none; background: none;">&times;</button>
+      <div id="admin-modal" class="fixed inset-0 bg-black-90 z-modal" style="display: none; align-items: center; justify-content: center; z-index: 9999; padding: 8px; box-sizing: border-box;">
+        <div class="card border bg-overlay w-full" style="display: flex; flex-direction: column; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); max-height: 90vh; overflow: hidden; max-width: min(500px, calc(100vw - 16px)); width: 100%; box-sizing: border-box;">
+          <div class="p-8 pb-4 border-bottom" style="flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; padding: clamp(12px, 4vw, 32px);">
+            <h3 class="h4 text-primary" id="modal-title">Form Title</h3>
+            <button class="text-tertiary hover:text-primary" id="close-modal-btn" style="font-size: 24px; border: none; background: none; cursor: pointer; flex-shrink: 0;">&times;</button>
           </div>
-          <form id="modal-form" class="form flex col gap-6">
-            <div id="modal-form-fields" class="flex col gap-4"></div>
-            <div class="flex gap-4 justify-end mt-4">
-              <button type="button" class="btn btn--outline btn--sm" id="cancel-modal-btn">Cancel</button>
-              <button type="submit" class="btn btn--primary btn--sm" id="submit-modal-btn">Save Changes</button>
-            </div>
-          </form>
+          <div class="p-8 py-4" style="flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: clamp(12px, 4vw, 32px);">
+            <form id="modal-form" class="form" style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div id="modal-form-fields" style="display: flex; flex-direction: column; gap: 1rem; overflow: hidden;"></div>
+              <div class="pt-4 border-top mt-2" style="display: flex; gap: 1rem; justify-content: flex-end; flex-wrap: wrap;">
+                <button type="button" class="btn btn--outline btn--sm" id="cancel-modal-btn">Cancel</button>
+                <button type="submit" class="btn btn--primary btn--sm" id="submit-modal-btn">Save Changes</button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
+
+      <!-- Profile Cropper Modal -->
+      <div id="profile-cropper-modal" class="fixed inset-0 bg-black-90 z-modal" style="display: none; align-items: center; justify-content: center; z-index: 9999; padding: 8px; box-sizing: border-box;">
+        <div class="card border bg-overlay w-full" style="display: flex; flex-direction: column; border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); max-height: 90vh; overflow: hidden; max-width: min(500px, calc(100vw - 16px)); width: 100%; box-sizing: border-box;">
+          <div class="p-8 pb-4 border-bottom" style="flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; padding: clamp(12px, 4vw, 32px);">
+            <h3 class="h4 text-primary">Edit Profile Avatar</h3>
+            <button class="text-tertiary hover:text-primary" id="close-cropper-btn" style="font-size: 24px; border: none; background: none; cursor: pointer; flex-shrink: 0;">&times;</button>
+          </div>
+          <div class="p-8 py-4" style="flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: clamp(12px, 4vw, 32px);">
+            <div style="width: 100%; height: clamp(180px, 40vw, 400px); background: #000; position: relative;">
+              <img id="cropper-image" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;" src="" />
+            </div>
+            <div class="pt-6 mt-6 border-top" style="display: flex; gap: 1rem; justify-content: space-between; flex-wrap: wrap;">
+              <div>
+                <button type="button" class="btn btn--outline btn--sm text-accent" id="remove-profile-img-btn">Remove Image</button>
+              </div>
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button type="button" class="btn btn--outline btn--sm" id="cancel-cropper-btn">Cancel</button>
+                <button type="button" class="btn btn--primary btn--sm" id="save-cropper-btn">Crop & Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       </div>
     `;
   };
@@ -175,7 +226,7 @@ Router.register('/admin', async () => {
         sidebarItems.forEach(m => {
           const b = document.getElementById(`tab-btn-${m.id}`);
           if (b) {
-            b.className = `btn w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${m.id === item.id ? 'btn--primary' : 'hover:bg-glass text-secondary'}`;
+            b.className = `btn w-full text-left py-3 px-4 rounded-md flex items-center gap-3 transition-all ${m.id === item.id ? 'btn--primary' : 'hover:bg-overlay text-secondary'}`;
           }
         });
         currentModule = item.id;
@@ -222,7 +273,7 @@ Router.register('/admin', async () => {
 
   // Dynamic Module router
   const loadPane = async (moduleId) => {
-    mainPane.innerHTML = `<div class="card p-12 text-center border bg-glass">Loading Content Panel...</div>`;
+    mainPane.innerHTML = `<div class="card p-12 text-center border bg-overlay">Loading Content Panel...</div>`;
     try {
       switch (moduleId) {
         case 'overview':
@@ -271,39 +322,21 @@ Router.register('/admin', async () => {
   // Render Filters / Controls header
   const renderControlsHeader = (placeholder = 'Search...') => {
     return `
-      <style>
-        @media (max-width: 576px) {
-          .controls-header {
-            flex-direction: column !important;
-            align-items: stretch !important;
-            padding: var(--sp-3) !important;
-          }
-          .controls-header .controls-dropdowns {
-            width: 100% !important;
-            flex-direction: column !important;
-            gap: var(--sp-2) !important;
-          }
-          .controls-header select {
-            max-width: none !important;
-            width: 100% !important;
-          }
-        }
-      </style>
-      <div class="flex flex-wrap gap-4 items-center justify-between mb-6 card p-4 border bg-glass controls-header" style="border-radius: var(--radius-sm);">
-        <div class="flex-1 min-w-[200px] relative">
-          <input type="text" id="admin-search-input" class="form-input w-full" value="${searchTerm}" placeholder="${placeholder}" style="padding-left: 2.5rem;" />
-          <svg class="absolute text-tertiary" style="left: 12px; top: 12px;" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <div class="flex flex-wrap gap-3 items-center justify-between mb-6 card p-4 border bg-overlay controls-header" style="border-radius: var(--radius-sm);">
+        <div style="flex: 1; min-width: 160px; position: relative;">
+          <input type="text" id="admin-search-input" class="form-input w-full" value="${searchTerm}" placeholder="${placeholder}" style="padding-left: 2.25rem; height: 40px; font-size: var(--text-sm); width: 100%; box-sizing: border-box;" />
+          <svg style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-tertiary);" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         </div>
-        <div class="flex gap-4 controls-dropdowns">
-          <select id="admin-filter-status" class="form-input" style="background: var(--surface-input); max-width: 150px;">
+        <div class="controls-dropdowns" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <select id="admin-filter-status" class="admin-select-ctrl" style="background: var(--surface-input); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); height: 40px; padding: 0 10px; font-size: var(--text-sm); cursor: pointer; min-width: 110px; max-width: 140px; box-sizing: border-box;">
             <option value="all" ${filterStatus === 'all' ? 'selected' : ''}>All Status</option>
             <option value="published" ${filterStatus === 'published' ? 'selected' : ''}>Published</option>
             <option value="unpublished" ${filterStatus === 'unpublished' ? 'selected' : ''}>Unpublished</option>
           </select>
-          <select id="admin-sort-by" class="form-input" style="background: var(--surface-input); max-width: 150px;">
+          <select id="admin-sort-by" class="admin-select-ctrl" style="background: var(--surface-input); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); height: 40px; padding: 0 10px; font-size: var(--text-sm); cursor: pointer; min-width: 90px; max-width: 120px; box-sizing: border-box;">
             <option value="newest" ${sortBy === 'newest' ? 'selected' : ''}>Newest</option>
             <option value="oldest" ${sortBy === 'oldest' ? 'selected' : ''}>Oldest</option>
-            <option value="alphabetical" ${sortBy === 'alphabetical' ? 'selected' : ''}>A-Z Name</option>
+            <option value="alphabetical" ${sortBy === 'alphabetical' ? 'selected' : ''}>A–Z</option>
           </select>
         </div>
       </div>
@@ -368,10 +401,10 @@ Router.register('/admin', async () => {
         }
       </style>
       <!-- Welcome Banner -->
-      <div class="card p-8 border bg-tinted mb-8 flex justify-between items-center admin-welcome" style="border-radius: var(--radius-md);">
+      <div class="card p-8 border bg-overlay mb-8 flex justify-between items-center admin-welcome" style="border-radius: var(--radius-md);">
         <div style="flex: 1; min-width: 0; padding-right: var(--sp-6);">
           <span class="eyebrow">Academy CMS</span>
-          <h2 class="display-sm text-gradient font-bold mt-2">Welcome Back, ${user.firstName || 'Agilan'}!</h2>
+          <h2 class="display-sm text-primary font-bold mt-2">Welcome Back, ${user.firstName || 'Karan'}!</h2>
           <p class="body-sm text-secondary mt-1">Manage public website content, instructors, events, and student Spotlights.</p>
         </div>
         <div class="flex gap-4" style="flex-shrink: 0;">
@@ -380,12 +413,12 @@ Router.register('/admin', async () => {
       </div>
 
       <!-- Statistics Grid -->
-      <h3 class="h5 text-white mb-4">Branding & Catalog Health</h3>
+      <h3 class="h5 text-primary mb-4">Branding & Catalog Health</h3>
       <div class="grid grid-3 sm:grid-2 gap-6 mb-8">
         ${stats.map(stat => `
-          <div class="card p-6 border bg-glass flex col gap-2 hover:scale transition-transform" style="border-radius: var(--radius-md);">
+          <div class="card p-6 border-subtle bg-overlay flex col gap-2 hover:scale transition-transform admin-stat-card" style="border-radius: var(--radius-md); box-shadow: var(--shadow-sm);" style="border-radius: var(--radius-md);">
             <span class="label text-tertiary">${stat.name}</span>
-            <span class="display-sm text-white font-bold leading-none">${stat.value}</span>
+            <span class="display-sm text-primary font-bold leading-none">${stat.value}</span>
             <span class="text-xs text-secondary mt-2">${stat.label}</span>
           </div>
         `).join('')}
@@ -393,8 +426,8 @@ Router.register('/admin', async () => {
 
       <div class="grid grid-hero gap-8">
         <!-- Upcoming Events Widget -->
-        <div class="card p-6 border bg-glass flex col gap-4" style="border-radius: var(--radius-md);">
-          <h4 class="h5 text-white font-semibold flex items-center gap-2">
+        <div class="card p-6 border bg-overlay flex col gap-4" style="border-radius: var(--radius-md);">
+          <h4 class="h5 text-primary font-semibold flex items-center gap-2">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             Upcoming Events Schedule
           </h4>
@@ -402,7 +435,7 @@ Router.register('/admin', async () => {
             ${(eventsRes.data.events || []).slice(0, 3).map(ev => `
               <li class="flex items-center justify-between border-bottom pb-3">
                 <div>
-                  <h5 class="body-sm text-white font-bold">${ev.title}</h5>
+                  <h5 class="body-sm text-primary font-bold">${ev.title}</h5>
                   <span class="text-xs text-secondary">${ev.location} &bull; ${Helpers.formatTime(ev.time)}</span>
                 </div>
                 <span class="text-xs text-accent">${Helpers.formatDate(ev.date)}</span>
@@ -413,8 +446,8 @@ Router.register('/admin', async () => {
         </div>
 
         <!-- Recent Audit Log Trail -->
-        <div class="card p-6 border bg-glass flex col gap-4" style="border-radius: var(--radius-md);">
-          <h4 class="h5 text-white font-semibold flex items-center gap-2">
+        <div class="card p-6 border bg-overlay flex col gap-4" style="border-radius: var(--radius-md);">
+          <h4 class="h5 text-primary font-semibold flex items-center gap-2">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             Recent System Activity
           </h4>
@@ -463,8 +496,8 @@ Router.register('/admin', async () => {
       const tbody = document.getElementById('courses-tbody');
       if (tbody) {
         tbody.innerHTML = items.map(course => `
-          <tr class="border-bottom">
-            <td class="py-3 text-white font-medium">${course.title}</td>
+          <tr class="border-bottom transition-all hover:bg-overlay"">
+            <td class="py-3 text-primary font-medium">${course.title}</td>
             <td class="py-3 text-secondary">${course.category || 'Piano Masterclass'}</td>
             <td class="py-3 text-secondary">${course.level}</td>
             <td class="py-3 text-secondary">${course.price ? Helpers.formatPrice(course.price) : 'Free'}</td>
@@ -509,14 +542,14 @@ Router.register('/admin', async () => {
         }
       </style>
       <div class="flex justify-between items-center mb-6 admin-section-header">
-        <h2 class="h3 text-white">Course Catalog</h2>
+        <h2 class="h3 text-primary">Course Catalog</h2>
         <button id="add-course-btn" class="btn btn--primary btn--sm">Add Course</button>
       </div>
       ${renderControlsHeader('Search courses by title or category...')}
-      <div class="overflow-x-auto card border bg-glass p-6 admin-table-card">
-        <table class="w-full text-left" style="border-collapse: collapse; font-size: var(--text-sm);">
+      <div class="card border bg-overlay p-6 admin-table-card" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <table class="w-full text-left" style="border-collapse: collapse; font-size: var(--text-sm); min-width: 520px;">
           <thead>
-            <tr class="border-bottom text-tertiary">
+            <tr class="border-bottom transition-all hover:bg-overlay" style="color: var(--text-secondary); font-size: var(--text-xs); text-transform: uppercase; font-weight: bold; letter-spacing: 0.05em;">
               <th class="py-3">Course Title</th>
               <th class="py-3">Category</th>
               <th class="py-3">Skill Level</th>
@@ -538,11 +571,11 @@ Router.register('/admin', async () => {
   const getCourseFields = (data = {}) => `
     <div class="form-group">
       <label class="form-label label">Course Title</label>
-      <input type="text" id="c-title" required class="form-input" value="${data.title || ''}" />
+      <input type="text" id="c-title" required class="form-input admin-input" value="${data.title || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Category</label>
-      <select id="c-category" class="form-input" style="background: var(--surface-input);">
+      <select id="c-category" class="form-input admin-input" style="background: var(--surface-input);">
         <option value="Classical Piano" ${data.category === 'Classical Piano' ? 'selected' : ''}>Classical Piano</option>
         <option value="Jazz Keyboard" ${data.category === 'Jazz Keyboard' ? 'selected' : ''}>Jazz Keyboard</option>
         <option value="Contemporary" ${data.category === 'Contemporary' ? 'selected' : ''}>Contemporary</option>
@@ -553,29 +586,29 @@ Router.register('/admin', async () => {
     </div>
     <div class="form-group">
       <label class="form-label label">Description</label>
-      <textarea id="c-desc" required class="form-input" rows="4">${data.description || ''}</textarea>
+      <textarea id="c-desc" required class="form-input admin-input" rows="4">${data.description || ''}</textarea>
     </div>
     <div class="grid grid-2 gap-4">
       <div class="form-group">
         <label class="form-label label">Duration (Mins)</label>
-        <input type="number" id="c-duration" required class="form-input" value="${data.totalDuration || 60}" />
+        <input type="number" id="c-duration" required class="form-input admin-input" value="${data.totalDuration || 60}" />
       </div>
       <div class="form-group">
         <label class="form-label label">Fee / Price (₹)</label>
-        <input type="number" id="c-price" required class="form-input" value="${data.price || 0}" />
+        <input type="number" id="c-price" required class="form-input admin-input" value="${data.price || 0}" />
       </div>
     </div>
     <div class="grid grid-2 gap-4">
       <div class="form-group">
         <label class="form-label label">Mode</label>
-        <select id="c-mode" class="form-input" style="background: var(--surface-input);">
+        <select id="c-mode" class="form-input admin-input" style="background: var(--surface-input);">
           <option value="online">Online</option>
           <option value="offline">Offline</option>
         </select>
       </div>
       <div class="form-group">
         <label class="form-label label">Skill Level</label>
-        <select id="c-level" class="form-input" style="background: var(--surface-input);">
+        <select id="c-level" class="form-input admin-input" style="background: var(--surface-input);">
           <option value="beginner" ${data.level === 'beginner' ? 'selected' : ''}>Beginner</option>
           <option value="intermediate" ${data.level === 'intermediate' ? 'selected' : ''}>Intermediate</option>
           <option value="advanced" ${data.level === 'advanced' ? 'selected' : ''}>Advanced</option>
@@ -583,53 +616,62 @@ Router.register('/admin', async () => {
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label label">Thumbnail Image URL</label>
-      <input type="text" id="c-thumb" class="form-input" value="${data.thumbnail || '/assets/images/default.jpg'}" />
+      <label class="form-label label">Course Image</label>
+      <input type="file" id="c-file" accept="image/*" class="form-input admin-input" />
+      <div id="c-preview-container" class="mt-2" style="display: ${data.imageUrl ? 'block' : 'none'};">
+        <img id="c-preview" src="${data.imageUrl || ''}" style="max-height: 120px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1); object-fit: cover; width: 100%;" class="upload-preview-container" / loading="lazy">
+      </div>
     </div>
     <div class="form-group flex items-center gap-3">
       <input type="checkbox" id="c-published" ${data.isPublished ? 'checked' : ''} style="width: 18px; height: 18px;" />
-      <label for="c-published" class="label text-white cursor-pointer">Publish on public website</label>
+      <label for="c-published" class="label text-primary cursor-pointer">Publish on public website</label>
     </div>
   `;
 
   const triggerAddCourse = () => {
     openModalDialog('Add Course', getCourseFields(), async () => {
-      const payload = {
-        title: document.getElementById('c-title').value,
-        category: document.getElementById('c-category').value,
-        description: document.getElementById('c-desc').value,
-        totalDuration: parseInt(document.getElementById('c-duration').value),
-        price: parseFloat(document.getElementById('c-price').value),
-        level: document.getElementById('c-level').value,
-        thumbnail: document.getElementById('c-thumb').value,
-        isPublished: document.getElementById('c-published').checked
-      };
-      await Api.post('/courses', payload);
-      logAdminActivity(`Course "${payload.title}" was created by admin`);
+      const formData = new FormData();
+      formData.append('title', document.getElementById('c-title').value);
+      formData.append('category', document.getElementById('c-category').value);
+      formData.append('description', document.getElementById('c-desc').value);
+      formData.append('totalDuration', document.getElementById('c-duration').value);
+      formData.append('price', document.getElementById('c-price').value);
+      formData.append('level', document.getElementById('c-level').value);
+      formData.append('isPublished', document.getElementById('c-published').checked);
+
+      const fileInput = document.getElementById('c-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.post('/courses', formData);
+      logAdminActivity(`Course "${formData.get('title')}" was created by admin`);
       Helpers.toast('Course created.');
       displayCourses();
     });
+    attachPreviewListener('c-file', 'c-preview-container', 'c-preview');
   };
 
   const triggerEditCourse = (id, courses) => {
     const course = courses.find(c => c._id === id);
     if (!course) return;
     openModalDialog('Edit Course', getCourseFields(course), async () => {
-      const payload = {
-        title: document.getElementById('c-title').value,
-        category: document.getElementById('c-category').value,
-        description: document.getElementById('c-desc').value,
-        totalDuration: parseInt(document.getElementById('c-duration').value),
-        price: parseFloat(document.getElementById('c-price').value),
-        level: document.getElementById('c-level').value,
-        thumbnail: document.getElementById('c-thumb').value,
-        isPublished: document.getElementById('c-published').checked
-      };
-      await Api.patch(`/courses/${id}`, payload);
-      logAdminActivity(`Course "${payload.title}" was updated by admin`);
+      const formData = new FormData();
+      formData.append('title', document.getElementById('c-title').value);
+      formData.append('category', document.getElementById('c-category').value);
+      formData.append('description', document.getElementById('c-desc').value);
+      formData.append('totalDuration', document.getElementById('c-duration').value);
+      formData.append('price', document.getElementById('c-price').value);
+      formData.append('level', document.getElementById('c-level').value);
+      formData.append('isPublished', document.getElementById('c-published').checked);
+
+      const fileInput = document.getElementById('c-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.patch(`/courses/${id}`, formData);
+      logAdminActivity(`Course "${formData.get('title')}" was updated by admin`);
       Helpers.toast('Course updated.');
       displayCourses();
     });
+    attachPreviewListener('c-file', 'c-preview-container', 'c-preview');
   };
 
   const triggerDeleteCourse = async (id, courses) => {
@@ -657,10 +699,15 @@ Router.register('/admin', async () => {
       const tbody = document.getElementById('faculty-tbody');
       if (tbody) {
         tbody.innerHTML = items.map(f => `
-          <tr class="border-bottom">
-            <td class="py-3 text-white font-medium">${f.name}</td>
+          <tr class="border-bottom transition-all hover:bg-overlay"">
+            <td class="py-3 text-primary font-medium">${f.name}</td>
             <td class="py-3 text-secondary">${f.role}</td>
             <td class="py-3 text-secondary">${(f.specialties || []).join(', ')}</td>
+            <td class="py-3 text-secondary">
+              <span class="badge ${f.isPublished !== false ? 'badge--violet' : 'badge--outline'}">
+                ${f.isPublished !== false ? 'Published' : 'Draft'}
+              </span>
+            </td>
             <td class="py-3 text-right" style="white-space: nowrap;">
               <div class="flex gap-2 justify-end">
                 <button class="btn btn--outline btn--sm edit-fac-btn" data-id="${f._id}">Edit</button>
@@ -681,17 +728,18 @@ Router.register('/admin', async () => {
 
     mainPane.innerHTML = `
       <div class="flex justify-between items-center mb-6">
-        <h2 class="h3 text-white">Faculty profiles</h2>
+        <h2 class="h3 text-primary">Faculty profiles</h2>
         <button id="add-fac-btn" class="btn btn--primary btn--sm">Add Faculty</button>
       </div>
       ${renderControlsHeader('Search faculty by name or role...')}
-      <div class="overflow-x-auto card border bg-glass p-6">
+      <div class="overflow-x-auto card border bg-overlay p-6">
         <table class="w-full text-left" style="border-collapse: collapse; font-size: var(--text-sm);">
           <thead>
-            <tr class="border-bottom text-tertiary">
+            <tr class="border-bottom transition-all hover:bg-overlay" text-secondary text-xs uppercase font-bold tracking-wider">
               <th class="py-3">Name</th>
               <th class="py-3">Role</th>
               <th class="py-3">Specialization</th>
+              <th class="py-3">Status</th>
               <th class="py-3 text-right">Actions</th>
             </tr>
           </thead>
@@ -708,64 +756,79 @@ Router.register('/admin', async () => {
   const getFacultyFields = (data = {}) => `
     <div class="form-group">
       <label class="form-label label">Full Name</label>
-      <input type="text" id="f-name" required class="form-input" value="${data.name || ''}" />
+      <input type="text" id="f-name" required class="form-input admin-input" value="${data.name || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Designation / Role</label>
-      <input type="text" id="f-role" required class="form-input" value="${data.role || ''}" placeholder="Principal Concert Pianist" />
+      <input type="text" id="f-role" required class="form-input admin-input" value="${data.role || ''}" placeholder="Principal Concert Pianist" />
     </div>
     <div class="form-group">
       <label class="form-label label">Experience Years</label>
-      <input type="number" id="f-exp" class="form-input" value="${data.yearsOfExp || 5}" />
+      <input type="number" id="f-exp" class="form-input admin-input" value="${data.yearsOfExp || 5}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Biography</label>
-      <textarea id="f-bio" required class="form-input" rows="3">${data.bio || ''}</textarea>
+      <textarea id="f-bio" required class="form-input admin-input" rows="3">${data.bio || ''}</textarea>
     </div>
     <div class="form-group">
       <label class="form-label label">Specialties (comma separated)</label>
-      <input type="text" id="f-specialties" class="form-input" value="${(data.specialties || []).join(', ')}" />
+      <input type="text" id="f-specialties" class="form-input admin-input" value="${(data.specialties || []).join(', ')}" />
     </div>
     <div class="form-group">
-      <label class="form-label label">Profile Photo Link</label>
-      <input type="text" id="f-photo" class="form-input" value="${data.image || '/assets/images/default.jpg'}" />
+      <label class="form-label label">Upload Profile Photo</label>
+      <input type="file" id="f-file" accept="image/*" class="form-input admin-input" />
+      <div id="f-preview-container" class="mt-2" style="display: ${data.imageUrl ? 'block' : 'none'};">
+        <img id="f-preview" src="${data.imageUrl || ''}" style="max-height: 120px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1); object-fit: cover; width: 100%;" class="upload-preview-container" / loading="lazy">
+      </div>
+    </div>
+    <div class="form-group flex items-center gap-3">
+      <input type="checkbox" id="f-published" ${data.isPublished !== false ? 'checked' : ''} style="width: 18px; height: 18px;" />
+      <label for="f-published" class="label text-primary cursor-pointer">Publish on public website</label>
     </div>
   `;
 
   const triggerAddFaculty = () => {
     openModalDialog('Add Faculty Profile', getFacultyFields(), async () => {
-      const payload = {
-        name: document.getElementById('f-name').value,
-        role: document.getElementById('f-role').value,
-        bio: document.getElementById('f-bio').value,
-        yearsOfExp: parseInt(document.getElementById('f-exp').value),
-        specialties: document.getElementById('f-specialties').value.split(',').map(s => s.trim()).filter(Boolean),
-        image: document.getElementById('f-photo').value
-      };
-      await Api.post('/faculty', payload);
-      logAdminActivity(`Faculty member "${payload.name}" was added by admin`);
+      const formData = new FormData();
+      formData.append('name', document.getElementById('f-name').value);
+      formData.append('role', document.getElementById('f-role').value);
+      formData.append('bio', document.getElementById('f-bio').value);
+      formData.append('yearsOfExp', document.getElementById('f-exp').value);
+      document.getElementById('f-specialties').value.split(',').map(s => s.trim()).filter(Boolean).forEach(s => formData.append('specialties[]', s));
+      formData.append('isPublished', document.getElementById('f-published').checked);
+
+      const fileInput = document.getElementById('f-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.post('/faculty', formData);
+      logAdminActivity(`Faculty member "${formData.get('name')}" was added by admin`);
       Helpers.toast('Faculty profile created.');
       displayFaculty();
     });
+    attachPreviewListener('f-file', 'f-preview-container', 'f-preview');
   };
 
   const triggerEditFaculty = (id, faculty) => {
     const f = faculty.find(item => item._id === id);
     if (!f) return;
     openModalDialog('Edit Faculty Profile', getFacultyFields(f), async () => {
-      const payload = {
-        name: document.getElementById('f-name').value,
-        role: document.getElementById('f-role').value,
-        bio: document.getElementById('f-bio').value,
-        yearsOfExp: parseInt(document.getElementById('f-exp').value),
-        specialties: document.getElementById('f-specialties').value.split(',').map(s => s.trim()).filter(Boolean),
-        image: document.getElementById('f-photo').value
-      };
-      await Api.patch(`/faculty/${id}`, payload);
-      logAdminActivity(`Faculty member "${payload.name}" was updated by admin`);
+      const formData = new FormData();
+      formData.append('name', document.getElementById('f-name').value);
+      formData.append('role', document.getElementById('f-role').value);
+      formData.append('bio', document.getElementById('f-bio').value);
+      formData.append('yearsOfExp', document.getElementById('f-exp').value);
+      document.getElementById('f-specialties').value.split(',').map(s => s.trim()).filter(Boolean).forEach(s => formData.append('specialties[]', s));
+      formData.append('isPublished', document.getElementById('f-published').checked);
+
+      const fileInput = document.getElementById('f-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.patch(`/faculty/${id}`, formData);
+      logAdminActivity(`Faculty member "${formData.get('name')}" was updated by admin`);
       Helpers.toast('Faculty updated successfully.');
       displayFaculty();
     });
+    attachPreviewListener('f-file', 'f-preview-container', 'f-preview');
   };
 
   const triggerDeleteFaculty = async (id, faculty) => {
@@ -793,10 +856,16 @@ Router.register('/admin', async () => {
       const tbody = document.getElementById('portfolios-tbody');
       if (tbody) {
         tbody.innerHTML = items.map(p => `
-          <tr class="border-bottom">
-            <td class="py-3 text-white font-medium">${p.title}</td>
+          <tr class="border-bottom transition-all hover:bg-overlay"">
+            <td class="py-3 text-primary font-medium">${p.title}</td>
             <td class="py-3 text-secondary">${p.studentName}</td>
             <td class="py-3 text-secondary">${p.courseName}</td>
+            <td class="py-3 text-secondary capitalize font-semibold text-accent">${p.type || 'image'}</td>
+            <td class="py-3 text-secondary">
+              <span class="badge ${p.isPublished !== false ? 'badge--violet' : 'badge--outline'}">
+                ${p.isPublished !== false ? 'Published' : 'Draft'}
+              </span>
+            </td>
             <td class="py-3 text-right" style="white-space: nowrap;">
               <div class="flex gap-2 justify-end">
                 <button class="btn btn--outline btn--sm edit-port-btn" data-id="${p._id}">Edit</button>
@@ -817,17 +886,19 @@ Router.register('/admin', async () => {
 
     mainPane.innerHTML = `
       <div class="flex justify-between items-center mb-6">
-        <h2 class="h3 text-white">Student Spotlights</h2>
+        <h2 class="h3 text-primary">Student Spotlights & Audio Highlights</h2>
         <button id="add-port-btn" class="btn btn--primary btn--sm">Add Spotlight</button>
       </div>
       ${renderControlsHeader('Search portfolios by title or performer...')}
-      <div class="overflow-x-auto card border bg-glass p-6">
+      <div class="overflow-x-auto card border bg-overlay p-6">
         <table class="w-full text-left" style="border-collapse: collapse; font-size: var(--text-sm);">
           <thead>
-            <tr class="border-bottom text-tertiary">
+            <tr class="border-bottom transition-all hover:bg-overlay" text-secondary text-xs uppercase font-bold tracking-wider">
               <th class="py-3">Performance Title</th>
               <th class="py-3">Student Performer</th>
               <th class="py-3">Course / Path</th>
+              <th class="py-3">Type</th>
+              <th class="py-3">Status</th>
               <th class="py-3 text-right">Actions</th>
             </tr>
           </thead>
@@ -843,59 +914,141 @@ Router.register('/admin', async () => {
 
   const getPortfolioFields = (data = {}) => `
     <div class="form-group">
-      <label class="form-label label">Recital Title</label>
-      <input type="text" id="p-title" required class="form-input" value="${data.title || ''}" />
+      <label class="form-label label">Recital / Spotlight Title</label>
+      <input type="text" id="p-title" required class="form-input admin-input" value="${data.title || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Student Name</label>
-      <input type="text" id="p-student" required class="form-input" value="${data.studentName || ''}" />
+      <input type="text" id="p-student" required class="form-input admin-input" value="${data.studentName || ''}" />
     </div>
     <div class="form-group">
-      <label class="form-label label">Course / Academy Path</label>
-      <input type="text" id="p-course" required class="form-input" value="${data.courseName || ''}" />
+      <label class="form-label label">Course / Academy Path / Location</label>
+      <input type="text" id="p-course" required class="form-input admin-input" value="${data.courseName || ''}" placeholder="e.g. Advanced Student &bull; Recorded in Avadi Studio A" />
     </div>
     <div class="form-group">
-      <label class="form-label label">Media Url (YouTube Video or Certificate)</label>
-      <input type="url" id="p-media" required class="form-input" value="${data.mediaUrl || ''}" placeholder="https://youtube.com/..." />
+      <label class="form-label label">Spotlight Type</label>
+      <select id="p-type" class="form-input admin-input" style="background: var(--surface-input);">
+        <option value="image" ${data.type === 'image' ? 'selected' : ''}>Certificate / Image Only</option>
+        <option value="video" ${data.type === 'video' ? 'selected' : ''}>Video Performance</option>
+        <option value="audio" ${data.type === 'audio' ? 'selected' : ''}>Audio Recital Highlight</option>
+      </select>
+    </div>
+    <div class="form-group" id="p-media-file-group" style="display: ${(data.type === 'video' || data.type === 'audio') ? 'block' : 'none'};">
+      <label class="form-label label" id="p-mediafile-label">${data.type === 'audio' ? 'Upload Audio File' : 'Upload Video File'}</label>
+      <input type="file" id="p-mediafile" class="form-input admin-input" accept="${data.type === 'audio' ? 'audio/*' : 'video/*'}" />
+      ${data.mediaUrl ? `
+        <p class="body-xs text-secondary mt-1">Current file: <a href="${data.mediaUrl}" target="_blank" class="text-accent" style="text-decoration: underline;">View Uploaded Media</a></p>
+      ` : ''}
+    </div>
+    <div class="form-group">
+      <label class="form-label label">Upload Portfolio Image/Certificate/Thumbnail</label>
+      <input type="file" id="p-file" accept="image/*" class="form-input admin-input" />
+      <div id="p-preview-container" class="mt-2" style="display: ${data.imageUrl ? 'block' : 'none'};">
+        <img id="p-preview" src="${data.imageUrl || ''}" style="max-height: 120px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1); object-fit: cover; width: 100%;" class="upload-preview-container" / loading="lazy">
+      </div>
     </div>
     <div class="form-group">
       <label class="form-label label">Performance Description</label>
-      <textarea id="p-desc" required class="form-input" rows="3">${data.description || ''}</textarea>
+      <textarea id="p-desc" required class="form-input admin-input" rows="3">${data.description || ''}</textarea>
+    </div>
+    <div class="form-group flex items-center gap-3">
+      <input type="checkbox" id="p-published" ${data.isPublished !== false ? 'checked' : ''} style="width: 18px; height: 18px;" />
+      <label for="p-published" class="label text-primary cursor-pointer">Publish on public website</label>
     </div>
   `;
 
   const triggerAddPortfolio = () => {
     openModalDialog('Add Performance spotlight', getPortfolioFields(), async () => {
-      const payload = {
-        title: document.getElementById('p-title').value,
-        studentName: document.getElementById('p-student').value,
-        courseName: document.getElementById('p-course').value,
-        mediaUrl: document.getElementById('p-media').value,
-        description: document.getElementById('p-desc').value
-      };
-      await Api.post('/portfolios', payload);
-      logAdminActivity(`Student portfolio for "${payload.studentName}" was approved by admin`);
+      const formData = new FormData();
+      formData.append('title', document.getElementById('p-title').value);
+      formData.append('studentName', document.getElementById('p-student').value);
+      formData.append('courseName', document.getElementById('p-course').value);
+      formData.append('type', document.getElementById('p-type').value);
+      formData.append('description', document.getElementById('p-desc').value);
+      formData.append('isPublished', document.getElementById('p-published').checked);
+
+      const fileInput = document.getElementById('p-file');
+      if (fileInput && fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      const mediaFileInput = document.getElementById('p-mediafile');
+      if (mediaFileInput && mediaFileInput.files[0]) formData.append('mediaFile', mediaFileInput.files[0]);
+
+      await Api.post('/portfolios', formData);
+      logAdminActivity(`Student portfolio for "${formData.get('studentName')}" was approved by admin`);
       Helpers.toast('Spotlight portfolio added.');
       displayPortfolios();
     });
+    attachPreviewListener('p-file', 'p-preview-container', 'p-preview');
+
+    // Toggle video/audio file visibility & label
+    const pType = document.getElementById('p-type');
+    const mediaFileGroup = document.getElementById('p-media-file-group');
+    const mediaFileLabel = document.getElementById('p-mediafile-label');
+    const mediaFileInput = document.getElementById('p-mediafile');
+    if (pType && mediaFileGroup) {
+      pType.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val === 'video' || val === 'audio') {
+          mediaFileGroup.style.display = 'block';
+          if (mediaFileLabel) {
+            mediaFileLabel.textContent = val === 'audio' ? 'Upload Audio File' : 'Upload Video File';
+          }
+          if (mediaFileInput) {
+            mediaFileInput.accept = val === 'audio' ? 'audio/*' : 'video/*';
+          }
+        } else {
+          mediaFileGroup.style.display = 'none';
+        }
+      });
+    }
   };
 
   const triggerEditPortfolio = (id, portfolios) => {
     const p = portfolios.find(item => item._id === id);
     if (!p) return;
     openModalDialog('Edit Spotlight', getPortfolioFields(p), async () => {
-      const payload = {
-        title: document.getElementById('p-title').value,
-        studentName: document.getElementById('p-student').value,
-        courseName: document.getElementById('p-course').value,
-        mediaUrl: document.getElementById('p-media').value,
-        description: document.getElementById('p-desc').value
-      };
-      await Api.patch(`/portfolios/${id}`, payload);
-      logAdminActivity(`Student portfolio for "${payload.studentName}" was updated by admin`);
+      const formData = new FormData();
+      formData.append('title', document.getElementById('p-title').value);
+      formData.append('studentName', document.getElementById('p-student').value);
+      formData.append('courseName', document.getElementById('p-course').value);
+      formData.append('type', document.getElementById('p-type').value);
+      formData.append('description', document.getElementById('p-desc').value);
+      formData.append('isPublished', document.getElementById('p-published').checked);
+
+      const fileInput = document.getElementById('p-file');
+      if (fileInput && fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      const mediaFileInput = document.getElementById('p-mediafile');
+      if (mediaFileInput && mediaFileInput.files[0]) formData.append('mediaFile', mediaFileInput.files[0]);
+
+      await Api.patch(`/portfolios/${id}`, formData);
+      logAdminActivity(`Student portfolio for "${formData.get('studentName')}" was updated by admin`);
       Helpers.toast('Spotlight updated.');
       displayPortfolios();
     });
+    attachPreviewListener('p-file', 'p-preview-container', 'p-preview');
+
+    // Toggle video/audio file visibility & label
+    const pType = document.getElementById('p-type');
+    const mediaFileGroup = document.getElementById('p-media-file-group');
+    const mediaFileLabel = document.getElementById('p-mediafile-label');
+    const mediaFileInput = document.getElementById('p-mediafile');
+    if (pType && mediaFileGroup) {
+      pType.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val === 'video' || val === 'audio') {
+          mediaFileGroup.style.display = 'block';
+          if (mediaFileLabel) {
+            mediaFileLabel.textContent = val === 'audio' ? 'Upload Audio File' : 'Upload Video File';
+          }
+          if (mediaFileInput) {
+            mediaFileInput.accept = val === 'audio' ? 'audio/*' : 'video/*';
+          }
+        } else {
+          mediaFileGroup.style.display = 'none';
+        }
+      });
+    }
   };
 
   const triggerDeletePortfolio = async (id, portfolios) => {
@@ -922,12 +1075,21 @@ Router.register('/admin', async () => {
 
       const grid = document.getElementById('gallery-grid');
       if (grid) {
+        const getImageUrl = (url) => {
+          if (!url) return '';
+          return (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) ? url : App.getAssetPath(url);
+        };
         grid.innerHTML = files.map(f => `
-          <div class="card border bg-glass overflow-hidden flex col justify-between hover:scale transition-transform" style="border-radius: var(--radius-sm);">
-            <div style="height: 160px; background: url('${App.getAssetPath(f.imageUrl)}') center/cover no-repeat;"></div>
+          <div class="card border bg-overlay overflow-hidden flex col justify-between hover:scale transition-transform" style="border-radius: var(--radius-sm);">
+            <div style="height: 160px; background: url('${getImageUrl(f.imageUrl)}') center/cover no-repeat;"></div>
             <div class="p-4 flex col gap-1">
-              <span class="badge badge--violet self-start mb-2">${f.category}</span>
-              <h5 class="body-sm text-white font-bold truncate">${f.title}</h5>
+              <div class="flex gap-2 mb-2 flex-wrap">
+                <span class="badge badge--violet self-start">${f.category}</span>
+                <span class="badge ${f.isPublished !== false ? 'badge--violet' : 'badge--outline'} self-start">
+                  ${f.isPublished !== false ? 'Published' : 'Draft'}
+                </span>
+              </div>
+              <h5 class="body-sm text-primary font-bold truncate">${f.title}</h5>
               <p class="text-xs text-tertiary truncate">${f.description || 'Showcase snapshot'}</p>
             </div>
             <div class="p-4 pt-0 flex gap-2">
@@ -948,7 +1110,7 @@ Router.register('/admin', async () => {
 
     mainPane.innerHTML = `
       <div class="flex justify-between items-center mb-6">
-        <h2 class="h3 text-white">Academy Gallery</h2>
+        <h2 class="h3 text-primary">Academy Gallery</h2>
         <button id="add-gal-btn" class="btn btn--primary btn--sm">Add Media File</button>
       </div>
       ${renderControlsHeader('Search gallery by title...')}
@@ -963,52 +1125,67 @@ Router.register('/admin', async () => {
   const getGalleryFields = (data = {}) => `
     <div class="form-group">
       <label class="form-label label">Image / Item Title</label>
-      <input type="text" id="g-title" required class="form-input" value="${data.title || ''}" />
+      <input type="text" id="g-title" required class="form-input admin-input" value="${data.title || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Category</label>
-      <input type="text" id="g-category" required class="form-input" value="${data.category || 'Studios'}" placeholder="Studios, Cohorts, Recitals" />
+      <input type="text" id="g-category" required class="form-input admin-input" value="${data.category || 'Studios'}" placeholder="Studios, Cohorts, Recitals" />
     </div>
     <div class="form-group">
-      <label class="form-label label">Image URL</label>
-      <input type="text" id="g-url" required class="form-input" value="${data.imageUrl || '/assets/images/default.jpg'}" />
+      <label class="form-label label">Upload Gallery Image</label>
+      <input type="file" id="g-file" accept="image/*" class="form-input admin-input" />
+      <div id="g-preview-container" class="mt-2" style="display: ${data.imageUrl ? 'block' : 'none'};">
+        <img id="g-preview" src="${data.imageUrl || ''}" style="max-height: 120px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1); object-fit: cover; width: 100%;" class="upload-preview-container" / loading="lazy">
+      </div>
     </div>
     <div class="form-group">
       <label class="form-label label">Description</label>
-      <input type="text" id="g-desc" class="form-input" value="${data.description || ''}" />
+      <input type="text" id="g-desc" class="form-input admin-input" value="${data.description || ''}" />
+    </div>
+    <div class="form-group flex items-center gap-3">
+      <input type="checkbox" id="g-published" ${data.isPublished !== false ? 'checked' : ''} style="width: 18px; height: 18px;" />
+      <label for="g-published" class="label text-primary cursor-pointer">Publish on public website</label>
     </div>
   `;
 
   const triggerAddGallery = () => {
     openModalDialog('Add Gallery Media', getGalleryFields(), async () => {
-      const payload = {
-        title: document.getElementById('g-title').value,
-        category: document.getElementById('g-category').value,
-        imageUrl: document.getElementById('g-url').value,
-        description: document.getElementById('g-desc').value
-      };
-      await Api.post('/gallery', payload);
-      logAdminActivity(`Gallery item "${payload.title}" was added by admin`);
+      const formData = new FormData();
+      formData.append('title', document.getElementById('g-title').value);
+      formData.append('category', document.getElementById('g-category').value);
+      formData.append('description', document.getElementById('g-desc').value);
+      formData.append('isPublished', document.getElementById('g-published').checked);
+
+      const fileInput = document.getElementById('g-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.post('/gallery', formData);
+      logAdminActivity(`Gallery item "${formData.get('title')}" was added by admin`);
       Helpers.toast('Gallery item created.');
       displayGallery();
     });
+    attachPreviewListener('g-file', 'g-preview-container', 'g-preview');
   };
 
   const triggerEditGallery = (id, items) => {
     const item = items.find(i => i._id === id);
     if (!item) return;
     openModalDialog('Edit Gallery Media', getGalleryFields(item), async () => {
-      const payload = {
-        title: document.getElementById('g-title').value,
-        category: document.getElementById('g-category').value,
-        imageUrl: document.getElementById('g-url').value,
-        description: document.getElementById('g-desc').value
-      };
-      await Api.patch(`/gallery/${id}`, payload);
-      logAdminActivity(`Gallery item "${payload.title}" was updated by admin`);
+      const formData = new FormData();
+      formData.append('title', document.getElementById('g-title').value);
+      formData.append('category', document.getElementById('g-category').value);
+      formData.append('description', document.getElementById('g-desc').value);
+      formData.append('isPublished', document.getElementById('g-published').checked);
+
+      const fileInput = document.getElementById('g-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.patch(`/gallery/${id}`, formData);
+      logAdminActivity(`Gallery item "${formData.get('title')}" was updated by admin`);
       Helpers.toast('Gallery item updated.');
       displayGallery();
     });
+    attachPreviewListener('g-file', 'g-preview-container', 'g-preview');
   };
 
   const triggerDeleteGallery = async (id, items) => {
@@ -1036,8 +1213,8 @@ Router.register('/admin', async () => {
       const tbody = document.getElementById('events-tbody');
       if (tbody) {
         tbody.innerHTML = list.map(ev => `
-          <tr class="border-bottom">
-            <td class="py-3 text-white font-medium">${ev.title}</td>
+          <tr class="border-bottom transition-all hover:bg-overlay"">
+            <td class="py-3 text-primary font-medium">${ev.title}</td>
             <td class="py-3 text-secondary">${ev.location}</td>
             <td class="py-3 text-secondary">${Helpers.formatDate(ev.date)}</td>
             <td class="py-3 text-secondary">${Helpers.formatTime(ev.time)}</td>
@@ -1061,14 +1238,14 @@ Router.register('/admin', async () => {
 
     mainPane.innerHTML = `
       <div class="flex justify-between items-center mb-6">
-        <h2 class="h3 text-white">Event Scheduling</h2>
+        <h2 class="h3 text-primary">Event Scheduling</h2>
         <button id="add-ev-btn" class="btn btn--primary btn--sm">Add Event</button>
       </div>
       ${renderControlsHeader('Search events by title...')}
-      <div class="overflow-x-auto card border bg-glass p-6">
+      <div class="overflow-x-auto card border bg-overlay p-6">
         <table class="w-full text-left" style="border-collapse: collapse; font-size: var(--text-sm);">
           <thead>
-            <tr class="border-bottom text-tertiary">
+            <tr class="border-bottom transition-all hover:bg-overlay" text-secondary text-xs uppercase font-bold tracking-wider">
               <th class="py-3">Event Title</th>
               <th class="py-3">Location</th>
               <th class="py-3">Date</th>
@@ -1089,60 +1266,75 @@ Router.register('/admin', async () => {
   const getEventFields = (data = {}) => `
     <div class="form-group">
       <label class="form-label label">Concert Title</label>
-      <input type="text" id="e-title" required class="form-input" value="${data.title || ''}" />
+      <input type="text" id="e-title" required class="form-input admin-input" value="${data.title || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Location</label>
-      <input type="text" id="e-location" required class="form-input" value="${data.location || 'Avadi, Chennai'}" />
+      <input type="text" id="e-location" required class="form-input admin-input" value="${data.location || 'Avadi, Chennai'}" />
     </div>
     <div class="grid grid-2 gap-4">
       <div class="form-group">
         <label class="form-label label">Date</label>
-        <input type="date" id="e-date" required class="form-input" value="${data.date ? new Date(data.date).toISOString().split('T')[0] : ''}" style="background: var(--surface-input);" />
+        <input type="date" id="e-date" required class="form-input admin-input" value="${data.date ? new Date(data.date).toISOString().split('T')[0] : ''}" style="background: var(--surface-input);" />
       </div>
       <div class="form-group">
         <label class="form-label label">Time</label>
-        <input type="time" id="e-time" required class="form-input" value="${Helpers.convertTo24Hour(data.time)}" style="background: var(--surface-input);" />
+        <input type="time" id="e-time" required class="form-input admin-input" value="${Helpers.convertTo24Hour(data.time)}" style="background: var(--surface-input);" />
       </div>
     </div>
     <div class="form-group">
       <label class="form-label label">Description</label>
-      <textarea id="e-desc" required class="form-input" rows="3">${data.description || ''}</textarea>
+      <textarea id="e-desc" required class="form-input admin-input" rows="3">${data.description || ''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label label">Upload Event Image</label>
+      <input type="file" id="e-file" accept="image/*" class="form-input admin-input" />
+      <div id="e-preview-container" class="mt-2" style="display: ${data.imageUrl ? 'block' : 'none'};">
+        <img id="e-preview" src="${data.imageUrl || ''}" style="max-height: 120px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1); object-fit: cover; width: 100%;" class="upload-preview-container" / loading="lazy">
+      </div>
     </div>
   `;
 
   const triggerAddEvent = () => {
     openModalDialog('Add Showcase Event', getEventFields(), async () => {
-      const payload = {
-        title: document.getElementById('e-title').value,
-        location: document.getElementById('e-location').value,
-        date: document.getElementById('e-date').value,
-        time: document.getElementById('e-time').value,
-        description: document.getElementById('e-desc').value
-      };
-      await Api.post('/events', payload);
-      logAdminActivity(`Showcase event "${payload.title}" was scheduled by admin`);
+      const formData = new FormData();
+      formData.append('title', document.getElementById('e-title').value);
+      formData.append('location', document.getElementById('e-location').value);
+      formData.append('date', document.getElementById('e-date').value);
+      formData.append('time', document.getElementById('e-time').value);
+      formData.append('description', document.getElementById('e-desc').value);
+
+      const fileInput = document.getElementById('e-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.post('/events', formData);
+      logAdminActivity(`Showcase event "${formData.get('title')}" was scheduled by admin`);
       Helpers.toast('Showcase event scheduled.');
       displayEvents();
     });
+    attachPreviewListener('e-file', 'e-preview-container', 'e-preview');
   };
 
   const triggerEditEvent = (id, events) => {
     const ev = events.find(item => item._id === id);
     if (!ev) return;
     openModalDialog('Edit Event Schedule', getEventFields(ev), async () => {
-      const payload = {
-        title: document.getElementById('e-title').value,
-        location: document.getElementById('e-location').value,
-        date: document.getElementById('e-date').value,
-        time: document.getElementById('e-time').value,
-        description: document.getElementById('e-desc').value
-      };
-      await Api.patch(`/events/${id}`, payload);
-      logAdminActivity(`Showcase event "${payload.title}" was updated by admin`);
+      const formData = new FormData();
+      formData.append('title', document.getElementById('e-title').value);
+      formData.append('location', document.getElementById('e-location').value);
+      formData.append('date', document.getElementById('e-date').value);
+      formData.append('time', document.getElementById('e-time').value);
+      formData.append('description', document.getElementById('e-desc').value);
+
+      const fileInput = document.getElementById('e-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.patch(`/events/${id}`, formData);
+      logAdminActivity(`Showcase event "${formData.get('title')}" was updated by admin`);
       Helpers.toast('Showcase event updated.');
       displayEvents();
     });
+    attachPreviewListener('e-file', 'e-preview-container', 'e-preview');
   };
 
   const triggerDeleteEvent = async (id, events) => {
@@ -1170,10 +1362,15 @@ Router.register('/admin', async () => {
       const tbody = document.getElementById('testimonials-tbody');
       if (tbody) {
         tbody.innerHTML = list.map(t => `
-          <tr class="border-bottom">
-            <td class="py-3 text-white font-medium">${t.name}</td>
+          <tr class="border-bottom transition-all hover:bg-overlay"">
+            <td class="py-3 text-primary font-medium">${t.name}</td>
             <td class="py-3 text-secondary">${t.role}</td>
-            <td class="py-3 text-accent">${'★'.repeat(t.rating)}</td>
+            <td class="py-3 text-accent">${'★'.repeat(t.rating || 5)}</td>
+            <td class="py-3 text-secondary">
+              <span class="badge ${t.isPublished !== false ? 'badge--violet' : 'badge--outline'}">
+                ${t.isPublished !== false ? 'Published' : 'Draft'}
+              </span>
+            </td>
             <td class="py-3 text-right" style="white-space: nowrap;">
               <div class="flex gap-2 justify-end">
                 <button class="btn btn--outline btn--sm edit-t-btn" data-id="${t._id}">Edit</button>
@@ -1194,17 +1391,18 @@ Router.register('/admin', async () => {
 
     mainPane.innerHTML = `
       <div class="flex justify-between items-center mb-6">
-        <h2 class="h3 text-white">Student & Parent Reviews</h2>
+        <h2 class="h3 text-primary">Student & Parent Reviews</h2>
         <button id="add-t-btn" class="btn btn--primary btn--sm">Add Testimonial</button>
       </div>
       ${renderControlsHeader('Search testimonials by name...')}
-      <div class="overflow-x-auto card border bg-glass p-6">
+      <div class="overflow-x-auto card border bg-overlay p-6">
         <table class="w-full text-left" style="border-collapse: collapse; font-size: var(--text-sm);">
           <thead>
-            <tr class="border-bottom text-tertiary">
+            <tr class="border-bottom transition-all hover:bg-overlay" text-secondary text-xs uppercase font-bold tracking-wider">
               <th class="py-3">Reviewer Name</th>
               <th class="py-3">Role / Subtitle</th>
               <th class="py-3">Stars</th>
+              <th class="py-3">Status</th>
               <th class="py-3 text-right">Actions</th>
             </tr>
           </thead>
@@ -1221,52 +1419,73 @@ Router.register('/admin', async () => {
   const getTestimonialFields = (data = {}) => `
     <div class="form-group">
       <label class="form-label label">Reviewer Name</label>
-      <input type="text" id="t-name" required class="form-input" value="${data.name || ''}" />
+      <input type="text" id="t-name" required class="form-input admin-input" value="${data.name || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Designation / Role</label>
-      <input type="text" id="t-role" required class="form-input" value="${data.role || ''}" placeholder="Parent of Student / Adult Learner" />
+      <input type="text" id="t-role" required class="form-input admin-input" value="${data.role || ''}" placeholder="Parent of Student / Adult Learner" />
     </div>
     <div class="form-group">
       <label class="form-label label">Stars Rating (1 to 5)</label>
-      <input type="number" id="t-rating" required class="form-input" min="1" max="5" value="${data.rating || 5}" />
+      <input type="number" id="t-rating" required class="form-input admin-input" min="1" max="5" value="${data.rating || 5}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Review Text</label>
-      <textarea id="t-text" required class="form-input" rows="3">${data.text || ''}</textarea>
+      <textarea id="t-text" required class="form-input admin-input" rows="3">${data.text || ''}</textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label label">Upload Reviewer Photo</label>
+      <input type="file" id="t-file" accept="image/*" class="form-input admin-input" />
+      <div id="t-preview-container" class="mt-2" style="display: ${data.imageUrl ? 'block' : 'none'};">
+        <img id="t-preview" src="${data.imageUrl || ''}" style="max-height: 120px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1); object-fit: cover; width: 100%;" class="upload-preview-container" / loading="lazy">
+      </div>
+    </div>
+    <div class="form-group flex items-center gap-3">
+      <input type="checkbox" id="t-published" ${data.isPublished !== false ? 'checked' : ''} style="width: 18px; height: 18px;" />
+      <label for="t-published" class="label text-primary cursor-pointer">Publish on public website</label>
     </div>
   `;
 
   const triggerAddTestimonial = () => {
     openModalDialog('Add Review Testimonial', getTestimonialFields(), async () => {
-      const payload = {
-        name: document.getElementById('t-name').value,
-        role: document.getElementById('t-role').value,
-        rating: parseInt(document.getElementById('t-rating').value),
-        text: document.getElementById('t-text').value
-      };
-      await Api.post('/testimonials', payload);
-      logAdminActivity(`Testimonial from "${payload.name}" was published to homepage`);
+      const formData = new FormData();
+      formData.append('name', document.getElementById('t-name').value);
+      formData.append('role', document.getElementById('t-role').value);
+      formData.append('rating', document.getElementById('t-rating').value);
+      formData.append('text', document.getElementById('t-text').value);
+      formData.append('isPublished', document.getElementById('t-published').checked);
+
+      const fileInput = document.getElementById('t-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.post('/testimonials', formData);
+      logAdminActivity(`Testimonial from "${formData.get('name')}" was published to homepage`);
       Helpers.toast('Review testimonial created.');
       displayTestimonials();
     });
+    attachPreviewListener('t-file', 't-preview-container', 't-preview');
   };
 
   const triggerEditTestimonial = (id, items) => {
     const t = items.find(item => item._id === id);
     if (!t) return;
     openModalDialog('Edit Review Testimonial', getTestimonialFields(t), async () => {
-      const payload = {
-        name: document.getElementById('t-name').value,
-        role: document.getElementById('t-role').value,
-        rating: parseInt(document.getElementById('t-rating').value),
-        text: document.getElementById('t-text').value
-      };
-      await Api.patch(`/testimonials/${id}`, payload);
-      logAdminActivity(`Testimonial from "${payload.name}" was updated by admin`);
+      const formData = new FormData();
+      formData.append('name', document.getElementById('t-name').value);
+      formData.append('role', document.getElementById('t-role').value);
+      formData.append('rating', document.getElementById('t-rating').value);
+      formData.append('text', document.getElementById('t-text').value);
+      formData.append('isPublished', document.getElementById('t-published').checked);
+
+      const fileInput = document.getElementById('t-file');
+      if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+      await Api.patch(`/testimonials/${id}`, formData);
+      logAdminActivity(`Testimonial from "${formData.get('name')}" was updated by admin`);
       Helpers.toast('Review testimonial updated.');
       displayTestimonials();
     });
+    attachPreviewListener('t-file', 't-preview-container', 't-preview');
   };
 
   const triggerDeleteTestimonial = async (id, items) => {
@@ -1284,23 +1503,23 @@ Router.register('/admin', async () => {
   const getContactFields = (data = {}) => `
     <div class="form-group">
       <label class="form-label label">Sender Name</label>
-      <input type="text" id="cnt-name" required class="form-input" value="${data.name || ''}" />
+      <input type="text" id="cnt-name" required class="form-input admin-input" value="${data.name || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Email Address</label>
-      <input type="email" id="cnt-email" required class="form-input" value="${data.email || ''}" />
+      <input type="email" id="cnt-email" required class="form-input admin-input" value="${data.email || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Phone (Optional)</label>
-      <input type="text" id="cnt-phone" class="form-input" value="${data.phone || ''}" />
+      <input type="text" id="cnt-phone" class="form-input admin-input" value="${data.phone || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Subject</label>
-      <input type="text" id="cnt-subject" required class="form-input" value="${data.subject || ''}" />
+      <input type="text" id="cnt-subject" required class="form-input admin-input" value="${data.subject || ''}" />
     </div>
     <div class="form-group">
       <label class="form-label label">Message</label>
-      <textarea id="cnt-message" required class="form-input" rows="4">${data.message || ''}</textarea>
+      <textarea id="cnt-message" required class="form-input admin-input" rows="4">${data.message || ''}</textarea>
     </div>
   `;
 
@@ -1333,7 +1552,7 @@ Router.register('/admin', async () => {
       const tbody = document.getElementById('contacts-tbody');
       if (tbody) {
         tbody.innerHTML = list.map(m => `
-          <tr class="border-bottom ${!m.isRead ? 'font-semibold text-white' : 'text-secondary'}">
+          <tr class="border-bottom transition-all hover:bg-overlay" ${!m.isRead ? 'font-semibold text-primary' : 'text-secondary'}">
             <td class="py-3">${m.name}</td>
             <td class="py-3">${m.subject}</td>
             <td class="py-3 text-xs"><span class="badge ${m.isRead ? 'badge--outline' : 'badge--violet'}">${m.isRead ? 'Read' : 'New'}</span></td>
@@ -1357,14 +1576,14 @@ Router.register('/admin', async () => {
 
     mainPane.innerHTML = `
       <div class="flex justify-between items-center mb-6">
-        <h2 class="h3 text-white">Academy Inquiry Inbox</h2>
+        <h2 class="h3 text-primary">Academy Inquiry Inbox</h2>
         <button id="add-contact-btn" class="btn btn--primary btn--sm">Add Entry</button>
       </div>
       ${renderControlsHeader('Search inbox by name or subject...')}
-      <div class="overflow-x-auto card border bg-glass p-6">
+      <div class="overflow-x-auto card border bg-overlay p-6">
         <table class="w-full text-left" style="border-collapse: collapse; font-size: var(--text-sm);">
           <thead>
-            <tr class="border-bottom text-tertiary">
+            <tr class="border-bottom transition-all hover:bg-overlay" text-secondary text-xs uppercase font-bold tracking-wider">
               <th class="py-3">Sender Name</th>
               <th class="py-3">Subject / Inquiry</th>
               <th class="py-3">Status</th>
@@ -1392,11 +1611,11 @@ Router.register('/admin', async () => {
 
     openModalDialog(`Inquiry: ${m.subject}`, `
       <div class="flex col gap-4 text-secondary" style="font-size: var(--text-sm);">
-        <p><strong class="text-white">Sender:</strong> ${m.name} (${m.email})</p>
-        <p><strong class="text-white">Phone:</strong> ${m.phone || 'Not provided'}</p>
-        <p><strong class="text-white">Received At:</strong> ${Helpers.formatDate(m.createdAt)}</p>
+        <p><strong class="text-primary">Sender:</strong> ${m.name} (${m.email})</p>
+        <p><strong class="text-primary">Phone:</strong> ${m.phone || 'Not provided'}</p>
+        <p><strong class="text-primary">Received At:</strong> ${Helpers.formatDate(m.createdAt)}</p>
         <div class="divider"></div>
-        <p class="text-white" style="white-space: pre-wrap; font-size: var(--text-base);">${m.message}</p>
+        <p class="text-primary" style="white-space: pre-wrap; font-size: var(--text-base);">${m.message}</p>
       </div>
     `, () => closeModalDialog());
 
@@ -1423,22 +1642,27 @@ Router.register('/admin', async () => {
       Api.get('/settings/live_studio_name').catch(() => null),
     ]);
 
-    const liveYT     = ytRes?.data?.setting?.value     || '';
-    const liveFB     = fbRes?.data?.setting?.value     || '';
-    const liveIG     = igRes?.data?.setting?.value     || '';
+    const liveYT = ytRes?.data?.setting?.value || '';
+    const liveFB = fbRes?.data?.setting?.value || '';
+    const liveIG = igRes?.data?.setting?.value || '';
     const studioName = studioRes?.data?.setting?.value || '';
     const hasAnyLive = liveYT || liveFB || liveIG;
 
     mainPane.innerHTML = `
-      <div class="flex justify-between items-center mb-6">
-        <div>
-          <h2 class="h3 text-white">Live Stream Links</h2>
-          <p class="body-xs text-secondary mt-1">Set the live stream URLs for the Online Classes page. Clear all fields to end the live session.</p>
+      <div class="mb-6" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; justify-content: space-between;">
+        <div style="flex: 1; min-width: 0;">
+          <h2 class="h3 text-primary">Live Stream Links</h2>
+          <p class="body-xs text-secondary mt-1" style="overflow-wrap: break-word; word-break: break-word;">Set the live stream URLs for the Online Classes page. Clear all fields to end the live session.</p>
         </div>
-        ${hasAnyLive ? `<span class="badge badge--violet" style="background: rgba(255,68,68,.15); border: 1px solid #ff4444; color: #ff6666;">&#11044; Session Active</span>` : `<span class="body-xs text-tertiary">No active session</span>`}
+        <div style="flex-shrink: 0;">
+          ${hasAnyLive 
+            ? `<span class="badge" style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,68,68,.15); border: 1px solid #ff4444; color: #ff6666; white-space: nowrap; padding: 4px 10px; border-radius: 20px; font-size: 12px;">&#11044; Session Active</span>` 
+            : `<span class="body-xs text-tertiary" style="white-space: nowrap;">No active session</span>`
+          }
+        </div>
       </div>
 
-      <div class="card border bg-glass p-8" style="border-radius: var(--radius-md);">
+      <div class="card border bg-overlay p-8" style="border-radius: var(--radius-md);">
         <form id="livestream-form" class="form flex col gap-6">
 
           <!-- Studio Name -->
@@ -1447,17 +1671,17 @@ Router.register('/admin', async () => {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Studio / Location Name
             </label>
-            <input type="text" id="live-studio" class="form-input" value="${studioName}" placeholder="e.g. Vienna Studio, Chennai Campus, Home Studio" />
+            <input type="text" id="live-studio" class="form-input admin-input" value="${studioName}" placeholder="e.g. Avadi Studio, Chennai Campus, Home Studio" />
             <span class="body-xs text-tertiary mt-1" style="display:block;">This name appears as "Broadcasting Live from <em>Location</em>" on the Online Classes page.</span>
           </div>
 
           <!-- YouTube -->
           <div class="form-group">
             <label class="form-label label" style="display: flex; align-items: center; gap: 8px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#FF0000"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#FF0000" d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon fill="#FFFFFF" points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
               YouTube Live URL
             </label>
-            <input type="url" id="live-yt" class="form-input" value="${liveYT}" placeholder="https://youtube.com/live/..." />
+            <input type="url" id="live-yt" class="form-input admin-input" value="${liveYT}" placeholder="https://youtube.com/live/..." />
             <span class="body-xs text-tertiary mt-1" style="display:block;">Paste the YouTube Live stream or video URL. Leave blank to hide.</span>
           </div>
 
@@ -1467,7 +1691,7 @@ Router.register('/admin', async () => {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
               Facebook Live URL
             </label>
-            <input type="url" id="live-fb" class="form-input" value="${liveFB}" placeholder="https://facebook.com/..." />
+            <input type="url" id="live-fb" class="form-input admin-input" value="${liveFB}" placeholder="https://facebook.com/..." />
             <span class="body-xs text-tertiary mt-1" style="display:block;">Paste the Facebook Live stream URL. Leave blank to hide.</span>
           </div>
 
@@ -1477,23 +1701,23 @@ Router.register('/admin', async () => {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
               Instagram Live URL
             </label>
-            <input type="url" id="live-ig" class="form-input" value="${liveIG}" placeholder="https://instagram.com/..." />
+            <input type="url" id="live-ig" class="form-input admin-input" value="${liveIG}" placeholder="https://instagram.com/..." />
             <span class="body-xs text-tertiary mt-1" style="display:block;">Paste the Instagram Live link. Leave blank to hide.</span>
           </div>
 
-          <div class="flex gap-4 items-center pt-2 border-top">
-            <button type="submit" class="btn btn--primary">Save Live Links</button>
-            <button type="button" id="clear-live-btn" class="btn btn--outline" style="color: var(--text-accent);">Clear All (End Session)</button>
+          <div class="pt-2 border-top" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+            <button type="submit" class="btn btn--primary" style="flex: 1; min-width: 140px;">Save Live Links</button>
+            <button type="button" id="clear-live-btn" class="btn btn--outline" style="color: var(--text-accent); flex: 1; min-width: 140px;">Clear All (End Session)</button>
           </div>
         </form>
       </div>
 
-      <div class="card border bg-glass p-6 mt-6" style="border-radius: var(--radius-md);">
-        <h3 class="h6 text-white mb-3">How it works</h3>
+      <div class="card border bg-overlay p-6 mt-6" style="border-radius: var(--radius-md);">
+        <h3 class="h6 text-primary mb-3">How it works</h3>
         <ul class="flex col gap-2 text-sm text-secondary">
           <li>&#8226; Enter a live URL for any platform(s) and save — the Online Classes page will show live join buttons immediately.</li>
           <li>&#8226; You can set one, two, or all three platforms simultaneously.</li>
-          <li>&#8226; To end the session, click <strong class="text-white">Clear All</strong> or manually remove the URLs and save.</li>
+          <li>&#8226; To end the session, click <strong class="text-primary">Clear All</strong> or manually remove the URLs and save.</li>
           <li>&#8226; Links open in a new tab for visitors.</li>
         </ul>
       </div>
@@ -1507,9 +1731,9 @@ Router.register('/admin', async () => {
       try {
         await Promise.all([
           Api.post('/settings', { key: 'live_studio_name', value: document.getElementById('live-studio').value.trim(), description: 'Live Studio Location Name' }),
-          Api.post('/settings', { key: 'live_youtube',    value: document.getElementById('live-yt').value.trim(), description: 'YouTube Live URL' }),
-          Api.post('/settings', { key: 'live_facebook',   value: document.getElementById('live-fb').value.trim(), description: 'Facebook Live URL' }),
-          Api.post('/settings', { key: 'live_instagram',  value: document.getElementById('live-ig').value.trim(), description: 'Instagram Live URL' }),
+          Api.post('/settings', { key: 'live_youtube', value: document.getElementById('live-yt').value.trim(), description: 'YouTube Live URL' }),
+          Api.post('/settings', { key: 'live_facebook', value: document.getElementById('live-fb').value.trim(), description: 'Facebook Live URL' }),
+          Api.post('/settings', { key: 'live_instagram', value: document.getElementById('live-ig').value.trim(), description: 'Instagram Live URL' }),
         ]);
         logAdminActivity('Live stream links were updated');
         Helpers.toast('Live stream links saved.');
@@ -1526,10 +1750,10 @@ Router.register('/admin', async () => {
       if (!confirm('This will clear all live stream links and end the session on the website. Continue?')) return;
       try {
         await Promise.all([
-          Api.post('/settings', { key: 'live_studio_name', value: '',  description: 'Live Studio Location Name' }),
-          Api.post('/settings', { key: 'live_youtube',     value: '', description: 'YouTube Live URL' }),
-          Api.post('/settings', { key: 'live_facebook',    value: '', description: 'Facebook Live URL' }),
-          Api.post('/settings', { key: 'live_instagram',   value: '', description: 'Instagram Live URL' }),
+          Api.post('/settings', { key: 'live_studio_name', value: '', description: 'Live Studio Location Name' }),
+          Api.post('/settings', { key: 'live_youtube', value: '', description: 'YouTube Live URL' }),
+          Api.post('/settings', { key: 'live_facebook', value: '', description: 'Facebook Live URL' }),
+          Api.post('/settings', { key: 'live_instagram', value: '', description: 'Instagram Live URL' }),
         ]);
         logAdminActivity('Live stream session was ended by admin');
         Helpers.toast('Live session ended. All links cleared.');
@@ -1549,28 +1773,28 @@ Router.register('/admin', async () => {
     const linkedinRes = await Api.get('/settings/social_linkedin').catch(() => null);
 
     mainPane.innerHTML = `
-      <h2 class="h3 text-white mb-6">Social Platform Links</h2>
-      <div class="card border bg-glass p-8 max-width-md" style="border-radius: var(--radius-md);">
+      <h2 class="h3 text-primary mb-6">Social Platform Links</h2>
+      <div class="card border bg-overlay p-8 max-width-md" style="border-radius: var(--radius-md);">
         <form id="socials-config-form" class="form flex col gap-6">
           <div class="form-group">
             <label class="form-label label">YouTube Channel</label>
-            <input type="url" id="soc-yt" class="form-input" value="${youtubeRes?.data?.setting?.value || ''}" />
+            <input type="url" id="soc-yt" class="form-input admin-input" value="${youtubeRes?.data?.setting?.value || ''}" />
           </div>
           <div class="form-group">
             <label class="form-label label">Instagram Profile</label>
-            <input type="url" id="soc-insta" class="form-input" value="${instaRes?.data?.setting?.value || ''}" />
+            <input type="url" id="soc-insta" class="form-input admin-input" value="${instaRes?.data?.setting?.value || ''}" />
           </div>
           <div class="form-group">
             <label class="form-label label">Facebook Page</label>
-            <input type="url" id="soc-fb" class="form-input" value="${fbRes?.data?.setting?.value || ''}" />
+            <input type="url" id="soc-fb" class="form-input admin-input" value="${fbRes?.data?.setting?.value || ''}" />
           </div>
           <div class="form-group">
             <label class="form-label label">WhatsApp API Url</label>
-            <input type="url" id="soc-wa" class="form-input" value="${whatsappRes?.data?.setting?.value || ''}" />
+            <input type="url" id="soc-wa" class="form-input admin-input" value="${whatsappRes?.data?.setting?.value || ''}" />
           </div>
           <div class="form-group">
             <label class="form-label label">LinkedIn Profile</label>
-            <input type="url" id="soc-li" class="form-input" value="${linkedinRes?.data?.setting?.value || ''}" />
+            <input type="url" id="soc-li" class="form-input admin-input" value="${linkedinRes?.data?.setting?.value || ''}" />
           </div>
           <button type="submit" class="btn btn--primary w-fit mt-4">Save Configuration</button>
         </form>
@@ -1610,8 +1834,8 @@ Router.register('/admin', async () => {
       const tbody = document.getElementById('settings-tbody');
       if (tbody) {
         tbody.innerHTML = settings.map(s => `
-          <tr class="border-bottom">
-            <td class="py-3 text-white font-semibold">${s.key}</td>
+          <tr class="border-bottom transition-all hover:bg-overlay"">
+            <td class="py-3 text-primary font-semibold">${s.key}</td>
             <td class="py-3 text-secondary truncate" style="max-width: 250px;">${JSON.stringify(s.value)}</td>
             <td class="py-3 text-right" style="white-space: nowrap;">
               <div class="flex gap-2 justify-end">
@@ -1631,36 +1855,58 @@ Router.register('/admin', async () => {
       }
     };
 
-    const getSettingFields = (data = {}) => `
-      <div class="form-group">
-        <label class="form-label label">Config Key</label>
-        <input type="text" id="s-key" required class="form-input" value="${data.key || ''}" ${data.key ? 'disabled style="opacity: 0.5;"' : ''} />
-      </div>
-      <div class="form-group">
-        <label class="form-label label">Config Value (JSON or String)</label>
-        <input type="text" id="s-val" required class="form-input" value="${data.value !== undefined ? JSON.stringify(data.value) : ''}" />
-      </div>
-      <div class="form-group">
-        <label class="form-label label">Description</label>
-        <input type="text" id="s-desc" class="form-input" value="${data.description || ''}" />
-      </div>
-    `;
+    const getSettingFields = (data = {}) => {
+      // If the value is a string and looks like a URL, we can preview it
+      const valStr = data.value !== undefined ? (typeof data.value === 'string' ? data.value : JSON.stringify(data.value)) : '';
+      const isImage = valStr.startsWith('http') && valStr.includes('cloudinary');
+      return `
+        <div class="form-group">
+          <label class="form-label label">Config Key</label>
+          <input type="text" id="s-key" required class="form-input admin-input" value="${data.key || ''}" ${data.key ? 'disabled style="opacity: 0.5;"' : ''} />
+        </div>
+        <div class="form-group">
+          <label class="form-label label">Config Value (JSON or String)</label>
+          <input type="text" id="s-val" class="form-input admin-input" value="${valStr}" placeholder="Leave blank if uploading image" />
+        </div>
+        <div class="form-group">
+          <label class="form-label label">OR Upload Image Value</label>
+          <input type="file" id="s-file" accept="image/*" class="form-input admin-input" />
+          <div id="s-preview-container" class="mt-2" style="display: ${isImage ? 'block' : 'none'};">
+            <img id="s-preview" src="${isImage ? valStr : ''}" style="max-height: 120px; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.1); object-fit: cover; width: 100%;" class="upload-preview-container" / loading="lazy">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label label">Description</label>
+          <input type="text" id="s-desc" class="form-input admin-input" value="${data.description || ''}" />
+        </div>
+      `;
+    };
 
     const triggerAddSetting = () => {
       openModalDialog('Add Config', getSettingFields(), async () => {
         const key = document.getElementById('s-key').value;
         const rawVal = document.getElementById('s-val').value;
-        let parsed;
-        try { parsed = JSON.parse(rawVal); } catch { parsed = rawVal; }
-        await Api.post('/settings', {
-          key,
-          value: parsed,
-          description: document.getElementById('s-desc').value
-        });
+        let parsed = rawVal;
+        if (rawVal) {
+          try { parsed = JSON.parse(rawVal); } catch { parsed = rawVal; }
+        }
+
+        const formData = new FormData();
+        formData.append('key', key);
+        formData.append('description', document.getElementById('s-desc').value);
+        if (parsed !== undefined && parsed !== '') {
+          formData.append('value', typeof parsed === 'object' ? JSON.stringify(parsed) : parsed);
+        }
+
+        const fileInput = document.getElementById('s-file');
+        if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+        await Api.post('/settings', formData);
         logAdminActivity(`Settings key "${key}" was created`);
         Helpers.toast('Config created.');
         displaySettings();
       });
+      attachPreviewListener('s-file', 's-preview-container', 's-preview');
     };
 
     const triggerEditSetting = (key, settingsList) => {
@@ -1668,17 +1914,27 @@ Router.register('/admin', async () => {
       if (!s) return;
       openModalDialog('Edit Config', getSettingFields(s), async () => {
         const rawVal = document.getElementById('s-val').value;
-        let parsed;
-        try { parsed = JSON.parse(rawVal); } catch { parsed = rawVal; }
-        await Api.post('/settings', {
-          key,
-          value: parsed,
-          description: document.getElementById('s-desc').value
-        });
+        let parsed = rawVal;
+        if (rawVal) {
+          try { parsed = JSON.parse(rawVal); } catch { parsed = rawVal; }
+        }
+
+        const formData = new FormData();
+        formData.append('key', key);
+        formData.append('description', document.getElementById('s-desc').value);
+        if (parsed !== undefined && parsed !== '') {
+          formData.append('value', typeof parsed === 'object' ? JSON.stringify(parsed) : parsed);
+        }
+
+        const fileInput = document.getElementById('s-file');
+        if (fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+        await Api.post('/settings', formData);
         logAdminActivity(`Settings key "${key}" was updated`);
         Helpers.toast('Config saved.');
         displaySettings();
       });
+      attachPreviewListener('s-file', 's-preview-container', 's-preview');
     };
 
     const triggerDeleteSetting = async (key, settingsList) => {
@@ -1692,13 +1948,13 @@ Router.register('/admin', async () => {
 
     mainPane.innerHTML = `
       <div class="flex justify-between items-center mb-6">
-        <h2 class="h3 text-white">Website Settings</h2>
+        <h2 class="h3 text-primary">Website Settings</h2>
         <button id="add-set-btn" class="btn btn--primary btn--sm">Add Config</button>
       </div>
-      <div class="overflow-x-auto card border bg-glass p-6">
+      <div class="overflow-x-auto card border bg-overlay p-6">
         <table class="w-full text-left" style="border-collapse: collapse; font-size: var(--text-sm);">
           <thead>
-            <tr class="border-bottom text-tertiary">
+            <tr class="border-bottom transition-all hover:bg-overlay" text-secondary text-xs uppercase font-bold tracking-wider">
               <th class="py-3">Config Key</th>
               <th class="py-3">Config Value</th>
               <th class="py-3 text-right">Actions</th>
@@ -1716,14 +1972,21 @@ Router.register('/admin', async () => {
   // 11. MODULE: ADMIN PROFILE
   const displayProfile = async () => {
     mainPane.innerHTML = `
-      <h2 class="h3 text-white mb-6">Admin Profile Info</h2>
-      <div class="card border bg-glass p-8 max-width-md flex col gap-6" style="border-radius: var(--radius-md);">
+      <h2 class="h3 text-primary mb-6">Admin Profile Info</h2>
+      <div class="card border bg-overlay p-8 max-width-md flex col gap-6" style="border-radius: var(--radius-md);">
         <div class="flex items-center gap-4 border-bottom pb-4">
-          <div class="flex items-center justify-center bg-tinted text-accent rounded-full font-bold" style="width: 60px; height: 60px; font-size: var(--text-lg);">
-            ${user.firstName[0]}${user.lastName[0]}
+          <div id="admin-avatar-trigger" style="width: 80px; height: 80px; flex-shrink: 0; cursor: pointer; position: relative; overflow: hidden; border-radius: 50%;" class="hover:opacity-80 transition-opacity group">
+            ${user.imageUrl
+        ? `<img src="${user.imageUrl}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" loading="lazy">`
+        : `<div class="flex items-center justify-center bg-overlay text-accent font-bold" style="width: 100%; height: 100%; font-size: 24px; border-radius: 50%;">${user.firstName[0]}${user.lastName[0]}</div>`}
+            <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity" style="border-radius: 50%;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
+              <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+            </div>
           </div>
+          <!-- Hidden file input for Cropper -->
+          <input type="file" id="cropper-file-input" accept="image/*" style="display: none;" />
           <div>
-            <h4 class="h5 text-white font-bold leading-none">${user.firstName} ${user.lastName}</h4>
+            <h4 class="h5 text-primary font-bold leading-none">${user.firstName} ${user.lastName}</h4>
             <span class="text-xs text-accent uppercase font-bold mt-2 tracking-wider">System Administrator</span>
           </div>
         </div>
@@ -1732,16 +1995,16 @@ Router.register('/admin', async () => {
           <div class="grid grid-2 gap-4">
             <div class="form-group">
               <label class="form-label label">First Name</label>
-              <input type="text" id="p-first" class="form-input" value="${user.firstName}" />
+              <input type="text" id="p-first" class="form-input admin-input" value="${user.firstName}" />
             </div>
             <div class="form-group">
               <label class="form-label label">Last Name</label>
-              <input type="text" id="p-last" class="form-input" value="${user.lastName}" />
+              <input type="text" id="p-last" class="form-input admin-input" value="${user.lastName}" />
             </div>
           </div>
           <div class="form-group">
             <label class="form-label label">Email Address</label>
-            <input type="email" disabled class="form-input" value="${user.email}" style="opacity: 0.5;" />
+            <input type="email" disabled class="form-input admin-input" value="${user.email}" style="opacity: 0.5;" />
           </div>
           <button type="submit" class="btn btn--primary w-fit mt-4">Save Profiles</button>
         </form>
@@ -1754,11 +2017,11 @@ Router.register('/admin', async () => {
       saveBtn.disabled = true;
       saveBtn.textContent = 'Saving...';
       try {
-        const payload = {
-          firstName: document.getElementById('p-first').value,
-          lastName: document.getElementById('p-last').value
-        };
-        await Api.patch('/users/update-me', payload);
+        const formData = new FormData();
+        formData.append('firstName', document.getElementById('p-first').value);
+        formData.append('lastName', document.getElementById('p-last').value);
+
+        await Api.patch('/users/update-me', formData);
         logAdminActivity(`Admin profile info was updated`);
         Helpers.toast('Admin profiles updated. Syncing login state...');
         await Auth.refreshUser();
@@ -1768,6 +2031,106 @@ Router.register('/admin', async () => {
       } finally {
         saveBtn.disabled = false;
         saveBtn.textContent = 'Save Profiles';
+      }
+    });
+
+    // --- CropperJS Logic ---
+    const cropperModal = document.getElementById('profile-cropper-modal');
+    const closeBtn = document.getElementById('close-cropper-btn');
+    const cancelBtn = document.getElementById('cancel-cropper-btn');
+    const saveCropBtn = document.getElementById('save-cropper-btn');
+    const removeImgBtn = document.getElementById('remove-profile-img-btn');
+    const fileInput = document.getElementById('cropper-file-input');
+    const imageElement = document.getElementById('cropper-image');
+    let cropperInstance = null;
+
+    document.getElementById('admin-avatar-trigger').addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        imageElement.src = event.target.result;
+        cropperModal.style.display = 'flex';
+        cropperModal.classList.remove('hidden');
+
+        if (cropperInstance) cropperInstance.destroy();
+        cropperInstance = new Cropper(imageElement, {
+          aspectRatio: 1,
+          viewMode: 1,
+          autoCropArea: 1,
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+
+    const closeCropperModal = () => {
+      cropperModal.style.display = 'none';
+      cropperModal.classList.add('hidden');
+      if (cropperInstance) {
+        cropperInstance.destroy();
+        cropperInstance = null;
+      }
+      fileInput.value = '';
+    };
+
+    closeBtn.addEventListener('click', closeCropperModal);
+    cancelBtn.addEventListener('click', closeCropperModal);
+
+    saveCropBtn.addEventListener('click', () => {
+      if (!cropperInstance) return;
+      saveCropBtn.disabled = true;
+      saveCropBtn.textContent = 'Saving...';
+
+      cropperInstance.getCroppedCanvas({
+        width: 400,
+        height: 400,
+      }).toBlob(async (blob) => {
+        if (!blob) {
+          Helpers.toast('Failed to crop image', 'error');
+          saveCropBtn.disabled = false;
+          saveCropBtn.textContent = 'Crop & Save';
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('image', blob, 'profile-avatar.jpg');
+
+        try {
+          await Api.patch('/users/update-me', formData);
+          Helpers.toast('Profile avatar updated successfully');
+          await Auth.refreshUser();
+          closeCropperModal();
+          displayProfile();
+        } catch (err) {
+          Helpers.toast(err.message || 'Failed to update avatar', 'error');
+          saveCropBtn.disabled = false;
+          saveCropBtn.textContent = 'Crop & Save';
+        }
+      }, 'image/jpeg', 0.9);
+    });
+
+    removeImgBtn.addEventListener('click', async () => {
+      if (!confirm('Are you sure you want to remove your profile image?')) return;
+      removeImgBtn.disabled = true;
+      try {
+        const formData = new FormData();
+        formData.append('removeImage', 'true'); // Backend logic would be needed to handle removing image, or just uploading empty. Assuming patching with removeImage=true or empty image works. For now let's just trigger update.
+        // Actually, many systems just patch an empty string.
+        formData.append('imageUrl', '');
+        await Api.patch('/users/update-me', formData);
+        Helpers.toast('Profile image removed.');
+        await Auth.refreshUser();
+        closeCropperModal();
+        displayProfile();
+      } catch (err) {
+        Helpers.toast(err.message || 'Failed to remove image', 'error');
+      } finally {
+        removeImgBtn.disabled = false;
       }
     });
   };

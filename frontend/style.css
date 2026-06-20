@@ -506,13 +506,7 @@ p {
 
 .section--alt  { background: var(--surface-1); }
 .section--dark { background: var(--surface-0); }
-.section--glow {
-  background: radial-gradient(
-    ellipse 80% 55% at 50% 100%,
-    var(--violet-10) 0%,
-    transparent 70%
-  );
-}
+.section--glow { background: var(--surface-0); }
 
 .section--cta {
   background: linear-gradient(
@@ -715,11 +709,7 @@ p {
 .bg-violet  { background: var(--violet); }
 .bg-tinted  { background: var(--violet-10); }
 
-.bg-glass {
-  background           : rgba(18,18,18,.70);
-  backdrop-filter      : blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-}
+.bg-glass { background: var(--surface-1); }
 
 /* Borders */
 .border        { border: 1px solid var(--border-default); }
@@ -744,7 +734,7 @@ p {
 .shadow-lg     { box-shadow: var(--shadow-lg); }
 .shadow-xl     { box-shadow: var(--shadow-xl); }
 .shadow-violet { box-shadow: var(--shadow-violet-md); }
-.shadow-glow   { box-shadow: var(--shadow-glow); }
+.shadow-glow { box-shadow: none; }
 .shadow-none   { box-shadow: none; }
 
 /* Width & height */
@@ -872,25 +862,11 @@ p {
 }
 
 /* Glow orb */
-.glow-orb {
-  position      : absolute;
-  border-radius : 50%;
-  filter        : blur(90px);
-  pointer-events: none;
-  z-index       : 0;
-  animation     : glow-pulse 6s ease-in-out infinite;
-}
+.glow-orb { display: none !important; }
 
-.glow-orb--violet {
-  background: var(--violet-10);
-  width     : 800px;
-  height    : 800px;
-}
+.glow-orb--violet { display: none !important; }
 
-.glow-orb--sm {
-  width : 400px;
-  height: 400px;
-}
+.glow-orb--sm { display: none !important; }
 
 
 /* ================================================================
@@ -915,13 +891,7 @@ p {
 }
 
 /* Scrolled state — JS adds .is-scrolled */
-.navbar.is-scrolled {
-  background           : rgba(18,18,18,.92);
-  border-color         : var(--border-subtle);
-  box-shadow           : 0 1px 0 var(--border-subtle), var(--shadow-md);
-  backdrop-filter      : blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-}
+.navbar.is-scrolled { background: rgba(18, 18, 18, 0.98); border-color: var(--border-subtle); box-shadow: var(--shadow-md); }
 
 .navbar__inner {
   display        : flex;
@@ -1080,8 +1050,7 @@ p {
   border-radius : var(--radius-2xl);
   padding       : var(--sp-2);
   box-shadow    : var(--shadow-xl), 0 0 0 1px var(--border-subtle);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  
   z-index       : var(--z-dropdown);
 
   /* Hidden by default */
@@ -1187,8 +1156,7 @@ p {
   right         : 0;
   bottom        : 0;
   background    : var(--black-95);
-  backdrop-filter: blur(28px) saturate(200%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  
   z-index       : var(--z-overlay);
   display       : flex;
   flex-direction: column;
@@ -1287,11 +1255,7 @@ p {
   content   : '';
   position  : absolute;
   inset     : 0;
-  background: radial-gradient(
-    ellipse 80% 60% at 50% 120%,
-    var(--violet-15) 0%,
-    transparent 65%
-  );
+  background: transparent;
   pointer-events: none;
   z-index   : 0;
 }
@@ -1559,7 +1523,7 @@ p {
 .btn--primary:hover {
   background  : transparent;
   color       : var(--violet);
-  box-shadow  : var(--shadow-violet-md), var(--shadow-glow);
+  box-shadow: var(--shadow-md);
   transform   : translateY(-3px);
 }
 
@@ -1696,11 +1660,7 @@ p {
   z-index   : 1;
 }
 
-.card:hover {
-  border-color: var(--border-violet);
-  box-shadow  : var(--shadow-violet-md), var(--shadow-lg), 0 0 0 1px var(--border-violet);
-  transform   : translateY(-8px);
-}
+.card:hover { border-color: var(--violet); box-shadow: 0 0 0 1px var(--violet-20), var(--shadow-lg); transform: translateY(-4px); }
 
 .card:hover::before { opacity: 1; }
 
@@ -1915,20 +1875,11 @@ p {
 
 /* ── Featured card ─────────────────────────────────────────────── */
 
-.card--featured {
-  background  : linear-gradient(145deg, var(--surface-2) 0%, var(--surface-1) 100%);
-  border-color: var(--border-violet);
-  box-shadow  : var(--shadow-violet-sm), var(--shadow-md);
-}
+.card--featured { background: var(--surface-2); border-color: var(--border-strong); box-shadow: var(--shadow-md); }
 
 /* ── Glass card ────────────────────────────────────────────────── */
 
-.card--glass {
-  background             : rgba(20,20,20,.60);
-  backdrop-filter        : blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border-color           : var(--border-subtle);
-}
+.card--glass { background: var(--surface-1); border-color: var(--border-subtle); }
 
 /* ── Stat card ─────────────────────────────────────────────────── */
 
@@ -2075,17 +2026,13 @@ p {
   align-items  : center;
   width        : 100%;
   height       : 54px;
-  padding      : 0 1.25rem;
-  background   : var(--surface-input);
-  border       : 1.5px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  padding      : 14px 16px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border       : 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
   color        : var(--text-primary);
   font-family  : var(--font-body);
-  font-size    : var(--text-base);
-  line-height  : 1;
-  transition   : border-color var(--t-base),
-                 background   var(--t-base),
-                 box-shadow   var(--t-slow);
+  transition   : border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .input:hover:not(:disabled):not(.input--error),
@@ -2096,10 +2043,9 @@ p {
 
 .input:focus:not(.input--error),
 .form-input:focus {
-  border-color: var(--border-focus);
-  background  : var(--surface-input);
-  box-shadow  : 0 0 0 3px var(--violet-15);
-  outline     : none;
+  outline      : none;
+  border-color : var(--violet);
+  background-color: rgba(255, 255, 255, 0.04);
 }
 
 .input:disabled,
@@ -2421,7 +2367,7 @@ p {
   translate    : -50% -60%;
   width        : 900px;
   height       : 600px;
-  background   : radial-gradient(ellipse, var(--violet-8) 0%, transparent 70%);
+  background: transparent;
   pointer-events: none;
   z-index      : 0;
 }
@@ -2729,8 +2675,8 @@ p {
 }
 
 @keyframes blur-in {
-  from { opacity: 0; filter: blur(16px); transform: scale(.95); }
-  to   { opacity: 1; filter: blur(0px);  transform: scale(1); }
+  from { opacity: 0;  transform: scale(.95); }
+  to   { opacity: 1;   transform: scale(1); }
 }
 
 @keyframes slide-in-up {
@@ -2925,9 +2871,7 @@ p {
   transition: box-shadow var(--t-slow);
 }
 
-.hover-glow:hover {
-  box-shadow: var(--shadow-violet-md), var(--shadow-glow);
-}
+.hover-glow:hover { box-shadow: 0 0 0 1px var(--violet-20), var(--shadow-lg); transform: translateY(-4px); }
 
 .hover-scale {
   transition: transform 200ms var(--ease-spring);
@@ -3228,8 +3172,7 @@ p {
   position   : fixed;
   inset      : 0;
   background : rgba(18,18,18,.90);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  
   z-index    : var(--z-modal);
   display    : flex;
   align-items: center;
@@ -3802,17 +3745,7 @@ p {
 
 /* ── Cursor glow (decorative) ─────────────────────────────────── */
 
-.cursor-glow {
-  position      : fixed;
-  width         : 320px;
-  height        : 320px;
-  border-radius : 50%;
-  background    : radial-gradient(circle, var(--violet-8) 0%, transparent 70%);
-  pointer-events: none;
-  z-index       : var(--z-below);
-  translate     : -50% -50%;
-  transition    : opacity .3s;
-}
+.cursor-glow { display: none !important; }
 
 
 /* ================================================================
@@ -3871,6 +3804,12 @@ p {
   :root {
     --nav-h: 68px;
     --pad  : 1.25rem;
+    --text-3xl  : clamp(1.5rem,   4vw,   2rem);
+    --text-4xl  : clamp(1.75rem,  5vw,   2.25rem);
+    --text-5xl  : clamp(2rem,     6vw,   2.5rem);
+    --text-6xl  : clamp(2.25rem,  7.5vw, 3rem);
+    --text-7xl  : clamp(2.5rem,   9vw,   3.5rem);
+    --text-8xl  : clamp(3rem,     11vw,  4.5rem);
   }
 
   .grid-2,
@@ -3942,6 +3881,8 @@ p {
 
 /* ── ≤ 639px — Small mobile ──────────────────────────────────── */
 @media (max-width: 639px) {
+  .navbar__actions { display: none; }
+
   .hero__actions {
     flex-direction: column;
     align-items   : stretch;
@@ -4371,26 +4312,11 @@ nav .is-active {
   padding-bottom: var(--sp-16);
 }
 
-.lux-hero__glow {
-  position      : absolute;
-  width         : clamp(300px, 50vw, 600px);
-  height        : clamp(300px, 50vw, 600px);
-  border-radius : var(--radius-full);
-  background    : radial-gradient(circle, var(--violet-15) 0%, transparent 70%);
-  filter        : blur(80px);
-  pointer-events: none;
-  z-index       : 1;
-}
+.lux-hero__glow { display: none !important; }
 
-.lux-hero__glow--tl {
-  top : -10%;
-  left: -10%;
-}
+.lux-hero__glow--tl { display: none !important; }
 
-.lux-hero__glow--br {
-  bottom: -10%;
-  right : -10%;
-}
+.lux-hero__glow--br { display: none !important; }
 
 .lux-hero__grid {
   position      : absolute;
@@ -4936,7 +4862,7 @@ nav .is-active {
 .lux-courses__bg {
   position      : absolute;
   inset         : 0;
-  background    : radial-gradient(circle at 80% 20%, var(--violet-5) 0%, transparent 60%);
+  background: transparent;
   pointer-events: none;
   z-index       : 1;
 }
@@ -5226,7 +5152,7 @@ nav .is-active {
 .lux-testimonials__bg {
   position      : absolute;
   inset         : 0;
-  background    : radial-gradient(circle at 15% 85%, var(--violet-5) 0%, transparent 60%);
+  background: transparent;
   pointer-events: none;
   z-index       : 1;
 }
@@ -5414,18 +5340,7 @@ nav .is-active {
   background   : var(--surface-0);
 }
 
-.lux-cta__glow {
-  position      : absolute;
-  top           : 50%;
-  left          : 50%;
-  transform     : translate(-50%, -50%);
-  width         : clamp(350px, 60vw, 700px);
-  height        : clamp(350px, 60vw, 700px);
-  background    : radial-gradient(circle, var(--violet-15) 0%, transparent 70%);
-  filter        : blur(80px);
-  pointer-events: none;
-  z-index       : 1;
-}
+.lux-cta__glow { display: none !important; }
 
 .lux-cta__grid {
   position      : absolute;
@@ -5696,8 +5611,14 @@ nav .is-active {
   .md\:flex-row {
     flex-direction: row !important;
   }
+  .md\:w-auto {
+    width: auto !important;
+  }
   .md\:w-72 {
     width: 18rem !important;
+  }
+  .gallery-preview-img-2 {
+    transform: translateY(20px);
   }
 }
 
@@ -5797,3 +5718,303 @@ nav .is-active {
   }
 }
 
+@media (max-width: 767px) {
+  .grid-2, .grid-3, .grid-4, .grid-5 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Disable custom scrollbars inside form controls to prevent rendering glitches / mild lines */
+input::-webkit-scrollbar,
+select::-webkit-scrollbar,
+textarea::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.play-audio-wrapper {
+  display: inline-flex;
+}
+
+@media (max-width: 767px) {
+  .audio-recital-card {
+    flex-direction: column !important;
+    text-align: center !important;
+    align-items: center !important;
+  }
+  .audio-recital-card > div {
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .audio-recital-card .play-audio-btn {
+    width: auto !important;
+    height: 30px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 12px !important;
+    font-size: 11px !important;
+  }
+  .audio-recital-card .flex-wrap {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: center !important;
+    margin-bottom: 8px !important;
+  }
+}
+
+/* Ensure all select elements render safely as block boxes */
+select,
+select.form-input {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Modal form overflow guard for 320px and below */
+@media (max-width: 360px) {
+  #portfolio-admin-modal .card {
+    padding: 16px !important;
+    margin: 8px !important;
+    max-width: calc(100vw - 16px) !important;
+    width: calc(100vw - 16px) !important;
+    overflow-x: hidden !important;
+  }
+  #portfolio-admin-modal .form-group {
+    overflow: hidden !important;
+  }
+  #portfolio-admin-modal select,
+  #portfolio-admin-modal input,
+  #portfolio-admin-modal textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+  }
+  #portfolio-admin-modal select {
+    font-size: 13px !important;
+  }
+}
+
+/* ── Admin sidebar icon tooltips ── */
+.card.w-full.md\:w-72 ul li {
+  position: relative;
+}
+/* Tooltip is hidden by default */
+.card.w-full.md\:w-72 ul li button[title]::after {
+  content: attr(title);
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--surface-3, #1e1e2e);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 9999;
+  pointer-events: none;
+  box-shadow: var(--shadow-md);
+  display: none;
+}
+/* Only show on hover/focus when in icon-only mode (≤360px) */
+@media (max-width: 360px) {
+  .card.w-full.md\:w-72 ul li button[title]:hover::after,
+  .card.w-full.md\:w-72 ul li button[title]:focus::after {
+    display: block;
+    animation: tooltipFadeIn 0.15s ease forwards;
+  }
+}
+@keyframes tooltipFadeIn {
+  from { opacity: 0; transform: translateY(-50%) translateX(-4px); }
+  to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+
+/* ── Live stream section: responsive header text wrapping ── */
+#admin-main-pane .body-xs.text-secondary {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* ================================================================
+   ADMIN DASHBOARD — Comprehensive Mobile / 320px Responsive Fixes
+   ================================================================ */
+
+/* ── Utility: horizontal scroll wrapper for tables ── */
+.overflow-x-auto {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.overflow-x-auto table {
+  min-width: 520px;
+}
+
+/* ── All admin tables: always scrollable and never break the layout ── */
+.admin-table-card {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+.admin-table-card table {
+  min-width: 520px;
+}
+
+/* ── Admin modal: responsive padding and max-width ── */
+#admin-modal,
+#profile-cropper-modal {
+  padding: 8px !important;
+  box-sizing: border-box !important;
+}
+
+#admin-modal > .card,
+#profile-cropper-modal > .card {
+  max-width: min(500px, calc(100vw - 16px)) !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* ── Responsive overrides at 1023px (tablet + mobile) ── */
+@media (max-width: 1023px) {
+  .card.w-full.md\:w-72 ul li button svg {
+    display: none;
+  }
+  .card.w-full.md\:w-72 ul li button {
+    font-size: 11px !important;
+    padding: 6px 8px !important;
+  }
+}
+
+/* ── Responsive overrides at 767px (small tablets / large phones) ── */
+@media (max-width: 767px) {
+  .admin-dashboard-scope li.flex.items-center.justify-between {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+  .admin-stat-card {
+    min-width: 0 !important;
+  }
+  /* Controls header: stack vertically */
+  .controls-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .controls-header > div:first-child {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  /* Controls dropdowns: keep as row but full width */
+  .controls-dropdowns {
+    width: 100% !important;
+  }
+  .admin-select-ctrl {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    width: auto !important;
+    box-sizing: border-box !important;
+  }
+  .admin-section-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .admin-section-header button {
+    width: 100% !important;
+  }
+}
+
+/* ── Responsive overrides at 480px (phones) ── */
+@media (max-width: 480px) {
+  #admin-modal .p-8,
+  #profile-cropper-modal .p-8 {
+    padding: 16px !important;
+  }
+  .card.w-full.md\:w-72 ul li button span {
+    font-size: 10px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px;
+  }
+  .admin-table-card .btn--sm {
+    padding: 4px 8px !important;
+    font-size: 10px !important;
+  }
+  .admin-stat-card .display-sm {
+    font-size: var(--text-2xl) !important;
+  }
+  .grid.grid-3.sm\:grid-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--sp-3) !important;
+  }
+}
+
+/* ── Responsive overrides at 360px (320–360px narrow phones) ── */
+@media (max-width: 360px) {
+  .card.w-full.md\:w-72 ul li button span {
+    display: none !important;
+  }
+  .card.w-full.md\:w-72 ul li button svg {
+    display: block !important;
+  }
+  .card.w-full.md\:w-72 ul li button {
+    padding: 8px !important;
+    justify-content: center !important;
+  }
+  .card.w-full.md\:w-72 ul li {
+    flex: 0 0 auto !important;
+  }
+  .grid.grid-3.sm\:grid-2,
+  .admin-dashboard-scope .grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+  #admin-modal > .card,
+  #profile-cropper-modal > .card {
+    max-width: calc(100vw - 16px) !important;
+    border-radius: var(--radius-md) !important;
+  }
+  #admin-modal .p-8,
+  #profile-cropper-modal .p-8 {
+    padding: 12px !important;
+  }
+  #admin-modal input,
+  #admin-modal select,
+  #admin-modal textarea {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    font-size: 13px !important;
+  }
+  /* Controls: search input full width, dropdowns side by side */
+  .controls-header #admin-search-input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .controls-dropdowns {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+  }
+  .admin-select-ctrl {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    font-size: 12px !important;
+    padding: 0 6px !important;
+  }
+  .admin-welcome {
+    padding: 16px !important;
+  }
+  .admin-welcome h2 {
+    font-size: var(--text-xl) !important;
+  }
+}

@@ -13,14 +13,14 @@ Router.register('/about', async () => {
 
   const html = `
     <!-- 1. ACADEMY STORY -->
-    <section class="section section--glow relative" style="padding-top: calc(var(--section-md) + 2rem);">
+    <section class="section  relative" style="padding-top: calc(var(--section-md) + 2rem);">
       <div class="container text-center">
-        <span class="eyebrow">Our Story</span>
-        <h1 class="display-lg text-gradient mb-6" style="font-size: clamp(var(--text-2xl), 6vw, var(--text-6xl)); line-height: 1.15;">
+        <span class="eyebrow mb-4">Our Story</span>
+        <h1 class="display-lg text-primary mb-6" style="font-size: clamp(var(--text-2xl), 6vw, var(--text-6xl)); line-height: 1.15;">
           Cultivating Musical Excellence <br>Across the Globe
         </h1>
         <p class="body-lg text-secondary mx-auto mb-12" style="max-width: 700px; font-size: clamp(var(--text-sm), 2vw, var(--text-lg));">
-          Established in Vienna, Keyboardist Academy emerged from a desire to combine traditional European conservatory rigor with cutting-edge, accessible digital pedagogy. We help students unlock authentic musical freedom.
+          Keyboardist Academy emerged from a desire to combine traditional training rigor with cutting-edge, accessible digital pedagogy. We help students unlock authentic musical freedom.
         </p>
       </div>
     </section>
@@ -29,20 +29,20 @@ Router.register('/about', async () => {
     <section class="section section--alt border-top border-bottom">
       <div class="container grid grid-2" style="gap: clamp(var(--sp-6), 6vw, var(--sp-12));">
         <!-- Vision -->
-        <div class="card p-8 border bg-glass flex col justify-between">
+        <div class="card p-8 border bg-overlay border-subtle flex col justify-between">
           <div>
             <div style="color: var(--violet); margin-bottom: 1rem;"><svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-            <h2 class="h3 text-white mb-4">Our Vision</h2>
+            <h2 class="h3 text-primary mb-4">Our Vision</h2>
             <p class="body-sm text-secondary">
               To be the premier global destination for online keyboard instruction, bridging the gap between mechanical dexterity and artistic expression. We envision a community of inspired, self-sufficient keyboardists who play with confidence and deep emotional clarity.
             </p>
           </div>
         </div>
         <!-- Mission -->
-        <div class="card p-8 border bg-glass flex col justify-between">
+        <div class="card p-8 border bg-overlay border-subtle flex col justify-between">
           <div>
             <div style="color: var(--violet); margin-bottom: 1rem;"><svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-            <h2 class="h3 text-white mb-4">Our Mission</h2>
+            <h2 class="h3 text-primary mb-4">Our Mission</h2>
             <p class="body-sm text-secondary">
               To demystify keyboard learning through structured curriculums, pristine HD close-up video tutorials, and dedicated practice files. We aim to make conservatory-level pedagogy accessible, encouraging consistent, perfect practice methods.
             </p>
@@ -55,15 +55,15 @@ Router.register('/about', async () => {
     <section class="section">
       <div class="container grid grid-2 items-center" style="gap: clamp(var(--sp-6), 6vw, var(--sp-16));">
         <div class="relative w-full overflow-hidden" style="border-radius: var(--radius-xl); border: 1px solid var(--border-default); aspect-ratio: 4/5;">
-          <img src="${App.getAssetPath('/assets/images/founder.png')}" alt="Founder Agilan" style="width: 100%; height: 100%; object-fit: cover;" />
+          <img src="${App.getAssetPath('/assets/images/founder.png')}" alt="Founder Karan" style="width: 100%; height: 100%; object-fit: cover;" / loading="lazy">
           <div class="absolute bottom-0 left-0 right-0 p-6" style="background: linear-gradient(to top, rgba(18,18,18,0.95) 0%, rgba(18,18,18,0) 100%); text-align: left;">
-            <h3 class="h4 text-white">Agilan</h3>
+            <h3 class="h4 text-primary">Karan</h3>
             <p class="body-xs text-accent uppercase font-bold tracking-wider mt-1">Founder & Principal Instructor</p>
           </div>
         </div>
         <div>
           <span class="eyebrow">A Message from Our Founder</span>
-          <h2 class="h2 text-white mb-6" style="font-size: clamp(var(--text-xl), 4vw, var(--text-4xl));">"Empowering Your Unique Musical Voice"</h2>
+          <h2 class="h2 text-primary mb-6" style="font-size: clamp(var(--text-xl), 4vw, var(--text-4xl));">"Empowering Your Unique Musical Voice"</h2>
           <p class="body-md text-secondary mb-6 italic">
             "We believe music is more than just mechanical notation; it is an art of creative expression. Our goal is to make conservatory-level training accessible, engaging, and highly rewarding for every student."
           </p>
@@ -85,20 +85,20 @@ Router.register('/about', async () => {
         </div>
 
         <div class="grid grid-3">
-          <div class="card p-6 border bg-glass">
-            <h3 class="h5 text-white mb-4">Structured Dexterity</h3>
+          <div class="card p-6 border bg-overlay border-subtle">
+            <h3 class="h5 text-primary mb-4">Structured Dexterity</h3>
             <p class="body-sm text-secondary">
               We focus on building strength and independence in weaker fingers (like the 4th and 5th) early on, using techniques inspired by Chopin and Liszt.
             </p>
           </div>
-          <div class="card p-6 border bg-glass">
-            <h3 class="h5 text-white mb-4">Harmonic Visualization</h3>
+          <div class="card p-6 border bg-overlay border-subtle">
+            <h3 class="h5 text-primary mb-4">Harmonic Visualization</h3>
             <p class="body-sm text-secondary">
               We teach how to visualize chord shapes, intervals, and key scale zones instantly, rather than rote mechanical memorization.
             </p>
           </div>
-          <div class="card p-6 border bg-glass">
-            <h3 class="h5 text-white mb-4">Ear-First Integration</h3>
+          <div class="card p-6 border bg-overlay border-subtle">
+            <h3 class="h5 text-primary mb-4">Ear-First Integration</h3>
             <p class="body-sm text-secondary">
               Music is an auditory art. We train students to hear intervals, chord extensions, and melodies before converting them to sheets.
             </p>
@@ -116,11 +116,11 @@ Router.register('/about', async () => {
         </div>
         <div class="grid grid-2" style="gap: clamp(var(--sp-4), 4vw, var(--sp-8));">
           <div class="card p-8 border">
-            <span class="badge badge--violet mb-4">Grade 8 ABRSM</span>
+            <span class="badge badge--violet mb-4">Advanced Level</span>
             <p class="body-base italic text-secondary mb-6" style="font-size: clamp(var(--text-xs), 2vw, var(--text-base));">
-              "Thanks to the advanced Chopin technique guide, I finally understood how to perform rubato cleanly without dragging the tempo. Passed my performance exam with high honors!"
+              "Thanks to the advanced Chopin technique guide, I finally understood how to perform rubato cleanly without dragging the tempo. Successfully completed my performance level assessment!"
             </p>
-            <h4 class="body-md text-white font-semibold">&mdash; Franz Liszt</h4>
+            <h4 class="body-md text-primary font-semibold">&mdash; Chennai Offline Student</h4>
             <span class="body-xs text-tertiary">Classical Student</span>
           </div>
           <div class="card p-8 border">
@@ -128,7 +128,7 @@ Router.register('/about', async () => {
             <p class="body-base italic text-secondary mb-6" style="font-size: clamp(var(--text-xs), 2vw, var(--text-base));">
               "The Jazz Harmony section completely transformed my playing. I was stuck replicating sheet music for years; now I can improvise chord variations over standard progressions easily."
             </p>
-            <h4 class="body-md text-white font-semibold">&mdash; Bill Evans</h4>
+            <h4 class="body-md text-primary font-semibold">&mdash; Improvisation Alumnus</h4>
             <span class="body-xs text-tertiary">Jazz Keyboard Student</span>
           </div>
         </div>
@@ -145,37 +145,51 @@ Router.register('/about', async () => {
 
         <div class="flex col gap-8 mx-auto w-full" style="max-width: 800px; position: relative;">
           <!-- Timeline Vertical line in CSS background -->
-          <div class="card p-6 border flex sm\:flex-col gap-6 bg-glass items-center w-full">
+          <div class="card p-6 border flex sm\:flex-col gap-6 bg-overlay border-subtle items-center w-full">
             <div style="font-size: 32px; font-weight: var(--fw-bold); color: var(--violet);" class="flex-shrink-0">2020</div>
             <div class="flex-1 text-left">
-              <h3 class="h5 text-white">Academy Founded</h3>
-              <p class="body-xs text-secondary mt-1">Launched Keyboardist Academy in Vienna with a single classical syllabus and 50 local conservatory students.</p>
+              <h3 class="h5 text-primary">Academy Founded</h3>
+              <p class="body-xs text-secondary mt-1">Launched Keyboardist Academy in Avadi with a single classical syllabus and local keyboard students.</p>
             </div>
           </div>
 
-          <div class="card p-6 border flex sm\:flex-col gap-6 bg-glass items-center w-full">
+          <div class="card p-6 border flex sm\:flex-col gap-6 bg-overlay border-subtle items-center w-full">
             <div style="font-size: 32px; font-weight: var(--fw-bold); color: var(--violet);" class="flex-shrink-0">2022</div>
             <div class="flex-1 text-left">
-              <h3 class="h5 text-white">Digital Platform Launch</h3>
+              <h3 class="h5 text-primary">Digital Platform Launch</h3>
               <p class="body-xs text-secondary mt-1">Migrated our curriculum online, introducing multi-angle HD lessons, student dashboard, and automated progress tools.</p>
             </div>
           </div>
 
-          <div class="card p-6 border flex sm\:flex-col gap-6 bg-glass items-center w-full">
+          <div class="card p-6 border flex sm\:flex-col gap-6 bg-overlay border-subtle items-center w-full">
             <div style="font-size: 32px; font-weight: var(--fw-bold); color: var(--violet);" class="flex-shrink-0">2024</div>
             <div class="flex-1 text-left">
-              <h3 class="h5 text-white">Jazz Department Open</h3>
-              <p class="body-xs text-secondary mt-1">Invited prestigious modern instructors to build out our contemporary and jazz keyboard improvisational branches.</p>
+              <h3 class="h5 text-primary">Improvisation Department Open</h3>
+              <p class="body-xs text-secondary mt-1">Expanded our syllabus to build out contemporary and jazz keyboard improvisational branches.</p>
             </div>
           </div>
 
-          <div class="card p-6 border flex sm\:flex-col gap-6 bg-glass items-center w-full">
+          <div class="card p-6 border flex sm\:flex-col gap-6 bg-overlay border-subtle items-center w-full">
             <div style="font-size: 32px; font-weight: var(--fw-bold); color: var(--violet);" class="flex-shrink-0">2026</div>
             <div class="flex-1 text-left">
-              <h3 class="h5 text-white">5,000+ Enrolled Students</h3>
-              <p class="body-xs text-secondary mt-1">Celebrating our global community of pianists practicing structured, conservatory-grade methods daily.</p>
+              <h3 class="h5 text-primary">5,000+ Enrolled Students</h3>
+              <p class="body-xs text-secondary mt-1">Celebrating our global community of pianists practicing structured, keyboard methods daily.</p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. CALL TO ACTION -->
+    <section class="section border-top">
+      <div class="container text-center py-8">
+        <h2 class="display-md text-primary mb-6" style="font-size: clamp(var(--text-xl), 5vw, var(--text-4xl));">Start Your Musical Journey Today</h2>
+        <p class="body-md text-secondary mb-12 mx-auto" style="max-width: 600px;">
+          Join Keyboardist Academy to learn structured, conservatory-grade methods paced around your schedule.
+        </p>
+        <div class="flex gap-4 sm\:flex-col w-full justify-center items-center">
+          <a href="/register" class="btn btn--primary btn--lg w-fit text-center" style="min-width: 200px;">Register Free</a>
+          <a href="/contact" class="btn btn--outline btn--lg w-fit text-center" style="min-width: 200px;">Inquire Admissions</a>
         </div>
       </div>
     </section>

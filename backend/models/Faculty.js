@@ -25,9 +25,12 @@ const facultySchema = new mongoose.Schema(
       type: String,
       required: [true, 'Bio is required.']
     },
-    image: {
+    imageUrl: {
       type: String,
       default: 'default-faculty.webp'
+    },
+    publicId: {
+      type: String
     },
     education: {
       type: [String],
@@ -36,6 +39,14 @@ const facultySchema = new mongoose.Schema(
     specialties: {
       type: [String],
       default: []
+    },
+    yearsOfExp: {
+      type: Number,
+      default: 0
+    },
+    isPublished: {
+      type: Boolean,
+      default: true
     }
   },
   { timestamps: true }

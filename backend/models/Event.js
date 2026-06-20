@@ -33,9 +33,12 @@ const eventSchema = new mongoose.Schema(
       required: [true, 'Event location is required.'],
       trim: true
     },
-    image: {
+    imageUrl: {
       type: String,
       default: 'default-event.webp'
+    },
+    publicId: {
+      type: String
     }
   },
   { timestamps: true }

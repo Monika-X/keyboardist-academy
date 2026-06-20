@@ -1,6 +1,6 @@
 /**
  * ============================================================
- *  KEYBOARDIST ACADEMY — Faculty Page View
+ *  KEYBOARDIST ACADEMY — Faculty Page View (Dynamic Connection)
  *  frontend/pages/faculty.js
  * ============================================================
  */
@@ -11,12 +11,50 @@ Router.register('/faculty', async () => {
   const app = document.getElementById('app');
   if (!app) return;
 
+  const FALLBACK_FACULTY = [
+    {
+      _id: 'fallback-1',
+      name: 'Karan Mehta',
+      role: 'Founder & Principal Instructor',
+      yearsOfExp: 15,
+      bio: 'Karan is the Founder and Principal Instructor of Keyboardist Academy. With over 15 years of experience in concert performance and composition, he guides students of all levels toward technical mastery and musical expression.',
+      specialties: ['Classical Piano', 'Romantic technique', 'dynamic expression', 'classical score interpretation'],
+      imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      _id: 'fallback-2',
+      name: 'Arun Kumar',
+      role: 'Senior Keyboard Instructor',
+      yearsOfExp: 12,
+      bio: 'Arun specializes in contemporary chord voicings, arpeggios, and improvisational keyboard techniques, helping intermediate students transition smoothly into modern playing.',
+      specialties: ['Jazz Keyboard', 'shell voicings', 'secondary dominants', 'contemporary jazz improvisation techniques'],
+      imageUrl: 'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&q=80&w=800'
+    },
+    {
+      _id: 'fallback-3',
+      name: 'Priya Raman',
+      role: 'Music Theory Instructor',
+      yearsOfExp: 10,
+      bio: 'Priya Raman specializes in music theory, sight reading, ear training, beginner student development, performance preparation, and foundational keyboard education. She supports students across beginner and intermediate learning pathways.',
+      specialties: ['Music Theory', 'sheet score analysis', 'key signature recognition', 'sight-reading dexterity'],
+      imageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=800'
+    }
+  ];
+
+  const getImageUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+      return url;
+    }
+    return App.getAssetPath(url);
+  };
+
   const html = `
     <!-- 1. HERO -->
-    <section class="section section--glow relative" style="padding-top: calc(var(--section-md) + 2rem);">
+    <section class="section  relative" style="padding-top: calc(var(--section-md) + 2rem);">
       <div class="container text-center">
         <span class="eyebrow">Our Faculty</span>
-        <h1 class="display-lg text-gradient mb-6" style="font-size: clamp(var(--text-2xl), 6vw, var(--text-6xl)); line-height: 1.15;">
+        <h1 class="display-lg text-primary mb-6" style="font-size: clamp(var(--text-2xl), 6vw, var(--text-6xl)); line-height: 1.15;">
           Learn from World-Class <br>Concert Pianists
         </h1>
         <p class="body-lg text-secondary mx-auto mb-12" style="max-width: 700px; font-size: clamp(var(--text-sm), 2vw, var(--text-base));">
@@ -33,54 +71,21 @@ Router.register('/faculty', async () => {
           <h2 class="section-header__title">Meet the Instructors</h2>
         </div>
 
-        <div class="grid grid-3">
-          <!-- Faculty Card 1 -->
-          <div class="card hover\:scale overflow-hidden flex col justify-between">
-            <div>
-              <div class="relative bg-overlay" style="height: 240px; display: flex; align-items: center; justify-content: center; color: var(--violet);"><svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline-block;vertical-align:middle;"><rect x="2" y="3" width="20" height="18" rx="2" ry="2"/><line x1="6" y1="3" x2="6" y2="21"/><line x1="10" y1="3" x2="10" y2="21"/><line x1="14" y1="3" x2="14" y2="21"/><line x1="18" y1="3" x2="18" y2="21"/></svg></div>
-              <div class="p-6">
-                <span class="label text-accent">Classical Piano</span>
-                <h3 class="h5 text-white mt-2 mb-1">Ludwig Beethoven</h3>
-                <p class="body-xs text-tertiary">Juilliard School &bull; 15 Years Exp</p>
-                <p class="body-xs text-secondary mt-4">Specializes in Romantic technique, dynamic expression, and Chopin score interpretation.</p>
+        <div id="faculty-grid-container" class="grid grid-3">
+          <!-- Skeletons (Shown initially) -->
+          ${[1, 2, 3].map(() => `
+            <div class="card bg-overlay border-subtle overflow-hidden flex col justify-between" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
+              <div>
+                <div class="skeleton skeleton--card" style="height: 240px; border-radius: 0;"></div>
+                <div class="p-6">
+                  <div class="skeleton skeleton--text w-1/3 mb-4" style="height: 12px;"></div>
+                  <div class="skeleton skeleton--text w-3/4 mb-4" style="height: 20px;"></div>
+                  <div class="skeleton skeleton--text w-full mb-2"></div>
+                  <div class="skeleton skeleton--text w-5/6 mb-2"></div>
+                </div>
               </div>
             </div>
-            <div class="p-6 pt-0">
-              <a href="#profiles" class="btn btn--outline btn--sm w-full text-center">View Profile</a>
-            </div>
-          </div>
-
-          <!-- Faculty Card 2 -->
-          <div class="card hover\:scale overflow-hidden flex col justify-between">
-            <div>
-              <div class="relative bg-overlay" style="height: 240px; display: flex; align-items: center; justify-content: center; color: var(--violet);"><svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/></svg></div>
-              <div class="p-6">
-                <span class="label text-accent">Jazz Keyboard</span>
-                <h3 class="h5 text-white mt-2 mb-1">Bill Evans</h3>
-                <p class="body-xs text-tertiary">Berklee College &bull; 12 Years Exp</p>
-                <p class="body-xs text-secondary mt-4">Specializes in shell voicings, secondary dominants, and contemporary modal jazz improvisation.</p>
-              </div>
-            </div>
-            <div class="p-6 pt-0">
-              <a href="#profiles" class="btn btn--outline btn--sm w-full text-center">View Profile</a>
-            </div>
-          </div>
-
-          <!-- Faculty Card 3 -->
-          <div class="card hover\:scale overflow-hidden flex col justify-between">
-            <div>
-              <div class="relative bg-overlay" style="height: 240px; display: flex; align-items: center; justify-content: center; color: var(--violet);"><svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-              <div class="p-6">
-                <span class="label text-accent">Music Theory</span>
-                <h3 class="h5 text-white mt-2 mb-1">Clara Schumann</h3>
-                <p class="body-xs text-tertiary">Vienna Conservatory &bull; 10 Years Exp</p>
-                <p class="body-xs text-secondary mt-4">Specializes in sheet score analysis, key signature recognition, and sight-reading dexterity.</p>
-              </div>
-            </div>
-            <div class="p-6 pt-0">
-              <a href="#profiles" class="btn btn--outline btn--sm w-full text-center">View Profile</a>
-            </div>
-          </div>
+          `).join('')}
         </div>
       </div>
     </section>
@@ -93,62 +98,39 @@ Router.register('/faculty', async () => {
           <h2 class="section-header__title">Biographies & Experience</h2>
         </div>
 
-        <!-- Instructor profile 1 -->
-        <div class="grid grid-2 items-center" style="gap: clamp(var(--sp-6), 6vw, var(--sp-16));">
-          <div class="card p-8 border bg-overlay text-center">
-            <div style="font-size: 80px;" class="mb-4"><svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
-            <h3 class="h4 text-white">Ludwig Beethoven</h3>
-            <p class="body-xs text-accent uppercase font-bold tracking-wider mt-2">Principal Classical Instructor</p>
-          </div>
-          <div>
-            <h3 class="h3 text-white mb-4">Background & Experience</h3>
-            <p class="body-sm text-secondary mb-6">
-              Ludwig holds a Master of Music degree in Piano Performance from the Juilliard School. He has performed as a soloist with orchestras across Europe and has spent over 15 years guiding intermediate and advanced pianists towards technical mastery.
-            </p>
-            <h4 class="h5 text-white mb-3">Key Achievements</h4>
-            <ul class="flex col gap-2 text-sm text-secondary">
-              <li><span class="text-accent">&bull;</span> Winner, Vienna International Piano Competition (2014)</li>
-              <li><span class="text-accent">&bull;</span> Published technique manuals on Chopin Etudes interpretation</li>
-              <li><span class="text-accent">&bull;</span> Trained over 500 students who successfully passed Grade 8 ABRSM</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- Instructor profile 2 -->
-        <div class="grid grid-2 items-center" style="gap: clamp(var(--sp-6), 6vw, var(--sp-16));">
-          <div>
-            <h3 class="h3 text-white mb-4">Background & Experience</h3>
-            <p class="body-sm text-secondary mb-6">
-              Bill Evans earned his degree in Contemporary Keyboard from Berklee College of Music. An active recording jazz pianist, Bill specializes in breaking down complex modal concepts, voicing arrangements, and polyrhythms into logical, actionable exercises.
-            </p>
-            <h4 class="h5 text-white mb-3">Key Achievements</h4>
-            <ul class="flex col gap-2 text-sm text-secondary">
-              <li><span class="text-accent">&bull;</span> Recorded 5 studio jazz albums with local European trios</li>
-              <li><span class="text-accent">&bull;</span> Hosted masterclass webinars with over 10,000 attendees</li>
-              <li><span class="text-accent">&bull;</span> Consultant for conservatory jazz syllabus design</li>
-            </ul>
-          </div>
-          <div class="card p-8 border bg-overlay text-center">
-            <div style="font-size: 80px;" class="mb-4"><svg class="icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/></svg></div>
-            <h3 class="h4 text-white">Bill Evans</h3>
-            <p class="body-xs text-accent uppercase font-bold tracking-wider mt-2">Head of Jazz Department</p>
-          </div>
+        <div id="faculty-profiles-container" class="flex col gap-16">
+          <!-- Skeletons (Shown initially) -->
+          ${[1, 2].map(() => `
+            <div class="grid grid-2 items-center" style="gap: clamp(var(--sp-6), 6vw, var(--sp-16));">
+              <div class="card p-8 border bg-overlay text-center flex col items-center">
+                <div class="skeleton skeleton--avatar mb-6" style="width: 120px; height: 120px;"></div>
+                <div class="skeleton skeleton--text w-1/2 mb-4" style="height: 20px;"></div>
+                <div class="skeleton skeleton--text w-1/3" style="height: 12px;"></div>
+              </div>
+              <div>
+                <div class="skeleton skeleton--text w-1/3 mb-6" style="height: 24px;"></div>
+                <div class="skeleton skeleton--text w-full mb-4"></div>
+                <div class="skeleton skeleton--text w-5/6 mb-6"></div>
+                <div class="skeleton skeleton--text w-1/4 mb-4" style="height: 18px;"></div>
+                <div class="skeleton skeleton--text w-3/4 mb-2"></div>
+                <div class="skeleton skeleton--text w-2/3"></div>
+              </div>
+            </div>
+          `).join('')}
         </div>
       </div>
     </section>
 
     <!-- 6. CTA -->
-    <section class="section section--glow border-top">
+    <section class="section  border-top">
       <div class="container text-center py-8">
         <span class="eyebrow">Consultation</span>
-        <h2 class="display-md text-white mb-6" style="font-size: clamp(var(--text-xl), 5vw, var(--text-4xl));">Learn with Our Expert Team</h2>
+        <h2 class="display-md text-primary mb-6" style="font-size: clamp(var(--text-xl), 5vw, var(--text-4xl));">Learn with Our Expert Team</h2>
         <p class="body-md text-secondary mb-12 mx-auto" style="max-width: 600px;">
           Create a free account to access basic piano posture lessons, custom sheet notation files, and track your progress.
         </p>
         <div class="flex gap-4 sm\:flex-col w-full justify-center items-center">
-          <a href="/register" class="btn btn--primary btn--lg w-fit text-center" style="min-width: 200px;">Register Free</a>
+          <a href="/contact" class="btn btn--primary btn--lg w-fit text-center" style="min-width: 200px;">Register Free</a>
           <a href="/contact" class="btn btn--outline btn--lg w-fit text-center" style="min-width: 200px;">Contact Faculty</a>
         </div>
       </div>
@@ -158,4 +140,83 @@ Router.register('/faculty', async () => {
   app.innerHTML = App.wrapWithLayout(html);
   App.initNavbarScroll();
   App.highlightActiveLink('/faculty');
+
+  const renderRoster = (facultyList) => {
+    const gridContainer = document.getElementById('faculty-grid-container');
+    const profilesContainer = document.getElementById('faculty-profiles-container');
+    if (!gridContainer || !profilesContainer) return;
+
+    if (facultyList.length === 0) {
+      gridContainer.innerHTML = `
+        <div class="card p-8 text-center border bg-overlay w-full" style="grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
+          <h3 class="h4 text-primary mb-2">No Instructors Found</h3>
+          <p class="body-sm text-secondary">Our faculty roster is currently being updated. Please check back later!</p>
+        </div>
+      `;
+      profilesContainer.innerHTML = '';
+      return;
+    }
+
+    // Render Grid Cards
+    gridContainer.innerHTML = facultyList.map(f => `
+      <div class="card hover\:scale overflow-hidden flex col justify-between">
+        <div>
+          <div class="relative overflow-hidden" style="height: 240px;">
+            <img src="${getImageUrl(f.imageUrl)}" alt="${f.name}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" loading="lazy">
+          </div>
+          <div class="p-6">
+            <span class="label text-accent">${(f.specialties && f.specialties[0]) || 'Instructor'}</span>
+            <h3 class="h5 text-primary mt-2 mb-1">${f.name}</h3>
+            <p class="body-xs text-tertiary">${f.yearsOfExp || 0} Years Exp</p>
+            <p class="body-xs text-secondary mt-4">${f.bio.split('.')[0]}.</p>
+          </div>
+        </div>
+        <div class="p-6 pt-0">
+          <a href="#profiles" class="btn btn--outline btn--sm w-full text-center">View Profile</a>
+        </div>
+      </div>
+    `).join('');
+
+    // Render Biographies & Highlights (Alternating structure)
+    profilesContainer.innerHTML = facultyList.map((f, i) => {
+      const isEven = i % 2 === 0;
+      const cardHtml = `
+        <div class="card p-8 border bg-overlay text-center">
+          <div class="mx-auto mb-6 overflow-hidden rounded-full border border-subtle" style="width: 120px; height: 120px;">
+            <img src="${getImageUrl(f.imageUrl)}" alt="${f.name}" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+          </div>
+          <h3 class="h4 text-primary">${f.name}</h3>
+          <p class="body-xs text-accent uppercase font-bold tracking-wider mt-2">${f.role}</p>
+        </div>
+      `;
+      const textHtml = `
+        <div>
+          <h3 class="h3 text-primary mb-4">Background & Experience</h3>
+          <p class="body-sm text-secondary mb-6">${f.bio}</p>
+          <h4 class="h5 text-primary mb-3">Key Highlights</h4>
+          <ul class="flex col gap-2 text-sm text-secondary">
+            <li><span class="text-accent">&bull;</span> Over ${f.yearsOfExp || 0} years of active teaching and performance experience</li>
+            ${(f.specialties || []).map(s => `<li><span class="text-accent">&bull;</span> Specializes in ${s}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+
+      return `
+        <div class="grid grid-2 items-center" style="gap: clamp(var(--sp-6), 6vw, var(--sp-16));">
+          ${isEven ? cardHtml + textHtml : textHtml + cardHtml}
+        </div>
+        ${i < facultyList.length - 1 ? '<div class="divider"></div>' : ''}
+      `;
+    }).join('');
+  };
+
+  try {
+    const res = await Api.get('/faculty?isPublished=true');
+    const faculty = res.data.faculty || [];
+    // Show dynamic data
+    renderRoster(faculty);
+  } catch (err) {
+    console.warn('API error fetching faculty, falling back to static team:', err);
+    renderRoster(FALLBACK_FACULTY);
+  }
 });

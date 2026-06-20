@@ -28,26 +28,8 @@ const App = (() => {
             <li><a href="/about" class="nav-link" id="nav-about">About</a></li>
             <li><a href="/courses" class="nav-link" id="nav-courses">Courses</a></li>
             
-            <!-- Dynamic Dropdown for More Links -->
-            <li class="nav-dropdown-wrapper" style="position: relative;">
-              <button class="nav-link dropdown-toggle" style="display:flex;align-items:center;gap:0.25rem;">
-                Explore
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M1 1l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <ul class="nav-dropdown-menu">
-                <li><a href="/online-classes" class="dropdown-link">Online Classes</a></li>
-                <li><a href="/offline-classes" class="dropdown-link">Offline Classes</a></li>
-                <li><a href="/faculty" class="dropdown-link">Faculty</a></li>
-                <li><a href="/portfolio" class="dropdown-link">Portfolio</a></li>
-                <li><a href="/gallery" class="dropdown-link">Gallery</a></li>
-                <li><a href="/events" class="dropdown-link">Events</a></li>
-                <li><a href="/testimonials" class="dropdown-link">Testimonials</a></li>
-                <li><a href="/admission" class="dropdown-link">Admission</a></li>
-                <li><a href="/faq" class="dropdown-link">FAQ</a></li>
-              </ul>
-            </li>
+            <!-- Explore Page -->
+            <li><a href="/explore" class="nav-link" id="nav-explore">Explore</a></li>
 
             <li><a href="/contact" class="nav-link" id="nav-contact">Contact</a></li>
             ${isLoggedIn && Auth.isAdmin() ? `<li><a href="/admin" class="nav-link" id="nav-admin">Admin Panel</a></li>` : ''}
@@ -81,15 +63,7 @@ const App = (() => {
             <li><a href="/" onclick="App.toggleMobileMenu()" class="nav-link">Home</a></li>
             <li><a href="/about" onclick="App.toggleMobileMenu()" class="nav-link">About</a></li>
             <li><a href="/courses" onclick="App.toggleMobileMenu()" class="nav-link">Courses</a></li>
-            <li><a href="/online-classes" onclick="App.toggleMobileMenu()" class="nav-link">Online Classes</a></li>
-            <li><a href="/offline-classes" onclick="App.toggleMobileMenu()" class="nav-link">Offline Classes</a></li>
-            <li><a href="/faculty" onclick="App.toggleMobileMenu()" class="nav-link">Faculty</a></li>
-            <li><a href="/portfolio" onclick="App.toggleMobileMenu()" class="nav-link">Portfolio</a></li>
-            <li><a href="/gallery" onclick="App.toggleMobileMenu()" class="nav-link">Gallery</a></li>
-            <li><a href="/events" onclick="App.toggleMobileMenu()" class="nav-link">Events</a></li>
-            <li><a href="/testimonials" onclick="App.toggleMobileMenu()" class="nav-link">Testimonials</a></li>
-            <li><a href="/admission" onclick="App.toggleMobileMenu()" class="nav-link">Admission</a></li>
-            <li><a href="/faq" onclick="App.toggleMobileMenu()" class="nav-link">FAQ</a></li>
+            <li><a href="/explore" onclick="App.toggleMobileMenu()" class="nav-link">Explore</a></li>
             <li><a href="/contact" onclick="App.toggleMobileMenu()" class="nav-link">Contact</a></li>
             ${isLoggedIn ? `
               ${Auth.isAdmin() ? `<li><a href="/admin" onclick="App.toggleMobileMenu()" class="nav-link">Admin Panel</a></li>` : ''}

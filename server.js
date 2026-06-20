@@ -7,11 +7,18 @@
  * ============================================================
  */
 
-const app = require('./backend/app');
-const connectDB = require('./backend/config/database');
-
 // ── Load environment variables ───────────────────────────────
 require('dotenv').config();
+
+//DEBUG CHECK
+console.log("ENV CHECK:", {
+  cloud: process.env.CLOUDINARY_CLOUD_NAME,
+  key: process.env.CLOUDINARY_API_KEY,
+  secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const app = require('./backend/app');
+const connectDB = require('./backend/config/database');
 
 const PORT = process.env.PORT || 5000;
 
@@ -28,7 +35,7 @@ const server = app.listen(PORT, () => {
 // ── Graceful shutdown on unhandled promise rejections ────────
 process.on('unhandledRejection', (err) => {
   console.error(`❌  Unhandled Rejection: ${err.message}`);
-  server.close(() => process.exit(1));
+  // Do not crash the server on Cloudinary 403 errors during development
 });
 
 // ── Graceful shutdown on uncaught exceptions ─────────────────

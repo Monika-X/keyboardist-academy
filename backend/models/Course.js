@@ -72,7 +72,8 @@ const courseSchema = new mongoose.Schema(
     isFree: { type: Boolean, default: false },
 
     // ── Media ─────────────────────────────────────────────
-    thumbnail : { type: String, default: 'default-course.webp' },
+    imageUrl: { type: String, default: 'default-course.webp' },
+    publicId  : { type: String },
     previewVideo: { type: String, default: '' },
 
     // ── Content ───────────────────────────────────────────
@@ -104,7 +105,6 @@ const courseSchema = new mongoose.Schema(
 );
 
 // ── Indexes ──────────────────────────────────────────────────
-courseSchema.index({ slug: 1 });
 courseSchema.index({ instructor: 1 });
 courseSchema.index({ category: 1, level: 1 });
 courseSchema.index({ isPublished: 1, isFeatured: 1 });
