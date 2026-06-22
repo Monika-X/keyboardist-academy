@@ -22,21 +22,21 @@ Router.register('/', async () => {
   const html = `
     <!-- 1. HERO — Typography Driven -->
     <section class="section section--lg relative flex items-center min-h-screen" style="position: relative; overflow: hidden;">
-      <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.7; filter: contrast(1.1) brightness(0.9);">
+      <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.9; filter: contrast(1.1) brightness(0.9);">
         <source src="https://res.cloudinary.com/doij66qnv/video/upload/v1782108360/keyboardist_academy/videos/g0lxolxvojceom8vga5a.mp4" type="video/mp4">
       </video>
-      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.5) 0%, rgba(18,18,18,1) 100%); z-index: 1;"></div>
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1;"></div>
       <div class="container text-center reveal" style="position: relative; z-index: 2;">
-        <h1 class="display-lg mb-6" style="font-size: clamp(var(--text-xl), 8vw, var(--text-6xl)); line-height: 1.15;">
-          <span class="block text-secondary" style="white-space: nowrap;">Master the Piano.</span>
-          <span class="block text-primary mt-2" style="white-space: nowrap;">Redefine your sound.</span>
+        <h1 class="display-lg mb-6" style="font-size: clamp(var(--text-xl), 8vw, var(--text-6xl)); line-height: 1.15; color: #ffffff;">
+          <span class="block" style="white-space: nowrap; opacity: 0.9;">Master the Piano.</span>
+          <span class="block mt-2" style="white-space: nowrap; color: #ffffff;">Redefine your sound.</span>
         </h1>
-        <p class="body-lg text-tertiary mx-auto mb-12" style="max-width: 600px;">
+        <p class="body-lg mx-auto mb-12" style="max-width: 600px; color: rgba(255, 255, 255, 0.85);">
           From first chord to concert hall. Our conservatory-grade curriculum is built for serious musicians who refuse to compromise on quality.
         </p>
         <div class="flex flex-col md:flex-row justify-center items-center gap-4 w-full px-4">
           <a href="/courses" class="btn btn--primary btn--xl w-full md:w-auto" style="justify-content: center;">Begin Your Journey</a>
-          <a href="/about" class="btn btn--ghost btn--xl w-full md:w-auto" style="justify-content: center;">Explore Curriculum</a>
+          <a href="/about" class="btn btn--xl w-full md:w-auto" style="justify-content: center; background: transparent; color: #ffffff; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(8px);">Explore Curriculum</a>
         </div>
       </div>
     </section>
@@ -46,19 +46,19 @@ Router.register('/', async () => {
       <div class="container">
         <div class="grid grid-4 text-center reveal stagger-children">
           <div>
-            <div class="display-md text-primary mb-2">15+</div>
+            <div class="display-md text-primary mb-2">15<span style="font-family: var(--font-body); font-weight: var(--fw-light);">+</span></div>
             <div class="text-xs text-secondary uppercase fw-semibold" style="letter-spacing: .08em;">Years Teaching</div>
           </div>
           <div>
-            <div class="display-md text-primary mb-2">5,000+</div>
+            <div class="display-md text-primary mb-2">5,000<span style="font-family: var(--font-body); font-weight: var(--fw-light);">+</span></div>
             <div class="text-xs text-secondary uppercase fw-semibold" style="letter-spacing: .08em;">Alumni Worldwide</div>
           </div>
           <div>
-            <div class="display-md text-primary mb-2">120+</div>
+            <div class="display-md text-primary mb-2">120<span style="font-family: var(--font-body); font-weight: var(--fw-light);">+</span></div>
             <div class="text-xs text-secondary uppercase fw-semibold" style="letter-spacing: .08em;">HD Masterclasses</div>
           </div>
           <div>
-            <div class="display-md text-primary mb-2">4.9/5</div>
+            <div class="display-md text-primary mb-2">4.9<span style="font-family: var(--font-body); font-weight: var(--fw-light); margin: 0 4px;">/</span>5</div>
             <div class="text-xs text-secondary uppercase fw-semibold" style="letter-spacing: .08em;">Student Rating</div>
           </div>
         </div>
@@ -198,10 +198,10 @@ Router.register('/', async () => {
         </div>
         <div class="flex flex-wrap justify-center stagger-children mt-8" style="gap: var(--sp-6);">
           ${events.slice(0, 3).map(ev => {
-            const dateObj = new Date(ev.date);
-            const monthShort = dateObj.toLocaleString('en-US', { month: 'short' }).toUpperCase();
-            const dayNum = dateObj.getDate().toString().padStart(2, '0');
-            return `
+    const dateObj = new Date(ev.date);
+    const monthShort = dateObj.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+    const dayNum = dateObj.getDate().toString().padStart(2, '0');
+    return `
               <div class="card" style="padding: var(--sp-6); width: 100%; max-width: 380px; flex: 1 1 300px;">
                 <div class="flex justify-between items-start mb-6">
                   <div class="text-center bg-base border-subtle rounded-md" style="padding: var(--sp-2) var(--sp-3); border: 1px solid var(--border-subtle);">
@@ -215,7 +215,7 @@ Router.register('/', async () => {
                 <div class="text-xs text-secondary fw-medium border-top" style="padding-top: var(--sp-4);">${Helpers.formatTime(ev.time)}</div>
               </div>
             `;
-          }).join('')}
+  }).join('')}
           ${events.length === 0 ? `<p class="text-tertiary text-center w-full" style="grid-column: 1 / -1;">No scheduled events at this time.</p>` : ''}
         </div>
         <div class="text-center mt-12">

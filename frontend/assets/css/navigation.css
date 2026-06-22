@@ -28,9 +28,9 @@
 
 /* Scrolled state (JS adds this class) */
 .navbar.is-scrolled {
-  background        : rgba(18, 18, 18, 0.92);
-  border-color      : var(--border-subtle);
-  box-shadow        : var(--shadow-md);
+  background        : rgba(255, 255, 255, 0.85);
+  border-color      : rgba(0, 0, 0, 0.08);
+  box-shadow        : 0 2px 20px rgba(0, 0, 0, 0.08);
   backdrop-filter   : blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
@@ -437,7 +437,7 @@
   left           : 0;
   right          : 0;
   bottom         : 0;
-  background     : rgba(18, 18, 18, 0.98);
+  background     : rgba(255, 255, 255, 0.97);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   z-index        : var(--z-overlay);

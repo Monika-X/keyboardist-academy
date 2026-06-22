@@ -14,23 +14,23 @@
 .section--gradient {
   background: radial-gradient(
     ellipse 80% 50% at 50% 100%,
-    var(--violet-10) 0%,
+    rgba(99, 102, 241, 0.08) 0%,
     transparent 65%
   );
 }
 
 /* Alternate section (slightly raised surface) */
 .section--alt {
-  background: var(--bg-raised);
+  background: #f1f5f9;
 }
 
-/* Dark dramatic gradient for CTA sections */
+/* Light gradient for CTA sections */
 .section--cta {
   background: linear-gradient(
     135deg,
-    rgba(108, 99, 255, 0.12) 0%,
-    rgba(18, 18, 18, 0) 50%,
-    rgba(108, 99, 255, 0.08) 100%
+    rgba(99, 102, 241, 0.08) 0%,
+    #f8fafc 50%,
+    rgba(99, 102, 241, 0.05) 100%
   );
 }
 

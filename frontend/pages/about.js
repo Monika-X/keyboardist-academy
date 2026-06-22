@@ -57,8 +57,9 @@ Router.register('/about', async () => {
         <div class="relative w-full overflow-hidden" style="border-radius: var(--radius-xl); border: 1px solid var(--border-default); aspect-ratio: 4/5;">
           <img src="${App.getAssetPath('/assets/images/founder.png')}" alt="Founder Agilan" style="width: 100%; height: 100%; object-fit: cover;" / loading="lazy">
           <div class="absolute bottom-0 left-0 right-0 p-6" style="background: linear-gradient(to top, rgba(18,18,18,0.95) 0%, rgba(18,18,18,0) 100%); text-align: left;">
-            <h3 class="h4 text-primary">Agilan</h3>
-            <p class="body-xs text-accent uppercase font-bold tracking-wider mt-1">Founder & Principal Instructor</p>
+            <h3 style="font-family: 'Oswald', sans-serif; font-weight: 600; font-size: clamp(1.5rem, 4vw, 2.5rem); color: var(--white); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: 0;">Agilan T</h3>
+            <p style="font-family: var(--font-body); font-weight: 300; font-size: var(--text-md); color: rgba(255,255,255,0.8); margin-bottom: 0.75rem;">Director</p>
+            <p style="font-family: var(--font-display); font-style: italic; font-size: var(--text-lg); color: var(--white); line-height: 1.4; font-variation-settings: 'opsz' 14;">Advanced Music<br>Production &<br>Composing</p>
           </div>
         </div>
         <div>

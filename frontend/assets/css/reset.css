@@ -32,7 +32,7 @@ body {
   font-weight             : var(--fw-regular);
   line-height             : var(--lh-normal);
   color                   : var(--text-primary);
-  background-color        : var(--bg-base);
+  background              : linear-gradient(to bottom right, #f8fafc, #dbeafe);
   -webkit-font-smoothing  : antialiased;
   -moz-osx-font-smoothing : grayscale;
   text-rendering          : optimizeLegibility;

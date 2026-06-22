@@ -16,66 +16,65 @@
      ──────────────────────────────────────────────────────── */
 
   /* Brand primaries */
-  --black-raw    : 18, 18, 18;      /* #121212 as R,G,B */
-  --white-raw    : 245, 245, 242;   /* #F5F5F2 as R,G,B */
-  --violet-raw   : 108, 99, 255;    /* #6C63FF as R,G,B */
+  --black-raw    : 18, 18, 18;
+  --white-raw    : 248, 250, 252;
+  --violet-raw   : 99, 102, 241;    /* indigo #6366f1 */
 
-  --color-black  : #121212;
-  --color-white  : #F5F5F2;
-  --color-violet : #6C63FF;
+  --color-black  : #1f2937;
+  --color-white  : #ffffff;
+  --color-violet : #6366f1;         /* indigo — matches reference site */
 
-  /* ─────────────────────────────────────────────────────────
-     2. SEMANTIC SURFACE TOKENS
-     (same palette — lightness only, never new hues)
-     ──────────────────────────────────────────────────────── */
+  /* ─────────────────────────────────────────────────────────────
+     2. SEMANTIC SURFACE TOKENS  (light mode)
+     ──────────────────────────────────────────────────────────── */
 
-  /* Page backgrounds — depth via lightness */
-  --bg-base      : #121212;   /* deepest background          */
-  --bg-raised    : #191919;   /* cards, panels on bg-base    */
-  --bg-overlay   : #1f1f1f;   /* elevated cards              */
-  --bg-modal     : #252525;   /* modals, dropdowns           */
-  --bg-input     : #1c1c1c;   /* form inputs                 */
-  --bg-hover     : #2a2a2a;   /* hover state on surfaces     */
+  /* Page backgrounds */
+  --bg-base      : #ffffff;
+  --bg-raised    : #f8fafc;
+  --bg-overlay   : #f1f5f9;
+  --bg-modal     : #ffffff;
+  --bg-input     : #f8fafc;
+  --bg-hover     : #e2e8f0;
 
   /* Borders */
-  --border-subtle  : rgba(245, 245, 242, 0.06);
-  --border-default : rgba(245, 245, 242, 0.10);
-  --border-strong  : rgba(245, 245, 242, 0.18);
-  --border-violet  : rgba(108, 99, 255, 0.30);
-  --border-focus   : rgba(108, 99, 255, 0.80);
+  --border-subtle  : rgba(0, 0, 0, 0.06);
+  --border-default : rgba(0, 0, 0, 0.10);
+  --border-strong  : rgba(0, 0, 0, 0.18);
+  --border-violet  : rgba(99, 102, 241, 0.30);
+  --border-focus   : rgba(99, 102, 241, 0.80);
 
   /* Text */
-  --text-primary     : #F5F5F2;
-  --text-secondary   : rgba(245, 245, 242, 0.65);
-  --text-tertiary    : rgba(245, 245, 242, 0.40);
-  --text-disabled    : rgba(245, 245, 242, 0.25);
-  --text-inverse     : #121212;
-  --text-accent      : #6C63FF;
-  --text-on-violet   : #F5F5F2;
+  --text-primary     : #1f2937;
+  --text-secondary   : rgba(31, 41, 55, 0.70);
+  --text-tertiary    : rgba(31, 41, 55, 0.45);
+  --text-disabled    : rgba(31, 41, 55, 0.28);
+  --text-inverse     : #ffffff;
+  --text-accent      : #6366f1;
+  --text-on-violet   : #ffffff;
 
-  /* Brand opacity scale */
-  --violet-10    : rgba(108, 99, 255, 0.10);
-  --violet-15    : rgba(108, 99, 255, 0.15);
-  --violet-20    : rgba(108, 99, 255, 0.20);
-  --violet-30    : rgba(108, 99, 255, 0.30);
-  --violet-40    : rgba(108, 99, 255, 0.40);
-  --violet-60    : rgba(108, 99, 255, 0.60);
-  --violet-80    : rgba(108, 99, 255, 0.80);
+  --violet-10    : rgba(99, 102, 241, 0.10);
+  --violet-15    : rgba(99, 102, 241, 0.15);
+  --violet-20    : rgba(99, 102, 241, 0.20);
+  --violet-30    : rgba(99, 102, 241, 0.30);
+  --violet-40    : rgba(99, 102, 241, 0.40);
+  --violet-60    : rgba(99, 102, 241, 0.60);
+  --violet-80    : rgba(99, 102, 241, 0.80);
 
-  --white-04     : rgba(245, 245, 242, 0.04);
-  --white-06     : rgba(245, 245, 242, 0.06);
-  --white-08     : rgba(245, 245, 242, 0.08);
-  --white-10     : rgba(245, 245, 242, 0.10);
-  --white-15     : rgba(245, 245, 242, 0.15);
-  --white-20     : rgba(245, 245, 242, 0.20);
-  --white-30     : rgba(245, 245, 242, 0.30);
-  --white-40     : rgba(245, 245, 242, 0.40);
-  --white-60     : rgba(245, 245, 242, 0.60);
-  --white-80     : rgba(245, 245, 242, 0.80);
+  /* Semi-transparent dark overlays for light theme */
+  --white-04     : rgba(0, 0, 0, 0.04);
+  --white-06     : rgba(0, 0, 0, 0.06);
+  --white-08     : rgba(0, 0, 0, 0.08);
+  --white-10     : rgba(0, 0, 0, 0.10);
+  --white-15     : rgba(0, 0, 0, 0.15);
+  --white-20     : rgba(0, 0, 0, 0.20);
+  --white-30     : rgba(0, 0, 0, 0.30);
+  --white-40     : rgba(0, 0, 0, 0.40);
+  --white-60     : rgba(0, 0, 0, 0.60);
+  --white-80     : rgba(0, 0, 0, 0.80);
 
-  --black-80     : rgba(18, 18, 18, 0.80);
-  --black-90     : rgba(18, 18, 18, 0.90);
-  --black-95     : rgba(18, 18, 18, 0.95);
+  --black-80     : rgba(255, 255, 255, 0.80);
+  --black-90     : rgba(255, 255, 255, 0.90);
+  --black-95     : rgba(255, 255, 255, 0.95);
 
   /* ─────────────────────────────────────────────────────────
      3. TYPOGRAPHY
@@ -186,24 +185,24 @@
      6. SHADOWS
      ──────────────────────────────────────────────────────── */
 
-  --shadow-xs    : 0 1px 2px   rgba(0, 0, 0, 0.35);
-  --shadow-sm    : 0 2px 6px   rgba(0, 0, 0, 0.40);
-  --shadow-md    : 0 4px 16px  rgba(0, 0, 0, 0.45);
-  --shadow-lg    : 0 8px 32px  rgba(0, 0, 0, 0.55);
-  --shadow-xl    : 0 16px 64px rgba(0, 0, 0, 0.65);
-  --shadow-2xl   : 0 24px 80px rgba(0, 0, 0, 0.70);
+  --shadow-xs    : 0 1px 2px   rgba(0, 0, 0, 0.06);
+  --shadow-sm    : 0 2px 6px   rgba(0, 0, 0, 0.08);
+  --shadow-md    : 0 4px 16px  rgba(0, 0, 0, 0.10);
+  --shadow-lg    : 0 8px 32px  rgba(0, 0, 0, 0.12);
+  --shadow-xl    : 0 16px 64px rgba(0, 0, 0, 0.15);
+  --shadow-2xl   : 0 24px 80px rgba(0, 0, 0, 0.18);
 
-  --shadow-violet-sm : 0 4px 16px  rgba(108, 99, 255, 0.25);
-  --shadow-violet-md : 0 8px 32px  rgba(108, 99, 255, 0.30);
-  --shadow-violet-lg : 0 16px 48px rgba(108, 99, 255, 0.35);
-  --shadow-glow      : 0 0 40px    rgba(108, 99, 255, 0.20),
-                       0 0 80px    rgba(108, 99, 255, 0.10);
-  --shadow-glow-lg   : 0 0 60px    rgba(108, 99, 255, 0.30),
-                       0 0 120px   rgba(108, 99, 255, 0.15);
+  --shadow-violet-sm : 0 4px 16px  rgba(99, 102, 241, 0.25);
+  --shadow-violet-md : 0 8px 32px  rgba(99, 102, 241, 0.30);
+  --shadow-violet-lg : 0 16px 48px rgba(99, 102, 241, 0.35);
+  --shadow-glow      : 0 0 40px    rgba(99, 102, 241, 0.20),
+                       0 0 80px    rgba(99, 102, 241, 0.10);
+  --shadow-glow-lg   : 0 0 60px    rgba(99, 102, 241, 0.30),
+                       0 0 120px   rgba(99, 102, 241, 0.15);
 
-  --shadow-inset     : inset 0 1px 0 rgba(245, 245, 242, 0.05);
-  --shadow-card      : 0 1px 0 rgba(245, 245, 242, 0.04) inset,
-                       0 8px 32px rgba(0, 0, 0, 0.50);
+  --shadow-inset     : inset 0 1px 0 rgba(0, 0, 0, 0.04);
+  --shadow-card      : 0 1px 3px rgba(0, 0, 0, 0.08),
+                       0 4px 16px rgba(0, 0, 0, 0.06);
 
   /* ─────────────────────────────────────────────────────────
      7. TRANSITIONS & EASINGS
@@ -313,7 +312,7 @@
 
   /* Nav */
   --nav-bg         : transparent;
-  --nav-bg-scrolled: rgba(18, 18, 18, 0.92);
+  --nav-bg-scrolled: rgba(255, 255, 255, 0.85);
 
   /* Badge */
   --badge-radius   : var(--radius-full);

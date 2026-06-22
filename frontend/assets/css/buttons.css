@@ -110,26 +110,31 @@
    2. BUTTON VARIANTS
    ──────────────────────────────────────────────────────────── */
 
-/* Primary — solid violet */
+/* Primary — gradient indigo (matches reference site) */
 .btn--primary {
-  background  : var(--color-violet);
-  color       : var(--color-white);
-  border-color: var(--color-violet);
+  background  : linear-gradient(to right, var(--color-violet), #374151);
+  color       : #ffffff;
+  border-color: transparent;
   box-shadow  : var(--shadow-violet-sm);
+  animation   : btn-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes btn-glow {
+  from { box-shadow: 0 0 8px rgba(99, 102, 241, 0.4); }
+  to   { box-shadow: 0 0 20px rgba(99, 102, 241, 0.7), 0 0 40px rgba(99, 102, 241, 0.3); }
 }
 
 .btn--primary:hover {
-  background  : transparent;
-  color       : var(--color-violet);
-  box-shadow  : var(--shadow-violet-md), var(--shadow-glow);
-  transform   : translateY(-2px);
+  opacity     : 0.92;
+  box-shadow  : var(--shadow-violet-md);
+  transform   : scale(1.05) translateY(-1px);
 }
 
-/* Outline — transparent with violet border */
+/* Outline — dark border for light theme */
 .btn--outline {
   background  : transparent;
-  color       : var(--color-white);
-  border-color: var(--border-strong);
+  color       : var(--text-primary);
+  border-color: rgba(0, 0, 0, 0.25);
 }
 
 .btn--outline:hover {
@@ -140,16 +145,16 @@
   transform   : translateY(-2px);
 }
 
-/* Ghost — subtle tinted */
+/* Ghost — subtle on light background */
 .btn--ghost {
-  background  : var(--white-08);
+  background  : rgba(0, 0, 0, 0.06);
   color       : var(--text-primary);
-  border-color: var(--border-default);
+  border-color: rgba(0, 0, 0, 0.10);
 }
 
 .btn--ghost:hover {
-  background  : var(--white-10);
-  border-color: var(--border-strong);
+  background  : rgba(0, 0, 0, 0.10);
+  border-color: rgba(0, 0, 0, 0.18);
   transform   : translateY(-2px);
 }
 
