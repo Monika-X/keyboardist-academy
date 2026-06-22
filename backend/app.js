@@ -56,11 +56,11 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com', 'https://cdnjs.cloudflare.com'],
         fontSrc: ["'self'", 'fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'blob:', 'https://res.cloudinary.com', '*'],
         mediaSrc: ["'self'", 'data:', 'blob:', 'https://res.cloudinary.com', '*'],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'https://cdnjs.cloudflare.com'],
         scriptSrcAttr: ["'unsafe-inline'"],
         connectSrc: ["'self'", "http://localhost:5000", "http://127.0.0.1:5000", "https://*.onrender.com"],
       },
