@@ -59,13 +59,14 @@ app.use(
         styleSrc: ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
         fontSrc: ["'self'", 'fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'blob:', 'https://res.cloudinary.com', '*'],
-        mediaSrc: ["'self'", 'https://res.cloudinary.com'],
+        mediaSrc: ["'self'", 'data:', 'blob:', 'https://res.cloudinary.com', '*'],
         scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
         scriptSrcAttr: ["'unsafe-inline'"],
         connectSrc: ["'self'", "http://localhost:5000", "http://127.0.0.1:5000", "https://*.onrender.com"],
       },
     },
     crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
 

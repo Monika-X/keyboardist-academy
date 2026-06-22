@@ -22,7 +22,7 @@ Router.register('/', async () => {
   const html = `
     <!-- 1. HERO — Typography Driven -->
     <section class="section section--lg relative flex items-center min-h-screen" style="position: relative; overflow: hidden;">
-      <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.9; filter: contrast(1.1) brightness(0.9);">
+      <video autoplay muted loop playsinline crossorigin="anonymous" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.9; filter: contrast(1.1) brightness(0.9);">
         <source src="https://res.cloudinary.com/doij66qnv/video/upload/v1782108360/keyboardist_academy/videos/g0lxolxvojceom8vga5a.mp4" type="video/mp4">
       </video>
       <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1;"></div>
