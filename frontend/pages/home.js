@@ -21,8 +21,12 @@ Router.register('/', async () => {
 
   const html = `
     <!-- 1. HERO — Typography Driven -->
-    <section class="section section--lg relative flex items-center min-h-screen">
-      <div class="container text-center reveal">
+    <section class="section section--lg relative flex items-center min-h-screen" style="position: relative; overflow: hidden;">
+      <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.7; filter: contrast(1.1) brightness(0.9);">
+        <source src="https://res.cloudinary.com/doij66qnv/video/upload/v1782108360/keyboardist_academy/videos/g0lxolxvojceom8vga5a.mp4" type="video/mp4">
+      </video>
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(18,18,18,0.5) 0%, rgba(18,18,18,1) 100%); z-index: 1;"></div>
+      <div class="container text-center reveal" style="position: relative; z-index: 2;">
         <h1 class="display-lg mb-6" style="font-size: clamp(var(--text-xl), 8vw, var(--text-6xl)); line-height: 1.15;">
           <span class="block text-secondary" style="white-space: nowrap;">Master the Piano.</span>
           <span class="block text-primary mt-2" style="white-space: nowrap;">Redefine your sound.</span>
