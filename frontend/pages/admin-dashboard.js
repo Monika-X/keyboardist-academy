@@ -18,7 +18,7 @@ Router.register('/admin', async () => {
     return;
   }
 
-  const user = Auth.getUser();
+  let user = Auth.getUser();
 
   const logAdminActivity = (text) => {
     const logs = Storage.get('ka_activity_log') || [];
@@ -1975,19 +1975,23 @@ Router.register('/admin', async () => {
       <h2 class="h3 text-primary mb-6">Admin Profile Info</h2>
       <div class="card border bg-overlay p-8 max-width-md flex col gap-6" style="border-radius: var(--radius-md);">
         <div class="flex items-center gap-4 border-bottom pb-4">
-          <div id="admin-avatar-trigger" style="width: 80px; height: 80px; flex-shrink: 0; cursor: pointer; position: relative; overflow: hidden; border-radius: 50%;" class="hover:opacity-80 transition-opacity group">
-            ${user.imageUrl
-        ? `<img src="${user.imageUrl}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" loading="lazy">`
-        : `<div class="flex items-center justify-center bg-overlay text-accent font-bold" style="width: 100%; height: 100%; font-size: 24px; border-radius: 50%;">${user.firstName[0]}${user.lastName[0]}</div>`}
-            <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity" style="border-radius: 50%;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
-              <svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+          <div style="position: relative; width: max-content;">
+            <div id="admin-avatar-trigger" style="width: 80px; height: 80px; flex-shrink: 0; cursor: pointer; position: relative; overflow: hidden; border-radius: 50%; border: 2px solid var(--border-subtle);" class="hover:opacity-80 transition-opacity">
+              ${user.imageUrl
+          ? `<img src="${user.imageUrl}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" loading="lazy">`
+          : `<div class="flex items-center justify-center bg-overlay text-accent font-bold" style="width: 100%; height: 100%; font-size: 24px; border-radius: 50%;">${user.firstName[0]}${user.lastName[0]}</div>`}
+            </div>
+            <!-- Permanent Edit Icon -->
+            <div style="position: absolute; bottom: 0; right: 0; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--bg-base); background: #4f46e5; color: #fff; display: flex; align-items: center; justify-content: center; pointer-events: none; box-shadow: var(--shadow-sm);">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
             </div>
           </div>
           <!-- Hidden file input for Cropper -->
           <input type="file" id="cropper-file-input" accept="image/*" style="display: none;" />
-          <div>
+          <div class="flex col gap-1">
             <h4 class="h5 text-primary font-bold leading-none">${user.firstName} ${user.lastName}</h4>
-            <span class="text-xs text-accent uppercase font-bold mt-2 tracking-wider">System Administrator</span>
+            <span class="text-xs text-accent uppercase font-bold tracking-wider">System Administrator</span>
+            ${user.imageUrl ? `<button type="button" id="main-remove-avatar-btn" class="text-xs mt-1" style="color: #ef4444; background: none; border: none; cursor: pointer; padding: 0; text-align: left; text-decoration: underline; width: fit-content;">Remove Profile Photo</button>` : ''}
           </div>
         </div>
         
@@ -2025,6 +2029,7 @@ Router.register('/admin', async () => {
         logAdminActivity(`Admin profile info was updated`);
         Helpers.toast('Admin profiles updated. Syncing login state...');
         await Auth.refreshUser();
+        user = Auth.getUser();
         displayProfile();
       } catch (err) {
         Helpers.toast(err.message || 'Failed to save profile changes', 'error');
@@ -2047,6 +2052,27 @@ Router.register('/admin', async () => {
     document.getElementById('admin-avatar-trigger').addEventListener('click', () => {
       fileInput.click();
     });
+
+    const mainRemoveBtn = document.getElementById('main-remove-avatar-btn');
+    if (mainRemoveBtn) {
+      mainRemoveBtn.addEventListener('click', async () => {
+        if (!confirm('Are you sure you want to remove your profile photo?')) return;
+        mainRemoveBtn.disabled = true;
+        try {
+          const formData = new FormData();
+          formData.append('removeImage', 'true');
+          formData.append('imageUrl', '');
+          await Api.patch('/users/update-me', formData);
+          Helpers.toast('Profile photo removed.');
+          await Auth.refreshUser();
+          user = Auth.getUser();
+          displayProfile();
+        } catch (err) {
+          Helpers.toast(err.message || 'Failed to remove image', 'error');
+          mainRemoveBtn.disabled = false;
+        }
+      });
+    }
 
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
@@ -2076,6 +2102,10 @@ Router.register('/admin', async () => {
         cropperInstance = null;
       }
       fileInput.value = '';
+      if (saveCropBtn) {
+        saveCropBtn.disabled = false;
+        saveCropBtn.textContent = 'Crop & Save';
+      }
     };
 
     closeBtn.addEventListener('click', closeCropperModal);
@@ -2087,8 +2117,8 @@ Router.register('/admin', async () => {
       saveCropBtn.textContent = 'Saving...';
 
       cropperInstance.getCroppedCanvas({
-        width: 400,
-        height: 400,
+        width: 250,
+        height: 250,
       }).toBlob(async (blob) => {
         if (!blob) {
           Helpers.toast('Failed to crop image', 'error');
@@ -2104,6 +2134,7 @@ Router.register('/admin', async () => {
           await Api.patch('/users/update-me', formData);
           Helpers.toast('Profile avatar updated successfully');
           await Auth.refreshUser();
+          user = Auth.getUser();
           closeCropperModal();
           displayProfile();
         } catch (err) {
@@ -2111,7 +2142,7 @@ Router.register('/admin', async () => {
           saveCropBtn.disabled = false;
           saveCropBtn.textContent = 'Crop & Save';
         }
-      }, 'image/jpeg', 0.9);
+      }, 'image/jpeg', 0.7);
     });
 
     removeImgBtn.addEventListener('click', async () => {
@@ -2125,6 +2156,7 @@ Router.register('/admin', async () => {
         await Api.patch('/users/update-me', formData);
         Helpers.toast('Profile image removed.');
         await Auth.refreshUser();
+        user = Auth.getUser();
         closeCropperModal();
         displayProfile();
       } catch (err) {

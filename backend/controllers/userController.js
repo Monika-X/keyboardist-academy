@@ -61,7 +61,12 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   const filtered = filterObj(req.body, 'firstName', 'lastName', 'phone', 'bio', 'socialLinks');
 
   let oldPublicId;
-  if (req.file) {
+  if (req.body.removeImage === 'true') {
+    const currentUser = await User.findById(req.user.id);
+    oldPublicId = currentUser.publicId;
+    filtered.imageUrl = '';
+    filtered.publicId = '';
+  } else if (req.file) {
     const currentUser = await User.findById(req.user.id);
     oldPublicId = currentUser.publicId;
     const uploadResult = await cloudinaryService.uploadImage(req.file.buffer);
@@ -74,7 +79,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
       new           : true,
       runValidators : true,
     });
-    if (req.file && oldPublicId) {
+    if (oldPublicId && (req.file || req.body.removeImage === 'true')) {
       await cloudinaryService.deleteImage(oldPublicId);
     }
     res.status(200).json({ status: 'success', data: { user } });
