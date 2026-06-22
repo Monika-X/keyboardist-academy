@@ -228,10 +228,13 @@ const App = (() => {
   `;
 
   const highlightActiveLink = (path) => {
+    const explorePages = ['/faculty', '/portfolio', '/gallery', '/admission', '/online-classes', '/offline-classes', '/events', '/faq', '/testimonials'];
+    const activePath = explorePages.includes(path) ? '/explore' : path;
+
     const links = document.querySelectorAll('.nav-link, .dropdown-link');
     links.forEach(link => {
       const href = link.getAttribute('href');
-      if (href === path) {
+      if (href === activePath) {
         link.classList.add('active');
         // If inside a dropdown, highlight the dropdown toggle too
         const parentDropdown = link.closest('.nav-dropdown-wrapper');

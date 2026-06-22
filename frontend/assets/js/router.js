@@ -81,6 +81,7 @@ const Router = (() => {
     app.innerHTML = '';
     document.body.style.overflow = '';
     app.classList.add('animate-fade-in');
+    window.scrollTo(0, 0);
 
     try {
       await config.handler({ params, query: _parseQuery(window.location.search) });
