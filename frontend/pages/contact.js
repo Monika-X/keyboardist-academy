@@ -122,9 +122,8 @@ Router.register('/contact', async () => {
           src="https://maps.google.com/maps?q=Avadi,%20Chennai,%20Tamil%20Nadu,%20India&t=&z=14&ie=UTF8&iwloc=&output=embed" 
           width="100%" 
           height="450" 
-          style="border:0; filter: grayscale(1) invert(0.9) contrast(1.2); display: block;" 
+          style="border:0; display: block;" 
           allowfullscreen="" 
-          loading="lazy" 
           referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       </div>

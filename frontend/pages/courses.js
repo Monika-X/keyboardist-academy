@@ -111,7 +111,7 @@ Router.register('/courses', async () => {
           Our masterclasses are structured modularly, giving you control over your practice timeline. Enroll today to access lifetime curriculum updates.
         </p>
         <div class="flex gap-4 sm:flex-col w-full justify-center items-center">
-          <a href="/register" class="btn btn--primary btn--lg w-fit text-center" style="min-width: 200px;">Start Free Trial</a>
+          <a href="/admission" class="btn btn--primary btn--lg w-fit text-center" style="min-width: 200px;">Start Free Trial</a>
         </div>
       </div>
     </section>

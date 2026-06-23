@@ -43,7 +43,7 @@ const App = (() => {
               </div>
             ` : `
               <a href="/login" class="btn btn--ghost btn--sm">Sign In</a>
-              <a href="/register" class="btn btn--primary btn--sm">Join Free</a>
+              <a href="/admission" class="btn btn--primary btn--sm">Join Free</a>
             `}
           </div>
 
@@ -71,7 +71,7 @@ const App = (() => {
             <li class="w-full px-8"><button onclick="App.handleLogout();App.toggleMobileMenu()" class="btn btn--outline btn--sm w-full">Logout</button></li>
           ` : `
             <li><a href="/login" onclick="App.toggleMobileMenu()" class="nav-link">Sign In</a></li>
-            <li class="w-full px-8"><a href="/register" onclick="App.toggleMobileMenu()" class="btn btn--primary btn--sm w-full text-center">Join Free</a></li>
+            <li class="w-full px-8"><a href="/admission" onclick="App.toggleMobileMenu()" class="btn btn--primary btn--sm w-full text-center">Join Free</a></li>
           `}
         </ul>
       </div>
@@ -292,7 +292,7 @@ const App = (() => {
           </div>
         ` : `
           <a href="/login" class="btn btn--ghost btn--sm">Sign In</a>
-          <a href="/register" class="btn btn--primary btn--sm">Join Free</a>
+          <a href="/admission" class="btn btn--primary btn--sm">Join Free</a>
         `;
       }
     }

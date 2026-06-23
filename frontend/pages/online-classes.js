@@ -234,7 +234,7 @@ Router.register('/online-classes', async () => {
           Create a free account to access basic piano posture lessons, custom sheet notation files, and track your progress.
         </p>
         <div class="flex flex-col md:flex-row gap-4 w-full justify-center items-center px-4">
-          <a href="/register" class="btn btn--primary btn--lg w-full md:w-auto text-center" style="min-width: 200px; justify-content: center;">Register Free</a>
+          <a href="/admission" class="btn btn--primary btn--lg w-full md:w-auto text-center" style="min-width: 200px; justify-content: center;">Register Free</a>
           <a href="/contact" class="btn btn--outline btn--lg w-full md:w-auto text-center" style="min-width: 200px; justify-content: center;">Inquire About Plans</a>
         </div>
       </div>

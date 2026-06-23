@@ -222,7 +222,7 @@ Router.register('/about', async () => {
           Join Keyboardist Academy to learn structured, conservatory-grade methods paced around your schedule.
         </p>
         <div class="flex gap-4 sm\:flex-col w-full justify-center items-center">
-          <a href="/register" class="btn btn--primary btn--lg w-fit text-center" style="min-width: 200px;">Register Free</a>
+          <a href="/admission" class="btn btn--primary btn--lg w-fit text-center" style="min-width: 200px;">Register Free</a>
           <a href="/contact" class="btn btn--outline btn--lg w-fit text-center" style="min-width: 200px;">Inquire Admissions</a>
         </div>
       </div>
