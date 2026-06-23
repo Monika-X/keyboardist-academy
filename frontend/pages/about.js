@@ -63,25 +63,25 @@ Router.register('/about', async () => {
         <div class="bg-base" style="padding: clamp(3rem, 8vw, 6rem); max-width: 1000px; margin: 0 auto; box-shadow: var(--shadow-2xl); border-radius: var(--radius-xl);">
           
           <!-- Headers -->
-          <div class="text-center mb-10 flex col items-center">
-            <span class="eyebrow mb-6">A Message from Our Founder</span>
-            <h2 style="font-family: 'Bodoni Moda', serif; font-size: clamp(2.5rem, 7vw, 4.5rem); line-height: 1.1; font-weight: 400; text-transform: uppercase;" class="text-primary relative z-10">
+          <div class="text-center mb-6 flex col items-center">
+            <span class="eyebrow mb-4">A Message from Our Founder</span>
+            <h2 style="font-family: 'Bodoni Moda', serif; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.1; font-weight: 400; text-transform: uppercase;" class="text-primary relative z-10">
               Agilan T
             </h2>
-            <div style="font-family: 'Bodoni Moda', serif; font-style: italic; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--violet); margin-top: -20px; position: relative; z-index: 20;">
+            <div style="font-family: 'Bodoni Moda', serif; font-style: italic; font-size: clamp(1.5rem, 3vw, 2.2rem); color: var(--violet); margin-top: -5px; position: relative; z-index: 20;">
               Director
             </div>
-            <p class="body-xs text-tertiary uppercase tracking-widest mt-8" style="letter-spacing: 0.15em;">
+            <p class="body-xs text-tertiary uppercase tracking-widest mt-3" style="letter-spacing: 0.15em;">
               Advanced Music Production & Composing
             </p>
           </div>
 
           <!-- Short Intro -->
-          <div class="text-center mx-auto mb-16" style="max-width: 700px;">
+          <div class="text-center mx-auto mb-8" style="max-width: 700px;">
             <p class="body-md text-secondary" style="font-family: var(--font-display); line-height: 1.6; font-weight: 300;">
               "Empowering Your Unique Musical Voice"
             </p>
-            <div style="width: 30px; height: 1px; background: var(--border-default); margin: 2.5rem auto 0;"></div>
+            <div style="width: 30px; height: 1px; background: var(--border-default); margin: 1.5rem auto 0;"></div>
           </div>
 
           <!-- Portrait and Bio Layout -->
