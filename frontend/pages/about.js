@@ -52,26 +52,59 @@ Router.register('/about', async () => {
     </section>
 
     <!-- 4. FOUNDER MESSAGE -->
-    <section class="section">
-      <div class="container grid grid-2 items-center" style="gap: clamp(var(--sp-6), 6vw, var(--sp-16));">
-        <div class="relative w-full overflow-hidden" style="border-radius: var(--radius-xl); border: 1px solid var(--border-default); aspect-ratio: 4/5;">
-          <img src="${App.getAssetPath('/assets/images/founder_new.jpg')}" alt="Founder Agilan" style="width: 100%; height: 100%; object-fit: cover;" / loading="lazy">
-          <div class="absolute bottom-0 left-0 right-0 p-6" style="background: linear-gradient(to top, rgba(18,18,18,0.95) 0%, rgba(18,18,18,0) 100%); text-align: left;">
-            <h3 style="font-family: 'Oswald', sans-serif; font-weight: 600; font-size: clamp(1.5rem, 4vw, 2.5rem); color: var(--white); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: 0;">Agilan T</h3>
-            <p style="font-family: var(--font-body); font-weight: 300; font-size: var(--text-md); color: rgba(255,255,255,0.8); margin-bottom: 0.75rem;">Director</p>
-            <p style="font-family: var(--font-display); font-style: italic; font-size: var(--text-lg); color: var(--white); line-height: 1.4; font-variation-settings: 'opsz' 14;">Advanced Music<br>Production &<br>Composing</p>
+    <section class="relative bg-base" style="padding-bottom: 0;">
+      <!-- Wide cinematic image at top -->
+      <div style="height: 60vh; min-height: 400px; width: 100%; position: absolute; top: 0; left: 0; z-index: 0;">
+        <img src="https://res.cloudinary.com/doij66qnv/image/upload/v1782201673/keyboardist-academy/assets/media__1782201575760.jpg" alt="Keyboardist Academy Studio" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+
+      <!-- Large floating content card -->
+      <div class="container relative" style="z-index: 1; padding-top: 35vh; padding-bottom: var(--section-xl);">
+        <div class="bg-base" style="padding: clamp(3rem, 8vw, 6rem); max-width: 1000px; margin: 0 auto; box-shadow: var(--shadow-2xl); border-radius: var(--radius-xl);">
+          
+          <!-- Headers -->
+          <div class="text-center mb-10 flex col items-center">
+            <span class="eyebrow mb-6">A Message from Our Founder</span>
+            <h2 style="font-family: 'Bodoni Moda', serif; font-size: clamp(2.5rem, 7vw, 4.5rem); line-height: 1.1; font-weight: 400; text-transform: uppercase;" class="text-primary relative z-10">
+              Agilan T
+            </h2>
+            <div style="font-family: 'Bodoni Moda', serif; font-style: italic; font-size: clamp(2.5rem, 5vw, 4rem); color: var(--violet); margin-top: -20px; position: relative; z-index: 20;">
+              Director
+            </div>
+            <p class="body-xs text-tertiary uppercase tracking-widest mt-8" style="letter-spacing: 0.15em;">
+              Advanced Music Production & Composing
+            </p>
           </div>
-        </div>
-        <div>
-          <span class="eyebrow">A Message from Our Founder</span>
-          <h2 class="h2 text-primary mb-6" style="font-size: clamp(var(--text-xl), 4vw, var(--text-4xl));">"Empowering Your Unique Musical Voice"</h2>
-          <p class="body-md text-secondary mb-6 italic">
-            "We believe music is more than just mechanical notation; it is an art of creative expression. Our goal is to make conservatory-level training accessible, engaging, and highly rewarding for every student."
-          </p>
-          <p class="body-sm text-tertiary mb-6">
-            Our student dashboards, interactive study guides, and custom exercises are specifically optimized around modern keyboard pedagogy and progress feedback.
-          </p>
-          <div style="width: 80px; height: 1px; background: var(--violet); margin-top: var(--sp-6);"></div>
+
+          <!-- Short Intro -->
+          <div class="text-center mx-auto mb-16" style="max-width: 700px;">
+            <p class="body-md text-secondary" style="font-family: var(--font-display); line-height: 1.6; font-weight: 300;">
+              "Empowering Your Unique Musical Voice"
+            </p>
+            <div style="width: 30px; height: 1px; background: var(--border-default); margin: 2.5rem auto 0;"></div>
+          </div>
+
+          <!-- Portrait and Bio Layout -->
+          <div style="display: flex; flex-wrap: wrap; gap: clamp(2rem, 6vw, 4rem); align-items: flex-start; justify-content: center;">
+            
+            <!-- Portrait -->
+            <div style="flex: 1 1 200px; max-width: 280px;">
+              <div style="aspect-ratio: 3/4; overflow: hidden; background: var(--surface-2);">
+                <img src="${App.getAssetPath('/assets/images/founder_new.jpg')}" alt="Founder Agilan T" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%); transition: filter 0.5s ease;" loading="lazy" onmouseover="this.style.filter='grayscale(0%)'" onmouseout="this.style.filter='grayscale(15%)'">
+              </div>
+            </div>
+            
+            <!-- Long story / bio -->
+            <div style="flex: 2 1 300px; display: flex; flex-direction: column; gap: 1.5rem;">
+              <p class="body-sm text-secondary" style="line-height: 1.9; font-size: 0.95rem;">
+                "We believe music is more than just mechanical notation; it is an art of creative expression. Our goal is to make conservatory-level training accessible, engaging, and highly rewarding for every student."
+              </p>
+              <p class="body-sm text-secondary" style="line-height: 1.9; font-size: 0.95rem;">
+                Our student dashboards, interactive study guides, and custom exercises are specifically optimized around modern keyboard pedagogy and progress feedback. We strive to give each individual the foundation they need to independently interpret and improvise their favorite pieces.
+              </p>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>
