@@ -6040,3 +6040,39 @@ select.form-input {
   line-height: 1.5 !important;
   padding-bottom: 3px !important;
 }
+
+/* ==========================================================================
+   MISSING UTILITY CLASSES FOR COURSE DETAIL AND RESPONSIVENESS
+   ========================================================================== */
+
+/* Max Width Utilities */
+.max-w-md  { max-width: 28rem !important; }
+.max-w-3xl { max-width: 48rem !important; }
+
+/* Padding & Margin Utilities */
+.pt-4 { padding-top: var(--sp-4) !important; }
+.pt-5 { padding-top: var(--sp-5) !important; }
+.pt-6 { padding-top: var(--sp-6) !important; }
+
+.pb-2 { padding-bottom: var(--sp-2) !important; }
+.pb-6 { padding-bottom: var(--sp-6) !important; }
+
+.py-16 { padding-top: var(--sp-16) !important; padding-bottom: var(--sp-16) !important; }
+.py-20 { padding-top: var(--sp-20) !important; padding-bottom: var(--sp-20) !important; }
+.py-24 { padding-top: var(--sp-24) !important; padding-bottom: var(--sp-24) !important; }
+
+/* Responsive Overrides */
+@media (max-width: 767px) {
+  .sm\:grid-1 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Fix for Sticky Card Overlap on Mobile */
+@media (max-width: 1023px) {
+  .sticky {
+    position: relative !important;
+    top: auto !important;
+    margin-bottom: var(--sp-12) !important;
+  }
+}

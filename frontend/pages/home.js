@@ -74,54 +74,20 @@ Router.register('/', async () => {
           <p class="body-lg text-secondary">Structured development for every stage of your musical journey.</p>
         </div>
 
-        <div class="grid grid-3 reveal stagger-children mt-12">
-          <!-- Card 1 -->
-          <article class="card card--course flex flex-col" style="height: 100%;">
-            <div class="card__media">
-              <img src="${App.getAssetPath('/assets/images/fundamentals.png')}" alt="Fundamentals" loading="lazy">
-            </div>
-            <div class="card__body flex flex-col" style="flex: 1;">
-              <div class="badge badge--subtle mb-4" style="align-self: center; width: max-content;">Beginner</div>
-              <h3 class="h4 mb-2 text-primary">Keyboard Fundamentals</h3>
-              <p class="body-sm text-secondary mb-6">Master the absolute basics of piano playing, posture, and scale warm-ups.</p>
-              <div class="border-top pt-4 flex justify-between items-center" style="margin-top: auto; padding-top: var(--sp-4);">
-                <span class="text-sm fw-medium text-primary">3 Months</span>
-                <a href="/courses" class="text-sm fw-semibold text-violet transition">View Syllabus &rarr;</a>
+        <div id="featured-courses-grid" class="grid grid-3 reveal stagger-children mt-12" style="min-height: 400px;">
+          <!-- Skeleton Loaders -->
+          ${[1,2,3].map(() => `
+            <div class="card bg-overlay border-subtle overflow-hidden flex col justify-between" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.03);">
+              <div>
+                <div class="skeleton skeleton--card" style="height: 240px; border-radius: 0;"></div>
+                <div class="p-6">
+                  <div class="skeleton skeleton--text w-1/3 mb-4" style="height: 12px;"></div>
+                  <div class="skeleton skeleton--text w-3/4 mb-4" style="height: 20px;"></div>
+                  <div class="skeleton skeleton--text w-full mb-2"></div>
+                </div>
               </div>
             </div>
-          </article>
-          
-          <!-- Card 2 -->
-          <article class="card card--course bg-raised flex flex-col" style="height: 100%;">
-            <div class="card__media">
-              <img src="${App.getAssetPath('/assets/images/advanced.png')}" alt="Advanced" loading="lazy">
-            </div>
-            <div class="card__body flex flex-col" style="flex: 1;">
-              <div class="badge badge--violet mb-4" style="align-self: center; width: max-content;">Intermediate</div>
-              <h3 class="h4 mb-2 text-primary">Advanced Techniques</h3>
-              <p class="body-sm text-secondary mb-6">Take your piano skills to the next level with advanced chord voicings and speed runs.</p>
-              <div class="border-top pt-4 flex justify-between items-center" style="margin-top: auto; padding-top: var(--sp-4);">
-                <span class="text-sm fw-medium text-primary">6 Months</span>
-                <a href="/courses" class="text-sm fw-semibold text-violet transition">View Syllabus &rarr;</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="card card--course">
-            <div class="card__media">
-              <img src="${App.getAssetPath('/assets/images/theory.png')}" alt="Theory" loading="lazy">
-            </div>
-            <div class="card__body flex flex-col" style="flex: 1;">
-              <div class="badge badge--subtle mb-4" style="align-self: center; width: max-content;">Advanced</div>
-              <h3 class="h4 mb-2 text-primary">Music Theory & Composition</h3>
-              <p class="body-sm text-secondary mb-6">Delve deep into musical intervals, score composition, and song writing.</p>
-              <div class="border-top pt-4 flex justify-between items-center" style="margin-top: auto; padding-top: var(--sp-4);">
-                <span class="text-sm fw-medium text-primary">4 Months</span>
-                <a href="/courses" class="text-sm fw-semibold text-violet transition">View Syllabus &rarr;</a>
-              </div>
-            </div>
-          </article>
+          `).join('')}
         </div>
       </div>
     </section>
@@ -243,4 +209,57 @@ Router.register('/', async () => {
 
   // Re-init reveal after content injection
   Helpers.initReveal();
+
+  // --- FEATURED COURSES LOGIC ---
+  const coursesContainer = document.getElementById('featured-courses-grid');
+  if (coursesContainer) {
+    try {
+      const response = await Api.get('/courses/featured');
+      if (response && response.data && response.data.courses && response.data.courses.length > 0) {
+        const featuredCourses = response.data.courses.slice(0, 3);
+        
+        // Artificial delay for smooth skeleton transition
+        setTimeout(() => {
+          coursesContainer.innerHTML = featuredCourses.map(course => {
+            let imgSrc = course.imageUrl;
+            if (!imgSrc || imgSrc === 'default-course.webp' || imgSrc === '/assets/images/default-course.jpg') {
+              if (course.category === 'Classical Piano') imgSrc = 'https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80&w=800';
+              else if (course.category === 'Jazz Keyboard') imgSrc = 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&q=80&w=800';
+              else if (course.category === 'Music Theory') imgSrc = 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&q=80&w=800';
+              else imgSrc = 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80&w=800';
+            } else if (!imgSrc.startsWith('http') && !imgSrc.startsWith('/')) {
+              imgSrc = App.getAssetPath('/assets/images/' + imgSrc);
+            }
+
+            return `
+              <article class="card card--course flex flex-col" style="height: 100%;">
+                <div class="card__media">
+                  <img src="${imgSrc}" alt="${course.title}" loading="lazy" style="filter: brightness(0.9);">
+                </div>
+                <div class="card__body flex flex-col" style="flex: 1;">
+                  <div class="badge badge--subtle mb-4" style="align-self: center; width: max-content; text-transform: capitalize;">${course.level || 'All Levels'}</div>
+                  <h3 class="h4 mb-2 text-primary">${course.title}</h3>
+                  <p class="body-sm text-secondary mb-6 clamp-3" style="line-height: 1.6;">${course.shortDescription || course.description}</p>
+                  <div class="border-top pt-4 flex justify-between items-center" style="margin-top: auto; padding-top: var(--sp-4);">
+                    <span class="text-sm fw-medium text-primary">${course.totalDuration ? course.totalDuration + ' Mins' : 'Flexible'}</span>
+                    <a href="/courses/${course.slug || course._id}" class="text-sm fw-semibold text-violet transition">View Syllabus &rarr;</a>
+                  </div>
+                </div>
+              </article>
+            `;
+          }).join('');
+          
+          // Staggered animation
+          const cards = coursesContainer.querySelectorAll('article');
+          cards.forEach((card, idx) => card.style.animationDelay = `${idx * 0.1}s`);
+          
+        }, 500);
+      } else {
+        coursesContainer.innerHTML = '<p class="text-secondary text-center w-full" style="grid-column: 1 / -1;">No featured courses found.</p>';
+      }
+    } catch (err) {
+      console.error('Failed to load featured courses:', err);
+      coursesContainer.innerHTML = '<p class="text-red-500 text-center w-full" style="grid-column: 1 / -1;">Failed to load featured courses.</p>';
+    }
+  }
 });

@@ -68,27 +68,27 @@ Router.register('/courses/:slug', async ({ params }) => {
           <div class="max-w-3xl course-fade-in">
             <div class="flex items-center gap-3 mb-6 flex-wrap">
               <span class="badge badge--violet shadow-sm" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); color: var(--violet);">${course.level || 'All Levels'}</span>
-              <span class="text-xs font-bold uppercase tracking-wider text-secondary flex items-center gap-2">
-                <span class="w-1 h-1 rounded-full bg-secondary"></span>
+              <span class="text-xs font-bold uppercase tracking-wider flex items-center gap-2" style="color: rgba(255,255,255,0.7);">
+                <span class="w-1 h-1 rounded-full" style="background-color: rgba(255,255,255,0.7);"></span>
                 ${course.category || 'Course'}
               </span>
             </div>
             
-            <h1 class="h2 text-primary mb-6" style="line-height: 1.1; letter-spacing: -0.03em;">${course.title}</h1>
-            <p class="body-lg text-secondary mb-10 clamp-3" style="line-height: 1.6;">${course.description || ''}</p>
+            <h1 class="h2 mb-6" style="line-height: 1.1; letter-spacing: -0.03em; color: #fff;">${course.title}</h1>
+            <p class="body-lg mb-10 clamp-3" style="line-height: 1.6; color: rgba(255,255,255,0.85);">${course.description || ''}</p>
 
             <div class="flex items-center gap-8 flex-wrap" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem;">
               <div class="flex items-center gap-3">
                 <svg class="text-violet" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <div class="flex col gap-1"><span class="text-xs text-secondary uppercase font-bold tracking-wider">Duration</span><span class="text-primary font-medium">${course.totalDuration || '0'} Mins</span></div>
+                <div class="flex col gap-1"><span class="text-xs uppercase font-bold tracking-wider" style="color: rgba(255,255,255,0.6);">Duration</span><span class="font-medium" style="color: #fff;">${course.totalDuration || '0'} Mins</span></div>
               </div>
               <div class="flex items-center gap-3">
                 <svg class="text-violet" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <div class="flex col gap-1"><span class="text-xs text-secondary uppercase font-bold tracking-wider">Lessons</span><span class="text-primary font-medium">${course.lessons ? course.lessons.length : '0'} Classes</span></div>
+                <div class="flex col gap-1"><span class="text-xs uppercase font-bold tracking-wider" style="color: rgba(255,255,255,0.6);">Lessons</span><span class="font-medium" style="color: #fff;">${course.lessons ? course.lessons.length : '0'} Classes</span></div>
               </div>
               <div class="flex items-center gap-3">
                 <svg class="text-violet" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                <div class="flex col gap-1"><span class="text-xs text-secondary uppercase font-bold tracking-wider">Students</span><span class="text-primary font-medium">${course.studentsEnrolled ? course.studentsEnrolled.length : '0'}</span></div>
+                <div class="flex col gap-1"><span class="text-xs uppercase font-bold tracking-wider" style="color: rgba(255,255,255,0.6);">Students</span><span class="font-medium" style="color: #fff;">${course.studentsEnrolled ? course.studentsEnrolled.length : '0'}</span></div>
               </div>
             </div>
           </div>
