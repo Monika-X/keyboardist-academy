@@ -56,25 +56,25 @@ const App = (() => {
             </svg>
           </button>
         </div>
-        
-        <!-- Mobile Dropdown Menu (Scrollable for many items) -->
-        <div class="navbar__mobile-menu hidden" id="mobile-menu">
-          <ul class="flex col gap-4 items-center py-8">
-            <li><a href="/" onclick="App.toggleMobileMenu()" class="nav-link">Home</a></li>
-            <li><a href="/about" onclick="App.toggleMobileMenu()" class="nav-link">About</a></li>
-            <li><a href="/courses" onclick="App.toggleMobileMenu()" class="nav-link">Courses</a></li>
-            <li><a href="/explore" onclick="App.toggleMobileMenu()" class="nav-link">Explore</a></li>
-            <li><a href="/contact" onclick="App.toggleMobileMenu()" class="nav-link">Contact</a></li>
-            ${isLoggedIn ? `
-              ${Auth.isAdmin() ? `<li><a href="/admin" onclick="App.toggleMobileMenu()" class="nav-link">Admin Panel</a></li>` : ''}
-              <li class="w-full px-8"><button onclick="App.handleLogout();App.toggleMobileMenu()" class="btn btn--outline btn--sm w-full">Logout</button></li>
-            ` : `
-              <li><a href="/login" onclick="App.toggleMobileMenu()" class="nav-link">Sign In</a></li>
-              <li class="w-full px-8"><a href="/register" onclick="App.toggleMobileMenu()" class="btn btn--primary btn--sm w-full text-center">Join Free</a></li>
-            `}
-          </ul>
-        </div>
       </nav>
+        
+      <!-- Mobile Dropdown Menu (Scrollable for many items) -->
+      <div class="navbar__mobile-menu hidden" id="mobile-menu">
+        <ul class="flex col gap-4 items-center py-8">
+          <li><a href="/" onclick="App.toggleMobileMenu()" class="nav-link">Home</a></li>
+          <li><a href="/about" onclick="App.toggleMobileMenu()" class="nav-link">About</a></li>
+          <li><a href="/courses" onclick="App.toggleMobileMenu()" class="nav-link">Courses</a></li>
+          <li><a href="/explore" onclick="App.toggleMobileMenu()" class="nav-link">Explore</a></li>
+          <li><a href="/contact" onclick="App.toggleMobileMenu()" class="nav-link">Contact</a></li>
+          ${isLoggedIn ? `
+            ${Auth.isAdmin() ? `<li><a href="/admin" onclick="App.toggleMobileMenu()" class="nav-link">Admin Panel</a></li>` : ''}
+            <li class="w-full px-8"><button onclick="App.handleLogout();App.toggleMobileMenu()" class="btn btn--outline btn--sm w-full">Logout</button></li>
+          ` : `
+            <li><a href="/login" onclick="App.toggleMobileMenu()" class="nav-link">Sign In</a></li>
+            <li class="w-full px-8"><a href="/register" onclick="App.toggleMobileMenu()" class="btn btn--primary btn--sm w-full text-center">Join Free</a></li>
+          `}
+        </ul>
+      </div>
     `;
   };
 

@@ -92,8 +92,8 @@ Router.register('/online-classes', async () => {
           <div class="card border bg-overlay border-subtle flex col justify-between" style="padding: clamp(var(--sp-4), 5vw, var(--sp-8));">
             <div>
               <span class="label text-tertiary">Beginner</span>
-              <h3 class="h4 text-primary mt-2 mb-4">Fundamentals</h3>
-              <div class="mb-6 flex justify-center items-baseline gap-2"><span style="font-size: 2rem; font-weight: 700; font-family: var(--font-body); color: var(--white); letter-spacing: -.02em;">&#8377;799</span><span style="font-size: 0.9rem; font-weight: 400; color: var(--text-secondary);">/mo</span></div>
+              <h3 class="h4 text-primary mt-2 mb-4" style="min-height: 2.5em;">Fundamentals</h3>
+              <div class="mb-6 flex justify-center items-baseline gap-2"><span style="font-size: 2rem; font-weight: 700; font-family: var(--font-body); color: var(--violet); letter-spacing: -.02em;">&#8377;799</span><span style="font-size: 0.9rem; font-weight: 400; color: var(--text-secondary);">/mo</span></div>
               <ul class="flex col gap-3 text-sm text-secondary mb-8">
                 <li><span class="text-accent">&bull;</span> Basic posture &amp; finger technique</li>
                 <li><span class="text-accent">&bull;</span> Foundational scales and notation</li>
@@ -108,7 +108,7 @@ Router.register('/online-classes', async () => {
           <div class="card border bg-overlay border-subtle flex col justify-between" style="border-color: var(--violet); padding: clamp(var(--sp-4), 5vw, var(--sp-8));">
             <div>
               <span class="badge badge--violet mb-2">Recommended</span>
-              <h3 class="h4 text-primary mt-2 mb-4">Advanced Techniques</h3>
+              <h3 class="h4 text-primary mt-2 mb-4" style="min-height: 2.5em;">Advanced Techniques</h3>
               <div class="mb-6 flex justify-center items-baseline gap-2"><span style="font-size: 2rem; font-weight: 700; font-family: var(--font-body); color: var(--violet); letter-spacing: -.02em;">&#8377;999</span><span style="font-size: 0.9rem; font-weight: 400; color: var(--text-secondary);">/mo</span></div>
               <ul class="flex col gap-3 text-sm text-secondary mb-8">
                 <li><span class="text-accent">&bull;</span> Advanced chord shapes &amp; composition</li>
@@ -124,8 +124,8 @@ Router.register('/online-classes', async () => {
           <div class="card border bg-overlay border-subtle flex col justify-between" style="padding: clamp(var(--sp-4), 5vw, var(--sp-8));">
             <div>
               <span class="label text-tertiary">Advanced</span>
-              <h3 class="h4 text-primary mt-2 mb-4">Theory &amp; Composition</h3>
-              <div class="mb-6 flex justify-center items-baseline gap-2"><span style="font-size: 2rem; font-weight: 700; font-family: var(--font-body); color: var(--white); letter-spacing: -.02em;">&#8377;1,499</span><span style="font-size: 0.9rem; font-weight: 400; color: var(--text-secondary);">/mo</span></div>
+              <h3 class="h4 text-primary mt-2 mb-4" style="min-height: 2.5em;">Theory &amp; Composition</h3>
+              <div class="mb-6 flex justify-center items-baseline gap-2"><span style="font-size: 2rem; font-weight: 700; font-family: var(--font-body); color: var(--violet); letter-spacing: -.02em;">&#8377;1,499</span><span style="font-size: 0.9rem; font-weight: 400; color: var(--text-secondary);">/mo</span></div>
               <ul class="flex col gap-3 text-sm text-secondary mb-8">
                 <li><span class="text-accent">&bull;</span> Intervals, chord structure, scale theory</li>
                 <li><span class="text-accent">&bull;</span> Songwriting &amp; composition basics</li>

@@ -146,7 +146,7 @@ Router.register('/login', async () => {
       
       <!-- RIGHT: IMAGE -->
       <div class="auth-image-side">
-        <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80&w=1200" alt="Piano Keys" class="w-full h-full object-cover" style="opacity: 0.4; filter: grayscale(100%) contrast(120%); mix-blend-mode: luminosity;" loading="lazy">
+        <img src="https://res.cloudinary.com/doij66qnv/image/upload/v1782195006/keyboardist-academy/assets/login_bg_image.jpg" alt="Vintage Piano Keys" class="w-full h-full object-cover" style="opacity: 0.7;" loading="lazy">
         <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(18,18,18,1) 0%, rgba(18,18,18,0) 50%);"></div>
         
         <!-- Elegant overlay badge -->

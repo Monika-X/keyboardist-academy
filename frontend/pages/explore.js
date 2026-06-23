@@ -63,7 +63,7 @@ Router.register('/explore', async () => {
           <div class="card hover\:scale overflow-hidden flex col justify-between">
             <div>
               <div class="relative text-center overflow-hidden" style="height: 180px;">
-                <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80&w=800" alt="Classical Piano" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" loading="lazy">
+                <img src="https://res.cloudinary.com/doij66qnv/image/upload/v1782193119/keyboardist-academy/explore/explore_traditional.jpg" alt="Classical Piano" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" loading="lazy">
               </div>
               <div class="p-6">
                 <span class="label text-accent">Classical Studio</span>
@@ -77,7 +77,7 @@ Router.register('/explore', async () => {
           <div class="card hover\:scale overflow-hidden flex col justify-between">
             <div>
               <div class="relative text-center overflow-hidden" style="height: 180px;">
-                <img src="https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&q=80&w=800" alt="Jazz Keyboard" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" loading="lazy">
+                <img src="https://res.cloudinary.com/doij66qnv/image/upload/v1782193120/keyboardist-academy/explore/explore_jazz.jpg" alt="Jazz Keyboard" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" loading="lazy">
               </div>
               <div class="p-6">
                 <span class="label text-accent">Jazz & Improv</span>
@@ -91,7 +91,7 @@ Router.register('/explore', async () => {
           <div class="card hover\:scale overflow-hidden flex col justify-between">
             <div>
               <div class="relative text-center overflow-hidden" style="height: 180px;">
-                <img src="https://images.unsplash.com/photo-1552422535-c45813c61732?auto=format&fit=crop&q=80&w=800" alt="Concert Virtuoso" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" loading="lazy">
+                <img src="https://res.cloudinary.com/doij66qnv/image/upload/v1782193121/keyboardist-academy/explore/explore_virtuoso.jpg" alt="Concert Virtuoso" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" loading="lazy">
               </div>
               <div class="p-6">
                 <span class="label text-accent">Private Coaching</span>

@@ -55,7 +55,7 @@ Router.register('/about', async () => {
     <section class="section">
       <div class="container grid grid-2 items-center" style="gap: clamp(var(--sp-6), 6vw, var(--sp-16));">
         <div class="relative w-full overflow-hidden" style="border-radius: var(--radius-xl); border: 1px solid var(--border-default); aspect-ratio: 4/5;">
-          <img src="${App.getAssetPath('/assets/images/founder.png')}" alt="Founder Agilan" style="width: 100%; height: 100%; object-fit: cover;" / loading="lazy">
+          <img src="${App.getAssetPath('/assets/images/founder_new.jpg')}" alt="Founder Agilan" style="width: 100%; height: 100%; object-fit: cover;" / loading="lazy">
           <div class="absolute bottom-0 left-0 right-0 p-6" style="background: linear-gradient(to top, rgba(18,18,18,0.95) 0%, rgba(18,18,18,0) 100%); text-align: left;">
             <h3 style="font-family: 'Oswald', sans-serif; font-weight: 600; font-size: clamp(1.5rem, 4vw, 2.5rem); color: var(--white); line-height: 1.1; margin-bottom: 0.5rem; letter-spacing: 0;">Agilan T</h3>
             <p style="font-family: var(--font-body); font-weight: 300; font-size: var(--text-md); color: rgba(255,255,255,0.8); margin-bottom: 0.75rem;">Director</p>

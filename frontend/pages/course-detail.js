@@ -64,31 +64,30 @@ Router.register('/courses/:slug', async ({ params }) => {
           <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(18,18,18,1) 0%, rgba(18,18,18,0) 40%);"></div>
         </div>
         
-        <div class="container relative py-20" style="z-index: 1;">
-          <div class="max-w-3xl course-fade-in">
-            <div class="flex items-center gap-3 mb-6 flex-wrap">
+        <div class="container relative py-20" style="z-index: 1; min-width: 0;">
+          <div class="max-w-3xl course-fade-in mx-auto text-center" style="min-width: 0;">
+            <div class="flex col items-center justify-center gap-3 mb-6">
               <span class="badge badge--violet shadow-sm" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); color: var(--violet);">${course.level || 'All Levels'}</span>
-              <span class="text-xs font-bold uppercase tracking-wider flex items-center gap-2" style="color: rgba(255,255,255,0.7);">
-                <span class="w-1 h-1 rounded-full" style="background-color: rgba(255,255,255,0.7);"></span>
+              <span class="text-xs font-bold uppercase tracking-wider" style="color: rgba(255,255,255,0.7);">
                 ${course.category || 'Course'}
               </span>
             </div>
             
             <h1 class="h2 mb-6" style="line-height: 1.1; letter-spacing: -0.03em; color: #fff;">${course.title}</h1>
-            <p class="body-lg mb-10 clamp-3" style="line-height: 1.6; color: rgba(255,255,255,0.85);">${course.description || ''}</p>
+            <p class="body-lg mb-10 clamp-3 mx-auto" style="line-height: 1.6; color: rgba(255,255,255,0.85);">${course.description || ''}</p>
 
-            <div class="flex items-center gap-8 flex-wrap" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem;">
-              <div class="flex items-center gap-3">
-                <svg class="text-violet" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <div class="flex col gap-1"><span class="text-xs uppercase font-bold tracking-wider" style="color: rgba(255,255,255,0.6);">Duration</span><span class="font-medium" style="color: #fff;">${course.totalDuration || '0'} Mins</span></div>
+            <div class="flex items-center justify-center gap-10 flex-wrap" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem;">
+              <div class="flex col items-center gap-2">
+                <svg class="text-violet" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <div class="flex col items-center gap-1"><span class="text-xs uppercase font-bold tracking-wider" style="color: rgba(255,255,255,0.6);">Duration</span><span class="font-medium" style="color: #fff;">${course.totalDuration || '0'} Mins</span></div>
               </div>
-              <div class="flex items-center gap-3">
-                <svg class="text-violet" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                <div class="flex col gap-1"><span class="text-xs uppercase font-bold tracking-wider" style="color: rgba(255,255,255,0.6);">Lessons</span><span class="font-medium" style="color: #fff;">${course.lessons ? course.lessons.length : '0'} Classes</span></div>
+              <div class="flex col items-center gap-2">
+                <svg class="text-violet" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                <div class="flex col items-center gap-1"><span class="text-xs uppercase font-bold tracking-wider" style="color: rgba(255,255,255,0.6);">Lessons</span><span class="font-medium" style="color: #fff;">${course.lessons ? course.lessons.length : '0'} Classes</span></div>
               </div>
-              <div class="flex items-center gap-3">
-                <svg class="text-violet" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                <div class="flex col gap-1"><span class="text-xs uppercase font-bold tracking-wider" style="color: rgba(255,255,255,0.6);">Students</span><span class="font-medium" style="color: #fff;">${course.studentsEnrolled ? course.studentsEnrolled.length : '0'}</span></div>
+              <div class="flex col items-center gap-2">
+                <svg class="text-violet" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <div class="flex col items-center gap-1"><span class="text-xs uppercase font-bold tracking-wider" style="color: rgba(255,255,255,0.6);">Students</span><span class="font-medium" style="color: #fff;">${course.studentsEnrolled ? course.studentsEnrolled.length : '0'}</span></div>
               </div>
             </div>
           </div>
@@ -96,11 +95,11 @@ Router.register('/courses/:slug', async ({ params }) => {
       </section>
 
       <!-- Main Content Area -->
-      <section class="section py-16" style="background: var(--bg-base);">
-        <div class="container grid-sidebar gap-12 items-start">
+      <section class="section py-16" style="background: var(--bg-base); min-width: 0; overflow: hidden;">
+        <div class="container grid-sidebar gap-12 items-start" style="min-width: 0;">
           
           <!-- LEFT COLUMN: Content -->
-          <div class="flex col gap-16">
+          <div class="flex col gap-16" style="min-width: 0;">
             
             <!-- Video Player (If Enrolled) -->
             ${isEnrolled ? `
@@ -189,18 +188,18 @@ Router.register('/courses/:slug', async ({ params }) => {
                     
                     return `
                       <div class="lesson-row card bg-overlay border-subtle p-5 flex justify-between items-center gap-4 transition-all" 
-                           style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); ${canPreview ? 'cursor: pointer;' : 'opacity: 0.7;'}"
+                           style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); flex-wrap: wrap; max-width: 100%; ${canPreview ? 'cursor: pointer;' : 'opacity: 0.7;'}"
                            ${canPreview ? `onclick="window.loadLessonVideo('${lesson._id}', '${encodeURIComponent(lesson.title)}', '${encodeURIComponent(lesson.section || '')}', '${lesson.videoUrl}', this)"` : ''}>
                         
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-4" style="min-width: 0; flex: 1;">
                           <div class="flex-shrink-0 flex items-center justify-center" style="width: 32px; height: 32px; border-radius: 50%; background: ${isCompleted ? 'var(--violet)' : 'rgba(255,255,255,0.05)'}; color: ${isCompleted ? '#fff' : 'var(--text-tertiary)'};">
                             ${isCompleted 
                               ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' 
                               : (canPreview ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3"/></svg>' : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>')
                             }
                           </div>
-                          <div>
-                            <h4 class="body-base text-primary font-medium mb-1 ${!canPreview ? 'text-secondary' : ''}">${idx + 1}. ${lesson.title}</h4>
+                          <div style="min-width: 0;">
+                            <h4 class="body-base text-primary font-medium mb-1 truncate ${!canPreview ? 'text-secondary' : ''}">${idx + 1}. ${lesson.title}</h4>
                             <span class="text-xs text-tertiary flex items-center gap-2">
                               ${lesson.section || 'General'} 
                               <span style="width: 3px; height: 3px; border-radius: 50%; background: var(--border-subtle);"></span> 
@@ -222,9 +221,9 @@ Router.register('/courses/:slug', async ({ params }) => {
             <!-- Instructor Section -->
             <div class="course-fade-in" style="animation-delay: 0.4s;">
               <h2 class="h3 text-primary mb-6">Your Instructor</h2>
-              <div class="card bg-overlay border-subtle p-8 flex sm:flex-col gap-8 items-start" style="border-radius: 16px; border: 1px solid rgba(255,255,255,0.03);">
+              <div class="card bg-overlay border-subtle p-8 flex sm:flex-col gap-8 items-start" style="border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); min-width: 0;">
                 <div class="flex-shrink-0">
-                  <div class="flex items-center justify-center text-primary font-bold h3" style="width: 100px; height: 100px; border-radius: 50%; background: var(--surface-1); border: 1px solid rgba(255,255,255,0.05);">
+                  <div class="flex items-center justify-center font-bold text-2xl" style="width: 100px; height: 100px; border-radius: 50%; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); color: var(--violet); overflow: hidden; letter-spacing: 1px;">
                     ${instInitials}
                   </div>
                 </div>

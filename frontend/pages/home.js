@@ -196,7 +196,7 @@ Router.register('/', async () => {
         <h2 class="display-lg mb-6 text-primary">Begin your journey.</h2>
         <p class="body-lg text-secondary mx-auto mb-10" style="max-width: 500px;">Join thousands of pianists who chose the academy's path. Start your free trial today.</p>
         <div class="flex flex-col md:flex-row justify-center items-center gap-4 w-full px-4">
-          <a href="/register" class="btn btn--primary btn--xl w-full md:w-auto" style="justify-content: center;">Start Free Trial</a>
+          <a href="/admission" class="btn btn--primary btn--xl w-full md:w-auto" style="justify-content: center;">Start Free Trial</a>
           <a href="/contact" class="btn btn--ghost btn--xl w-full md:w-auto" style="justify-content: center;">Contact Admissions</a>
         </div>
       </div>
