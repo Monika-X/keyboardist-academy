@@ -148,10 +148,10 @@ Router.register('/explore', async () => {
           </div>
           <div class="grid grid-2 gap-4">
             <div class="bg-overlay rounded-md overflow-hidden" style="aspect-ratio: 1; border: 1px solid var(--border-subtle);">
-              <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=600" alt="Portfolio Preview" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+              <img src="https://res.cloudinary.com/doij66qnv/image/upload/v1782209271/keyboardist-academy/assets/sovbcnzxzqi7kfk07mvv.jpg" alt="Portfolio Preview" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
             </div>
             <div class="bg-overlay rounded-md overflow-hidden gallery-preview-img-2" style="aspect-ratio: 1; border: 1px solid var(--border-subtle);">
-              <img src="https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80&w=600" alt="Gallery Preview" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+              <img src="https://res.cloudinary.com/doij66qnv/image/upload/v1782209272/keyboardist-academy/assets/xxat68bo6uvdtclnwxub.jpg" alt="Gallery Preview" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
             </div>
           </div>
         </div>
